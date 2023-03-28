@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!--GPS와 네트워크를 이용하여 단말기 위치 식별-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!--네트워크를 이용하여 단말기 위치 식별-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!--백그라운드 위치 권한-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!--사용자가 앱과 상호작용하지 않는 경우에도 계속 실행-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!--전화기 상태 읽기 권한-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!--네트워크 소켓 권한-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!--네트워크 연결 상태-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!--네트워크 WIFI 연결 상태 확인-->
 
     <application
         android:allowBackup="true"
