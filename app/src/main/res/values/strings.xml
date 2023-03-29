@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">MyPetLoad</string>
+    <string name="app_name">PetLoad</string>
+    <string name="title_home">Home</string>
+    <string name="title_map">Map</string>
+    <string name="title_settings">Setting</string>
+    <string name="permission_rationale">Permission rationale</string>
+    <string name="text_gps_on">GPS ON</string>
+    <string name="text_network_on">Network ON</string>
+    <string name="text_off">OFF</string>
+    <string name="permission_for_imei">Permission for imei</string>
+    <string name="permission_for_imei_active">Please Active Permission for imei</string>
+    <string name="permission_for_locations">Permission for Location</string>
+    <string name="permission_for_locations_active">Please Active Permission for Location</string>
+    <string name="text_status">상태 :</string>
+    <string name="text_time">시간 :</string>
+    <string name="text_all_dist">거리 :</string>
+    <string name="text_forse_send">설명</string>
+    <string name="text_data_to_send">데이터 보내기</string>
+    <string name="text_send_time">파견 시간 :</string>
+    <string name="text_send_status">Send status :</string>
+    <string name="text_stop">STOP</string>
+    <string name="text_start">Start</string>
+    <string name="title_activity_del_maps">Map</string>
+    <string name="text_server">서버</string>
+    <string name="text_local">장소</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_time_interval">GPS survey </string>
+    <string name="setting_time_interval_fast">GPS Polling. (sec)</string>
+    <string name="setting_distance_interval">거리 (м)</string>
+    <string name="setting_server_send_time">출발 시간 (최소)</string>
+    <string name="setting_server_send_distance">배송 거리 ()</string>
+    <string name="setting_data_save_day">Keep data (days)</string>
+    <string name="setting_auto_exit">Auto shutdown</string>
+    <string name="text_need_permission_imei">IMEI rights need to be allowed</string>
+    <string name="text_gps_wona_on">GPS positioning is off, do you want to turn it on?</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="text_ok">Ok</string>
+
 </resources>
