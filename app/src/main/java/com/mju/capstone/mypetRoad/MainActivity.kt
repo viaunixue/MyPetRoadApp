@@ -1,4 +1,4 @@
-package com.mju.capstone.mypetload
+package com.mju.capstone.mypetRoad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
