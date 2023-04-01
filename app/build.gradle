@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.mju.capstone.mypetload'
+    namespace 'com.mju.capstone.mypetRoad'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.mju.capstone.mypetload"
+        applicationId "com.mju.capstone.mypetRoad"
         minSdk 24
         targetSdk 33
         versionCode 1
