@@ -3,6 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_home">
 
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.mju.capstone.mypetRoad.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.mju.capstone.mypetRoad.ui.map.MapFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.mju.capstone.mypetRoad.ui.setting.SettingFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_setting" />
 </navigation>
