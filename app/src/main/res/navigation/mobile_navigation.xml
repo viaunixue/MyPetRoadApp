@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.mju.capstone.mypetRoad.ui.home.HomeFragment"
+        android:name="com.mju.capstone.mypetRoad.ui.view.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.mju.capstone.mypetRoad.ui.map.MapFragment"
+        android:name="com.mju.capstone.mypetRoad.ui.view.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.mju.capstone.mypetRoad.ui.setting.SettingFragment"
+        android:name="com.mju.capstone.mypetRoad.ui.view.SettingFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_setting" />
 </navigation>
