@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.mju.capstone.mypetRoad">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!--GPS와 네트워크를 이용하여 단말기 위치 식별-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!--네트워크를 이용하여 단말기 위치 식별-->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!--백그라운드 위치 권한-->
