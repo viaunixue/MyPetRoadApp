@@ -1,56 +1,58 @@
 package com.mju.capstone.mypetRoad.ui.view
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.mju.capstone.mypetRoad.R
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.MapView
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.util.FusedLocationSource
-import com.naver.maps.map.util.MarkerIcons
+import com.mju.capstone.mypetRoad.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
-    private lateinit var mapView: MapView
-    private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
-    private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
-    private lateinit var naverMap: NaverMap
-    private val marker = Marker()
-    private val marker1 = Marker()
-    private val marker2 = Marker()
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
-
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.mju.capstone.mypetRoad.R.layout.activity_main)
+        setContentView(binding.root)
 
-        mapView = findViewById(com.mju.capstone.mypetRoad.R.id.nav_host_fragment)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        setupJetpackNavigation()
     }
 
-    override fun onMapReady(@NonNull naverMap: NaverMap) {
-        this.naverMap = naverMap
+    private fun setupJetpackNavigation() {
+        // navigation controller instance 획득
+        val host = supportFragmentManager
+            .findFragmentById(R.id.petroad_nav_host_fragment) as NavHostFragment? ?: return
+        navController = host.navController
 
-        // 현재 위치 마커
-        marker.position = LatLng(37.6281, 127.0905)
-        marker.map = naverMap
-        marker.icon = MarkerIcons.BLACK
-        marker.iconTintColor = Color.RED // 현재위치 마커 빨간색으로
+        // navigation View - navigation Controller 연결
+        binding.bottomNavView.setupWithNavController(navController)
 
-        // 장소 리스트 마커
-        marker1.position = LatLng(37.62444907132257, 127.09321109051345)
-        marker1.map = naverMap
-        marker1.captionText = "화랑대 철도공원"
-        marker2.position = LatLng(37.608990485010956, 127.0703518565252)
-        marker2.map = naverMap // 고씨네
-        marker2.captionText = "중랑천 산책로"
+        // app 상단 Bar 설정
+        appBarConfiguration = AppBarConfiguration(
+            // app Bar Conriguration에 navigation 그래프를 넘겨줌
+            // 현재 navigation 계층 구조에 따라서 top level destination 으로 지정
+//            navController.graph
+            setOf(
+                R.id.fragment_home, R.id.fragment_map, R.id.fragment_walking,
+                R.id.fragment_analysis, R.id.fragment_settings
+            )
+        )
+
+        // navigation Controller & appBarConfiguration 연결
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

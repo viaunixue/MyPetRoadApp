@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!--GPS와 네트워크를 이용하여 단말기 위치 식별-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!--네트워크를 이용하여 단말기 위치 식별-->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> <!--백그라운드 위치 권한-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!--사용자가 앱과 상호작용하지 않는 경우에도 계속 실행-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!--전화기 상태 읽기 권한-->
-    <uses-permission android:name="android.permission.INTERNET" /> <!--네트워크 소켓 권한-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!--네트워크 연결 상태-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!--네트워크 WIFI 연결 상태 확인-->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- GPS와 네트워크를 이용하여 단말기 위치 식별 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 네트워크를 이용하여 단말기 위치 식별 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 백그라운드 위치 권한 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 사용자가 앱과 상호작용하지 않는 경우에도 계속 실행 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 전화기 상태 읽기 권한 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 네트워크 소켓 권한 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 네트워크 연결 상태 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
+        android:name = ".PetRoadApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,10 +20,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.mypetRoad"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="byowz1na59" />
+
         <activity
             android:name=".ui.view.MainActivity"
             android:exported="true">
@@ -32,6 +35,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="${applicationId}.androidx-startup"
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            tools:node="merge" >
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
     </application>
 
 </manifest>

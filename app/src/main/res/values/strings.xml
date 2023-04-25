@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">MyPetRoad</string>
-    <string name="title_home">홈</string>
-    <string name="title_map">실시간위치</string>
-    <string name="title_analysis">활동량분석</string>
-    <string name="title_walking">산책</string>
-    <string name="title_settings">내정보</string>
+    <string name="home">홈</string>
+    <string name="map">실시간위치</string>
+    <string name="analysis">활동량분석</string>
+    <string name="walking">산책</string>
+    <string name="settings">내정보</string>
     <string name="permission_rationale">Permission rationale</string>
     <string name="text_gps_on">GPS ON</string>
     <string name="text_network_on">Network ON</string>

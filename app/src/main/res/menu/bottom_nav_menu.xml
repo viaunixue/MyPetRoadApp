@@ -2,27 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/fragment_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/title_home" />
+        android:title="@string/home" />
 
     <item
-        android:id="@+id/navigation_map"
+        android:id="@+id/fragment_map"
         android:icon="@drawable/ic_marker"
-        android:title="@string/title_map" />
+        android:title="@string/map" />
 
     <item
-        android:id="@+id/navigation_walking"
+        android:id="@+id/fragment_walking"
         android:icon="@drawable/ic_walking"
-        android:title="@string/title_walking" />
+        android:title="@string/walking" />
 
     <item
-        android:id="@+id/navigation_analysis"
+        android:id="@+id/fragment_analysis"
         android:icon="@drawable/ic_analysis"
-        android:title="@string/title_analysis" />
+        android:title="@string/analysis" />
 
     <item
-        android:id="@+id/navigation_settings"
+        android:id="@+id/fragment_settings"
         android:icon="@drawable/ic_user"
-        android:title="@string/title_settings" />
+        android:title="@string/settings" />
 </menu>
