@@ -37,19 +37,19 @@ class MainActivity : AppCompatActivity() {
         // navigation View - navigation Controller 연결
         binding.bottomNavView.setupWithNavController(navController)
 
-        // app 상단 Bar 설정
-        appBarConfiguration = AppBarConfiguration(
-            // app Bar Conriguration에 navigation 그래프를 넘겨줌
-            // 현재 navigation 계층 구조에 따라서 top level destination 으로 지정
-//            navController.graph
-            setOf(
-                R.id.fragment_home, R.id.fragment_map, R.id.fragment_walking,
-                R.id.fragment_analysis, R.id.fragment_settings
-            )
-        )
-
-        // navigation Controller & appBarConfiguration 연결
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        // app 상단 Bar 설정
+//        appBarConfiguration = AppBarConfiguration(
+//            // app Bar Conriguration에 navigation 그래프를 넘겨줌
+//            // 현재 navigation 계층 구조에 따라서 top level destination 으로 지정
+////            navController.graph
+//            setOf(
+//                R.id.fragment_home, R.id.fragment_map, R.id.fragment_walking,
+//                R.id.fragment_analysis, R.id.fragment_settings
+//            )
+//        )
+//
+//        // navigation Controller & appBarConfiguration 연결
+//        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {
