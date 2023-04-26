@@ -12,6 +12,11 @@
         android:layout_height="match_parent"
         tools:context=".ui.view.SettingFragment">
 
+        <com.naver.maps.map.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_search"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -31,11 +36,6 @@
                 android:inputType="textAutoComplete" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <FrameLayout
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

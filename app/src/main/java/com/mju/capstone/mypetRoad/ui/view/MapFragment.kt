@@ -29,7 +29,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
-    private lateinit var naverMap: NaverMap
     private val marker = Marker()
     private val marker1 = Marker()
     private val marker2 = Marker()
@@ -40,18 +39,54 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
+        mapView = binding.mapView
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        mapView = binding.mapView
-//        mapView.onCreate(savedInstanceState)
-//        mapView.getMapAsync(this)
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
     }
 
-    override fun onMapReady(p0: NaverMap) {
-        this.naverMap = naverMap
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onResume()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onStop()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        MapFragment.naverMap = naverMap
 
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)
@@ -71,5 +106,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+    companion object {
+        lateinit var naverMap: NaverMap
     }
 }
