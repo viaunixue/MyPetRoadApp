@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -47,6 +48,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 //        database = MapDB.getInstance(this)!!
         uiScope = CoroutineScope(Dispatchers.Main)
 
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
 
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
@@ -96,6 +98,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(naverMap: NaverMap) {
         Companion.naverMap = naverMap
+
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)
