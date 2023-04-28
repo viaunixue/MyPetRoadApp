@@ -101,7 +101,9 @@ class MainActivity : AppCompatActivity() {
         val minTime: Long = 1000
         val minDistance = 1f
 
-        if(::myLocationListener.isInitialized.not())
+        if(::myLocationListener.isInitialized.not()){
+
+        }
     }
 
     inner class MyLocationListener : LocationListener {
@@ -110,11 +112,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        @RequiresApi(Build.VERSION_CODES.P)
-        @SuppressLint("MissingPermission")
-        private fun removeLocationListener() {
-            if(viewmodel.getLocationManager())
-        }
 
     }
 }
