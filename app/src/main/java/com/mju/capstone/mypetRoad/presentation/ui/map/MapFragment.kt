@@ -1,4 +1,4 @@
-package com.mju.capstone.mypetRoad.ui.view
+package com.mju.capstone.mypetRoad.presentation.ui.map
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.mju.capstone.mypetRoad.R
+//import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
-import com.mju.capstone.mypetRoad.ui.viewmodel.MapViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -18,6 +17,8 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -25,6 +26,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
 
     private val mapViewModel by viewModels<MapViewModel>()
+
+//    private lateinit var database: MapDB
+    private lateinit var  uiScope: CoroutineScope
 
     private lateinit var mapView: MapView
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
@@ -39,6 +43,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
+
+//        database = MapDB.getInstance(this)!!
+        uiScope = CoroutineScope(Dispatchers.Main)
+
+
         mapView = binding.mapView
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -86,7 +95,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        MapFragment.naverMap = naverMap
+        Companion.naverMap = naverMap
 
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)

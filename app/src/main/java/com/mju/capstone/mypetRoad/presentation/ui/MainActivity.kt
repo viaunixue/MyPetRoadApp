@@ -1,17 +1,25 @@
-package com.mju.capstone.mypetRoad.ui.view
+package com.mju.capstone.mypetRoad.presentation.ui
 
+import android.annotation.SuppressLint
+import android.location.Location
+import android.location.LocationListener
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -21,9 +29,33 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    companion object {
+        private const val MY_LOCATION_KEY = "MY_LOCATION_KEY"
+
+        val PERMISSIONS = arrayOf(
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_COARSE_LOCATION)
+    }
+
+
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+        { permissions ->
+            val responsePermissions = permissions.entries.filter {
+                it.key in PERMISSIONS
+            }
+            if(responsePermissions.filter { it.value == true }.size == PERMISSIONS.size) {
+                setLocationListener()
+            } else {
+                Toast.makeText(this, "no", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
         setupJetpackNavigation()
     }
@@ -54,5 +86,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun observeData() = with(binding) {
+
+    }
+
+    @Suppress("MissingPermission")
+    private fun setLocationListener() {
+        val minTime: Long = 1000
+        val minDistance = 1f
+
+        if(::myLocationListener.isInitialized.not())
+    }
+
+    inner class MyLocationListener : LocationListener {
+        @RequiresApi(Build.VERSION_CODES.P)
+        override fun onLocationChanged(location: Location) {
+
+        }
+
+        @RequiresApi(Build.VERSION_CODES.P)
+        @SuppressLint("MissingPermission")
+        private fun removeLocationListener() {
+            if(viewmodel.getLocationManager())
+        }
+
     }
 }
