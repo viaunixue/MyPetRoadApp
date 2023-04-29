@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.mju.capstone.mypetRoad.data.api.RetrofitInstance
+import com.mju.capstone.mypetRoad.data.url.Url
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
+import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -21,6 +24,11 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -111,6 +119,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
+        lateinit var retrofitInstance : RetrofitInstance
+
+        retrofitInstance.service.getGps().enqueue(object : Callback<GpsModel>{
+            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
+                if(response.isSuccessful){
+                    var result: GpsModel? = response.body()
+                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("YJ", "onResponce 실패")
+                }
+            }
+            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
+                Log.d("YJ", "네트워크 에러" + t.message.toString())
+            }
+        })
+
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)
         marker.map = naverMap
@@ -121,6 +146,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker1.position = LatLng(37.62444907132257, 127.09321109051345)
         marker1.map = naverMap
         marker1.captionText = "화랑대 철도공원"
+
         marker2.position = LatLng(37.608990485010956, 127.0703518565252)
         marker2.map = naverMap // 고씨네
         marker2.captionText = "중랑천 산책로"
