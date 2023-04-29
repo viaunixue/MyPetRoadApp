@@ -2,6 +2,7 @@ package com.mju.capstone.mypetRoad.presentation.ui.map
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,41 +60,48 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onStart() {
         super.onStart()
         mapView.onStart()
+        Log.e("e","Onstart")
     }
 
     override fun onResume() {
         super.onResume()
         mapView.onResume()
+        Log.e("e","OnResume")
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onResume()
+        Log.e("e","OnPause")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onStop()
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onStop() {
         super.onStop()
         mapView.onStop()
+        Log.e("e","OnStop")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         mapView.onDestroy()
+        Log.e("e","OnDest")
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
+        Log.e("e","OnLOw")
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("e","Onview")
     }
 
     override fun onMapReady(naverMap: NaverMap) {
