@@ -119,12 +119,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-        lateinit var retrofitInstance : RetrofitInstance
+        var retrofitInstance = RetrofitInstance.service
+        var temp: GpsModel?
 
-        retrofitInstance.service.getGps().enqueue(object : Callback<GpsModel>{
+        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
             override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
                 if(response.isSuccessful){
                     var result: GpsModel? = response.body()
+                    if (result != null) {
+                        marker2.position = LatLng(result.latitude, result.longitude,)
+                        marker2.map = naverMap // 고씨네
+                        marker2.captionText = "GPS 위치마커"
+                    }
                     Log.d("YJ", "onResponce 성공: " + result?.toString());
                 }
                 else{
@@ -132,7 +138,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
             override fun onFailure(call: Call<GpsModel>, t: Throwable) {
-                Log.d("YJ", "네트워크 에러" + t.message.toString())
+                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
             }
         })
 
@@ -146,10 +152,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker1.position = LatLng(37.62444907132257, 127.09321109051345)
         marker1.map = naverMap
         marker1.captionText = "화랑대 철도공원"
-
-        marker2.position = LatLng(37.608990485010956, 127.0703518565252)
-        marker2.map = naverMap // 고씨네
-        marker2.captionText = "중랑천 산책로"
     }
 
     override fun onDestroy() {
