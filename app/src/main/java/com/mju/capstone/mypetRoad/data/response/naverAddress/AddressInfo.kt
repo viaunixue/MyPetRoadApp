@@ -9,10 +9,10 @@ data class AddressInfo(
     @Expose val id: Long?,
     @SerializedName("latitude")
     @Expose val latitude: Double?,
-    @SerializedName("longtitue")
-    @Expose val longtitue: Double?,
+    @SerializedName("longitude")
+    @Expose val longitude: Double?,
     @SerializedName("altitude")
     @Expose val altitude: Double?,
-    @SerializedName("creatTime")
-    @Expose val creatTime: Date?
+    @SerializedName("createTime")
+    @Expose val createTime: Date?
 )

@@ -2,30 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/fragment_home">
+    android:id="@+id/petroad_nav_graph"
+    app:startDestination="@id/home">
 
-    <fragment
-        android:id="@+id/fragment_home"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.home.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/fragment_map"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.map.MapFragment"
-        android:label="@string/map"
-        tools:layout="@layout/fragment_map" />
-    <fragment
-        android:id="@+id/fragment_settings"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.settings.SettingFragment"
-        android:label="@string/settings"
-        tools:layout="@layout/fragment_setting" />
-    <fragment
-        android:id="@+id/fragment_analysis"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.analysis.AnalysisFragment"
-        android:label="@string/analysis" />
-    <fragment
-        android:id="@+id/fragment_walking"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.walking.WalkingFragment"
-        android:label="@string/walking" />
+    <include app:graph="@navigation/home" />
+    <include app:graph="@navigation/map" />
+    <include app:graph="@navigation/walking" />
+    <include app:graph="@navigation/analysis" />
+    <include app:graph="@navigation/setting" />
 </navigation>

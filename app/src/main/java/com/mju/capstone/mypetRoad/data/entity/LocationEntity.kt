@@ -9,5 +9,5 @@ data class LocationEntity (
     var latitude: Double = 0.0,
     var longitude: Double = 0.0,
     var altitude: Double = 0.0,
-    var creatTime: Date
+    var createTime: Date
 ) : Parcelable

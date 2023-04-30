@@ -8,13 +8,13 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 import java.sql.Date
 
-interface MapApiService {
+interface TrackerApiService {
     @GET(Url.LOC_URL)
     suspend fun getReverseGeoCode(
         @Header("ID") id: Long = 1,
         @Query("latitude") latitude: Double,
-        @Query("longtitue") longtitue: Double,
+        @Query("longitude") longitude: Double,
         @Query("altitude") altitude: Double,
-        @Query("altitude") creatTime: Date
+        @Query("altitude") createTime: Date
     ): Response<AddressResponse>
 }

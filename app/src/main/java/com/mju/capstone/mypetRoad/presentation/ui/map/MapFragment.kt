@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.presentation.ui.map
 
+import android.content.res.loader.ResourcesProvider
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,9 @@ import com.mju.capstone.mypetRoad.data.url.Url
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
+import com.mju.capstone.mypetRoad.presentation.base.BaseFragment
+import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.MarkerFactory
+import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.NaverMapHandler
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -29,17 +33,16 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
+import javax.inject.Provider
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback {
-    private var _binding: FragmentMapBinding? = null
-    private val binding get() = _binding!!
+class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
+    override fun getViewBinding() = FragmentMapBinding.inflate(layoutInflater)
 
     private val mapViewModel by viewModels<MapViewModel>()
 
-//    private lateinit var database: MapDB
     private lateinit var  uiScope: CoroutineScope
-
     private lateinit var mapView: MapView
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
@@ -47,74 +50,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private val marker1 = Marker()
     private val marker2 = Marker()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
+//    @Inject
+//    lateinit var resourcesProvider: ResourcesProvider
+//
+//    @Inject
+//    lateinit var markerFactory: MarkerFactory
 
-//        database = MapDB.getInstance(this)!!
+    // 네이버 지도를 불러와 Handler 에 지도를 주입
+    @Inject
+    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
+
+//    private val naverMapHandler get() = naverMapHandlerProvider.get()
+
+    lateinit var naverMap: NaverMap
+
+    override fun initState(){
+        super.initState()
         uiScope = CoroutineScope(Dispatchers.Main)
-
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
-
         mapView = binding.mapView
-        mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mapView.onStart()
-        Log.e("e","Onstart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-        Log.e("e","OnResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mapView.onResume()
-        Log.e("e","OnPause")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView.onStop()
-        Log.e("e","OnStop")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mapView.onDestroy()
-        Log.e("e","OnDest")
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
-        Log.e("e","OnLOw")
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.e("e","Onview")
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        Companion.naverMap = naverMap
-
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
@@ -152,13 +110,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         marker1.position = LatLng(37.62444907132257, 127.09321109051345)
         marker1.map = naverMap
         marker1.captionText = "화랑대 철도공원"
-    }
-
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
-    }
-    companion object {
-        lateinit var naverMap: NaverMap
     }
 }
