@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/walking"
+    app:startDestination="@id/walkingFragment">
+
+    <fragment
+        android:id="@+id/walkingFragment"
+        android:name="com.mju.capstone.mypetRoad.presentation.ui.walking.WalkingFragment"
+        android:label="@string/walking"/>
+
+</navigation>

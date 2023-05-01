@@ -2,6 +2,7 @@ package com.mju.capstone.mypetRoad.presentation.base
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     private var _binding: VB? = null
-    private val binding : VB get() = _binding!!
+    protected val binding : VB get() = _binding!!
 
     lateinit var progressDialog: Dialog
 
@@ -43,6 +44,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initState()
+        Log.e("e", "OnView")
     }
 
     open fun initState() {
@@ -53,6 +55,12 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        initState()
+        Log.e("e", "OnLow")
     }
 
     open fun initViews() = Unit

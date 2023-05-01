@@ -1,10 +1,11 @@
 package com.mju.capstone.mypetRoad.data.api
 
-import com.mju.capstone.mypetRoad.util.Constants.BASE_URL
+import com.mju.capstone.mypetRoad.data.network.RetrofitService
+import com.mju.capstone.mypetRoad.data.url.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
     private val okHttpClient: OkHttpClient by lazy {
@@ -17,13 +18,15 @@ object RetrofitInstance {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+//            .client(okHttpClient)
+            .baseUrl(Url.LOC_URL)
             .build()
     }
 
     val api: MapRoadApi by lazy {
         retrofit.create(MapRoadApi::class.java)
     }
+
+    val service: RetrofitService = retrofit.create(RetrofitService::class.java)
 }

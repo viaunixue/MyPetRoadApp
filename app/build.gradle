@@ -59,11 +59,13 @@ dependencies {
 
     // Naver Map API
     implementation "com.naver.maps:map-sdk:3.16.2"
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     // Retrofit
     def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     // Moshi
     def moshi_version = "1.13.0"
