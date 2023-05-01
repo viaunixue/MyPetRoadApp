@@ -1,4 +1,4 @@
-package com.mju.capstone.mypetRoad.data.retrofit
+package com.mju.capstone.mypetRoad.data.network
 
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import retrofit2.http.GET

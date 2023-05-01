@@ -1,15 +1,11 @@
 package com.mju.capstone.mypetRoad.data.api
 
-import com.google.gson.Gson
-import com.mju.capstone.mypetRoad.data.retrofit.RetrofitService
+import com.mju.capstone.mypetRoad.data.network.RetrofitService
 import com.mju.capstone.mypetRoad.data.url.Url
-import com.mju.capstone.mypetRoad.util.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 
 object RetrofitInstance {
     private val okHttpClient: OkHttpClient by lazy {
