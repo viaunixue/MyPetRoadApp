@@ -23,16 +23,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpActivity"
+            android:name=".presentation.login.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MyGpsActivity"
+            android:name=".presentation.ui.gps.myGpsLocation.MyGpsLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".MapGpsSettingActivity"
+            android:name=".presentation.ui.gps.mapGpsSettings.MapGpsSettingActivity"
             android:exported="false"
             android:label="@string/title_activity_map_gps_setting"
             android:theme="@style/Theme.mypetRoad.NoActionBar" />
