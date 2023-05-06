@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     abstract fun getViewBinding(): VB
 
-    private val binding by lazy {
+    val binding by lazy {
         getViewBinding()
     }
 

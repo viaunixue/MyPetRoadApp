@@ -9,7 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray_64">#646464</color>
-    <color name="base">#7791CA</color>
+    <color name="textBox">#F5F5F5</color>
+    <color name="base">#4098FF</color>
     <color name="base_grey">#C4C4C4</color>
     <color name="gray_168">#A8A8A8</color>
     <color name="orange_yellow">#FFCA42</color>

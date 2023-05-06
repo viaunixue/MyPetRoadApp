@@ -33,7 +33,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        freeCompilerArgs = ['-Xjvm-default=compatibility']
+        freeCompilerArgs = ['-Xjvm-default=enable']
         jvmTarget = "1.8"
     }
     buildFeatures {
@@ -45,14 +45,18 @@ android {
     }
 }
 
+apply plugin: 'com.google.gms.google-services'
+
 dependencies {
 
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.browser:browser:1.5.0"
     implementation "androidx.core:core-ktx:1.7.0"
     implementation "androidx.appcompat:appcompat:1.6.0"
     implementation "com.google.android.material:material:1.8.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit:1.1.5"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
@@ -139,4 +143,14 @@ dependencies {
 
     //ui
     implementation "com.github.ybq:Android-SpinKit:1.4.0"
+
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // firebase
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+    implementation 'com.google.firebase:firebase-bom:31.5.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
 }

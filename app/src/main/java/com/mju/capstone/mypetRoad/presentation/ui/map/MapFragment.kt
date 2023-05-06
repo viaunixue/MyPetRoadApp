@@ -78,7 +78,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         var retrofitInstance = RetrofitInstance.service
-        var temp: GpsModel?
+//        var temp: GpsModel?
 
         retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
             override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {

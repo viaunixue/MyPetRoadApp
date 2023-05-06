@@ -6,15 +6,26 @@ import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
+//@HiltAndroidApp
+//class PetRoadApplication: Application(), Configuration.Provider {
+//
+//    @Inject
+//    lateinit var workerFactory: HiltWorkerFactory
+//
+//    override fun getWorkManagerConfiguration(): Configuration {
+//        return Configuration.Builder()
+//            .setWorkerFactory(workerFactory)
+//            .build()
+//    }
+//}
 @HiltAndroidApp
-class PetRoadApplication: Application(), Configuration.Provider {
+class PetRoadApplication : Application(){
 
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    override fun onCreate() {
+        super.onCreate()
 
-    override fun getWorkManagerConfiguration(): Configuration {
-        return Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
+//        KakaoSdk.init(this,getString(R.string.kakao_app_key))
+
     }
+
 }

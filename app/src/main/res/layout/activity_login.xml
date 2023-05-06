@@ -1,9 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.login.LoginActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+    </data>
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/loginframe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        app:umanoOverlay="false"
+        app:umanoPanelHeight="0dp"
+        app:umanoParallaxOffset="0dp"
+        app:umanoShadowHeight="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/with"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="440dp"
+                android:text="마이펫로드와 함께 \n건강한 산책해요 "
+                android:textColor="@color/black"
+                android:textSize="33sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="아이디"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/with"
+                app:layout_constraintTop_toBottomOf="@id/with" />
+
+            <EditText
+                android:id="@+id/editId"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/login_textbox"
+                android:hint="@string/id_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id"
+                app:layout_constraintWidth_percent="0.85" />
+
+            <TextView
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="비밀번호"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@id/with"
+                app:layout_constraintTop_toBottomOf="@id/editId" />
+
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/pw_hint"
+                android:inputType="textPassword"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/login_textbox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/password"
+                app:layout_constraintWidth_percent="0.85" />
+
+            <ImageView
+                android:id="@+id/eye"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/editPassword"
+                app:layout_constraintTop_toTopOf="@id/editPassword"
+                app:layout_constraintEnd_toEndOf="@id/editPassword"
+                android:src="@drawable/eyes" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/login_btn"
+                android:text="로그인"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/password"
+                app:layout_constraintTop_toBottomOf="@id/editPassword"
+                app:layout_constraintWidth_percent="0.86" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sign"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="회원가입"
+                android:textSize="18sp"
+                android:textColor="@color/base"
+                android:background="@drawable/signup_btn"
+                app:layout_constraintEnd_toEndOf="@id/login"
+                app:layout_constraintTop_toBottomOf="@id/login"
+                app:layout_constraintWidth_percent="0.86" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/find"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="비밀번호찾기"
+                android:textSize="18sp"
+                android:textColor="@color/base"
+                android:background="@drawable/signup_btn"
+                app:layout_constraintEnd_toEndOf="@id/sign"
+                app:layout_constraintTop_toBottomOf="@id/sign"
+                app:layout_constraintWidth_percent="0.86" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textreset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="초기화된 비밀번호를 받을 주소를 입력해주세요"
+                app:layout_constraintTop_toTopOf="@id/con"
+                app:layout_constraintStart_toStartOf="@id/con"
+                app:layout_constraintBottom_toTopOf="@id/editReset"
+                app:layout_constraintEnd_toEndOf="@id/con"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editReset"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.8"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@id/con"
+                app:layout_constraintEnd_toEndOf="@id/con"
+                app:layout_constraintBottom_toTopOf="@id/send_reset"
+                app:layout_constraintTop_toBottomOf="@id/textreset"
+                android:hint="Email을 적어주세요" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/send_reset"
+                android:layout_width="0dp"
+                app:layout_constraintWidth_percent="0.8"
+                android:background="@drawable/login_btn"
+                android:layout_height="wrap_content"
+                android:text="새로운 비밀번호 전송"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/editReset"
+                app:layout_constraintBottom_toBottomOf="@id/con"
+                app:layout_constraintStart_toStartOf="@id/con"
+                app:layout_constraintEnd_toEndOf="@id/con"
+                android:layout_marginBottom="30dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</layout>
