@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "293926756710",
+    "project_id": "mypetroad",
+    "storage_bucket": "mypetroad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293926756710:android:733c6eb839f33e24a128a7",
+        "android_client_info": {
+          "package_name": "com.mju.capstone.mypetRoad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293926756710-2cein4vq3euarbq3l2vf25brfcp6ju7v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mju.capstone.mypetRoad",
+            "certificate_hash": "2d75b2bc6e3e9188b88512ee3bc90fd099d12226"
+          }
+        },
+        {
+          "client_id": "293926756710-6d10589pkc6ec2aq8nbljkm64l0khqtc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOlL-WANhs0svWdcX0HQ2xWjYLC90oQ60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293926756710-6d10589pkc6ec2aq8nbljkm64l0khqtc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
