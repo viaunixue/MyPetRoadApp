@@ -124,9 +124,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         //callback functuon for Phone Auth
 
 
-        back.setOnClickListener {
-            back()
-        }
+//        back.setOnClickListener {
+//            back()
+//        }
 
         eye.setOnClickListener {
             showAndHide()
