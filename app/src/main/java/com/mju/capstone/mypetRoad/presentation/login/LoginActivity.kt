@@ -94,9 +94,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             registerMove()
         }
 
-        binding.find.setOnClickListener {
-            Sliding()
-        }
         binding.sendReset.setOnClickListener {
             resetPassword()
         }
@@ -158,16 +155,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
 
-    private fun Sliding() {
-        val slidePanel = binding.loginframe
-
-        val state = slidePanel.panelState
-        if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-            slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-        } else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-        }
-    }
+//    private fun Sliding() {
+//        val slidePanel = binding.loginframe
+//
+//        val state = slidePanel.panelState
+//        if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+//        } else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
+//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+//        }
+//    }
 
     override fun getViewBinding(): com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding =
         com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding.inflate(layoutInflater)
