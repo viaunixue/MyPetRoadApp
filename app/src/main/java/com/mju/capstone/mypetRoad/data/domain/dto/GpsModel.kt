@@ -1,15 +1,14 @@
-package com.mju.capstone.mypetRoad.domain.model
+package com.mju.capstone.mypetRoad.data.domain.dto
 
 import java.util.Date
 
-class GpsModel {
-    var id: Long = 0
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
-    var altitude: Double = 0.0
-    lateinit var createTime: Date
-    constructor()
-
+data class GpsModel(
+    override val id: Long,
+    override val createTime: Date,
+    var latitude: Double,
+    var longitude: Double,
+    var altitude: Double
+): Model(id, createTime){
     override fun toString(): String {
         return "GetResult(" +
                 "latitude=" + latitude +

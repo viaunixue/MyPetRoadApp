@@ -1,6 +1,5 @@
 package com.mju.capstone.mypetRoad.data.api
 
-import com.mju.capstone.mypetRoad.data.network.RetrofitService
 import com.mju.capstone.mypetRoad.data.url.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,9 +23,9 @@ object RetrofitInstance {
             .build()
     }
 
-    val api: MapRoadApi by lazy {
-        retrofit.create(MapRoadApi::class.java)
+    val api: PetRoadApi by lazy {
+        retrofit.create(PetRoadApi::class.java)
     }
 
-    val service: RetrofitService = retrofit.create(RetrofitService::class.java)
+    val service: PetRoadApi = retrofit.create(PetRoadApi::class.java)
 }

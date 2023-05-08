@@ -1,7 +1,6 @@
 package com.mju.capstone.mypetRoad.di.moduleComponent.SingletonComponent
 
 import com.mju.capstone.mypetRoad.BuildConfig
-import com.mju.capstone.mypetRoad.data.network.TrackerApiService
 import com.mju.capstone.mypetRoad.data.url.Url
 import com.mju.capstone.mypetRoad.di.annotation.networkModule.TrackerRetrofitInstance
 import dagger.Module

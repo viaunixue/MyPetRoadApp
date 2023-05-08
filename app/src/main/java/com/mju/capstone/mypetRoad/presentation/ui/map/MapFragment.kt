@@ -1,21 +1,13 @@
 package com.mju.capstone.mypetRoad.presentation.ui.map
 
-import android.content.res.loader.ResourcesProvider
 import android.graphics.Color
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.data.api.RetrofitInstance
-import com.mju.capstone.mypetRoad.data.url.Url
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
-import com.mju.capstone.mypetRoad.domain.model.GpsModel
+import com.mju.capstone.mypetRoad.data.domain.dto.GpsModel
 import com.mju.capstone.mypetRoad.presentation.base.BaseFragment
-import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.MarkerFactory
 import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.NaverMapHandler
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
@@ -31,8 +23,6 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 import javax.inject.Provider
 
