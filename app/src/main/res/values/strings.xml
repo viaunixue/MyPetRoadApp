@@ -5,10 +5,14 @@
     <string name="analysis">활동량분석</string>
     <string name="walking">산책</string>
     <string name="settings">내정보</string>
-    <string name="id_hint"><font size="15">영문으로 시작, 최소 4글자입니다! </font></string>
-    <string name="birth_hint"><font size="15">영문으로 시작, 최소 4글자입니다! </font></string>
-    <string name="pw_hint"><font size="15">최소 6글자입니다! </font></string>
+    <string name="id_hint"><font size="15">아이디: 영문으로 시작, 최소 4글자 </font></string>
+    <string name="pw_hint"><font size="15">비밀번호: 최소 6글자 </font></string>
     <string name="name_hint"><font size="15">이름: </font></string>
+    <string name="address_hint"><font size="15">주소: </font></string>
+    <string name="phone_hint"><font size="15">전화번호: </font></string>
+    <string name="age_hint"><font size="15">나이: </font></string>
+    <string name="species_hint"><font size="15">견종: </font></string>
+    <string name="weight_hint"><font size="15">몸무게: </font></string>
     <string name="map_search">도로명, 건물명 또는 지번으로 검색</string>
     <string name="permission_rationale">Permission rationale</string>
     <string name="text_gps_on">GPS ON</string>

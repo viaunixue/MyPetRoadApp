@@ -30,7 +30,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <TextView
                 android:id="@+id/nameEmail"
                 android:layout_width="wrap_content"
@@ -39,6 +38,7 @@
                 android:text="반려인 정보"
                 android:textColor="@color/black"
                 android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/name" />
 
             <EditText
@@ -49,30 +49,48 @@
                 android:hint="@string/name_hint"
                 android:background="@drawable/login_textbox"
                 app:layout_constraintStart_toStartOf="@id/nameEmail"
-                app:layout_constraintTop_toBottomOf="@id/nameEmail"
-                app:layout_constraintWidth_percent="0.85"/>
+                app:layout_constraintTop_toBottomOf="@id/nameEmail" />
 
             <EditText
-                android:id="@+id/userBirth"
+                android:id="@+id/userPhone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/phone_hint"
+                android:background="@drawable/login_textbox"
+                app:layout_constraintStart_toStartOf="@id/userName"
+                app:layout_constraintTop_toBottomOf="@id/userName" />
+
+            <EditText
+                android:id="@+id/userAddress"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/address_hint"
+                android:background="@drawable/login_textbox"
+                app:layout_constraintStart_toStartOf="@id/userPhone"
+                app:layout_constraintTop_toBottomOf="@id/userPhone" />
+
+            <EditText
+                android:id="@+id/userId"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:hint="@string/id_hint"
+                android:background="@drawable/login_textbox"
+                app:layout_constraintStart_toStartOf="@id/userAddress"
+                app:layout_constraintTop_toBottomOf="@id/userAddress" />
+
+            <EditText
+                android:id="@+id/userPassword"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_textbox"
-                android:hint="@string/birth_hint"
+                android:hint="@string/pw_hint"
                 android:inputType="textPassword"
-                app:layout_constraintStart_toStartOf="@id/userName"
-                app:layout_constraintTop_toBottomOf="@id/userName"
-                />
-
-            <ImageView
-                android:id="@+id/eye"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/userBirth"
-                app:layout_constraintTop_toTopOf="@id/userBirth"
-                app:layout_constraintEnd_toEndOf="@id/userBirth"
-                android:src="@drawable/eyes" />
+                app:layout_constraintStart_toStartOf="@id/userId"
+                app:layout_constraintTop_toBottomOf="@id/userId" />
 
 
             <TextView
@@ -80,47 +98,126 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="이름"
+                android:text="반려견 정보"
                 android:textColor="@color/black"
-                android:textSize="22sp"
-                app:layout_constraintStart_toStartOf="@id/userBirth"
-                app:layout_constraintTop_toBottomOf="@id/userBirth" />
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userPassword" />
 
             <EditText
-                android:id="@+id/editname"
+                android:id="@+id/petName"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:hint="@string/name_hint"
                 android:background="@drawable/login_textbox"
-                app:layout_constraintStart_toStartOf="@id/name_name"
-                app:layout_constraintTop_toBottomOf="@id/name_name"
-                app:layout_constraintWidth_percent="0.85"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name_name" />
 
             <EditText
-                android:id="@+id/editname2"
+                android:id="@+id/petAge"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_textbox"
-                android:hint="@string/name_hint"
-                app:layout_constraintStart_toStartOf="@id/name_name"
-                app:layout_constraintTop_toBottomOf="@id/editname"
-                app:layout_constraintWidth_percent="0.85" />
+                android:hint="@string/age_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/petName" />
 
+            <EditText
+                android:id="@+id/petSpecies"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_textbox"
+                android:hint="@string/species_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/petAge" />
+
+            <EditText
+                android:id="@+id/petWeight"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_textbox"
+                android:hint="@string/weight_hint"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/petSpecies" />
+
+            <RadioGroup
+                android:id="@+id/isNeutered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/petSex"
+                app:layout_constraintBottom_toTopOf="@id/sign_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="중성화 여부"/>
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/yesNeutered"
+                    android:text="O"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/radioButton2"
+                    android:text="X"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/petSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/petWeight"
+                app:layout_constraintBottom_toTopOf="@id/isNeutered"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="성별"/>
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/male"
+                    android:text="수컷"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+                <RadioButton
+                    android:layout_weight="1"
+                    android:id="@+id/female"
+                    android:text="암컷"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    />
+            </RadioGroup>
+
+<!--        모두 기입된다면 background를 @drawable/login_btn으로 변경-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/sign_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/login_btn"
-                android:text="가입하기"
-                android:textSize="17sp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/login_textbox"
+                android:text="완료"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                app:layout_constraintTop_toBottomOf="@id/petWeight"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_percent="0.8" />
-
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
