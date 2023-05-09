@@ -92,6 +92,16 @@
                 app:layout_constraintStart_toStartOf="@id/userId"
                 app:layout_constraintTop_toBottomOf="@id/userId" />
 
+            <ImageView
+                android:id="@+id/eye"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/userPassword"
+                app:layout_constraintTop_toTopOf="@id/userPassword"
+                app:layout_constraintEnd_toEndOf="@id/userPassword"
+                android:src="@drawable/eyes" />
+
 
             <TextView
                 android:id="@+id/name_name"
@@ -160,14 +170,14 @@
                     android:text="중성화 여부"/>
                 <RadioButton
                     android:layout_weight="1"
-                    android:id="@+id/yesNeutered"
+                    android:id="@+id/Neutered"
                     android:text="O"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     />
                 <RadioButton
                     android:layout_weight="1"
-                    android:id="@+id/radioButton2"
+                    android:id="@+id/notNeutered"
                     android:text="X"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -211,6 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/login_textbox"
+                android:clickable="false"
                 android:text="완료"
                 android:textColor="@color/black"
                 android:textSize="32sp"

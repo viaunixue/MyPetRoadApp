@@ -93,10 +93,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         binding.sign.setOnClickListener {
             registerMove()
         }
-
-        binding.sendReset.setOnClickListener {
-            resetPassword()
-        }
         binding.eye.setOnClickListener {
             showAndHide()
         }
@@ -190,22 +186,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
     private fun runDelayed(millis: Long, function: () -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(function, millis)
-    }
-
-    private fun resetPassword(){
-        val email = binding.editReset.text.toString().trim()
-
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(applicationContext,"이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
-        }else{
-            auth!!.sendPasswordResetEmail(email)
-                .addOnCompleteListener { task ->
-                    if(task.isSuccessful){
-                        Toast.makeText(this,"이메일을 확인해주세요", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this,"메일이 정상적으로 보내지지않았습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
     }
 }
