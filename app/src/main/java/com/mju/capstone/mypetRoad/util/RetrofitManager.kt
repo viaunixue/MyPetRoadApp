@@ -37,15 +37,15 @@ class RetrofitManager {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     val result: UserResponse? = response.body()
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                    Log.d("user", "onResponce 성공: " + result?.toString());
                 } else {
-                    Log.d("YJ", "onResponce 실패")
+                    Log.d("user", "onResponce 실패")
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 // handle error
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+                Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
@@ -59,22 +59,28 @@ class RetrofitManager {
         isNeutered: Boolean,
         species: String
     ){
-        val petRequest = Pet(name, age, sex, weight, isNeutered, species)
+        val petRequest = Pet(name, age, sex, weight, true, species)
+        Log.e("YJ", "name = $name")
+        Log.e("YJ", "age = $age")
+        Log.e("YJ", "sex = $sex")
+        Log.e("YJ", "weight = $weight")
+        Log.e("YJ", "isNeutered = $isNeutered")
+        Log.e("YJ", "species = $petRequest")
         val petCall = retrofitInstance.postPet(petRequest)
 
         petCall.enqueue(object : Callback<PetResponse> {
             override fun onResponse(call: Call<PetResponse>, response: Response<PetResponse>) {
                 if (response.isSuccessful) {
                     val result: PetResponse? = response.body()
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                    Log.d("pet", "onResponce 성공: " + result?.toString());
                 } else {
-                    Log.d("YJ", "onResponce 실패")
+                    Log.d("pet", "onResponce 실패")
                 }
             }
 
             override fun onFailure(call: Call<PetResponse>, t: Throwable) {
                 // handle error
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+                Log.d("pet", "네트워크 에러 : " + t.message.toString())
             }
         })
     }

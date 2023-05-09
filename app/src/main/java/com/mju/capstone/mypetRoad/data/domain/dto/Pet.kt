@@ -1,10 +1,12 @@
 package com.mju.capstone.mypetRoad.data.domain.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class Pet(
-    val name: String,
-    val age: Int,
-    val sex: String,
-    val weight: Float,
-    val isNeutered: Boolean,
-    val species: String
+    @SerializedName("name") val name: String,
+    @SerializedName("age") val age: Int,
+    @SerializedName("sex") val sex: String,
+    @SerializedName("weight") val weight: Float,
+    @SerializedName("is_neutered") val isNeutered: Boolean?,
+    @SerializedName("species") val species: String
 )

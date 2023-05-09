@@ -20,10 +20,14 @@ interface PetRoadApi {
 //    @POST("/api/login")
 //    fun login(@Body request: User): Call<User>
 
-    @POST("/api/user")
+    @POST("/api/users")
+    @Headers("accept: application/json",
+        "content-type: application/json")
     fun postUser(@Body request: User): Call<UserResponse>
 
-    @POST("/api/pet")
+    @POST("/api/pets")
+    @Headers("accept: application/json",
+        "content-type: application/json")
     fun postPet(@Body request: Pet): Call<PetResponse>
 
     @GET(Url.LOC_URL)
