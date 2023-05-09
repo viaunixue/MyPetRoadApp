@@ -7,6 +7,6 @@ data class Pet(
     @SerializedName("age") val age: Int,
     @SerializedName("sex") val sex: String,
     @SerializedName("weight") val weight: Float,
-    @SerializedName("is_neutered") val isNeutered: Boolean?,
+    @SerializedName("isNeutered") val isNeutered: Boolean?,
     @SerializedName("species") val species: String
 )

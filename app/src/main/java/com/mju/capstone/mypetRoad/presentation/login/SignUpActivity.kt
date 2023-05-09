@@ -7,6 +7,7 @@ import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.widget.RadioButton
 import android.widget.Toast
 import com.google.firebase.auth.*
 import com.mju.capstone.mypetRoad.R
@@ -99,15 +100,16 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         val species = binding.petSpecies.text.toString()
         val age = binding.petAge.text.toString().toInt()
         val petName = binding.petName.text.toString()
-        val petSex = binding.petSex.checkedRadioButtonId.toString()
-        val isNeutered = binding.isNeutered.checkedRadioButtonId.toString() == "Neutered"
+        val petSexId = binding.petSex.checkedRadioButtonId
+        val petSex = findViewById<RadioButton>(petSexId).text.toString()
+        val isNeutered = binding.isNeutered.checkedRadioButtonId == R.id.Neutered
         if (userName.isEmpty() || password.isEmpty() || id.isEmpty()
             || address.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "기입하지 않은 항목이 있습니다.", Toast.LENGTH_SHORT).show()
         }
 
-        Log.d("SignUpFragment", "Name is " + userName)
-        Log.d("SignUpFragment", "password is + $password")
+        Log.d("SignUpFragment", "Name is $userName")
+        Log.d("SignUpFragment", "password is $password")
 
         // User, Pet 데이터 Post
         RetrofitManager.instance.postUser(userName, address, id, password, phone)

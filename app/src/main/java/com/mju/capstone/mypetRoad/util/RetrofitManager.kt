@@ -1,6 +1,7 @@
 package com.mju.capstone.mypetRoad.util
 
 import android.util.Log
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.mju.capstone.mypetRoad.data.api.RetrofitInstance
 import com.mju.capstone.mypetRoad.data.domain.dto.GpsModel
@@ -39,7 +40,7 @@ class RetrofitManager {
                     val result: UserResponse? = response.body()
                     Log.d("user", "onResponce 성공: " + result?.toString());
                 } else {
-                    Log.d("user", "onResponce 실패")
+                    Log.d("user", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
@@ -56,10 +57,10 @@ class RetrofitManager {
         age: Int,
         sex: String,
         weight: Float,
-        isNeutered: Boolean,
+        isNeutered: Boolean?,
         species: String
     ){
-        val petRequest = Pet(name, age, sex, weight, true, species)
+        val petRequest = Pet(name, age, sex, weight, isNeutered, species)
         Log.e("YJ", "name = $name")
         Log.e("YJ", "age = $age")
         Log.e("YJ", "sex = $sex")
@@ -74,7 +75,7 @@ class RetrofitManager {
                     val result: PetResponse? = response.body()
                     Log.d("pet", "onResponce 성공: " + result?.toString());
                 } else {
-                    Log.d("pet", "onResponce 실패")
+                    Log.d("pet", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
@@ -101,7 +102,7 @@ class RetrofitManager {
                     Log.d("YJ", "onResponce 성공: " + result?.toString());
                 }
                 else{
-                    Log.d("YJ", "onResponce 실패")
+                    Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
             override fun onFailure(call: Call<GpsModel>, t: Throwable) {
