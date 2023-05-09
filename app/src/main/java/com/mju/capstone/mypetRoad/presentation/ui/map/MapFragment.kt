@@ -9,6 +9,7 @@ import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.data.domain.dto.GpsModel
 import com.mju.capstone.mypetRoad.presentation.base.BaseFragment
 import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.NaverMapHandler
+import com.mju.capstone.mypetRoad.util.RetrofitManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -67,28 +68,29 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-        var retrofitInstance = RetrofitInstance.service
-//        var temp: GpsModel?
-
-        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
-            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
-                if(response.isSuccessful){
-                    var result: GpsModel? = response.body()
-                    if (result != null) {
-                        marker2.position = LatLng(result.latitude, result.longitude,)
-                        marker2.map = naverMap // 고씨네
-                        marker2.captionText = "GPS 위치마커"
-                    }
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
-                }
-                else{
-                    Log.d("YJ", "onResponce 실패")
-                }
-            }
-            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
-            }
-        })
+//        var retrofitInstance = RetrofitInstance.service
+////        var temp: GpsModel?
+//
+//        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
+//            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
+//                if(response.isSuccessful){
+//                    var result: GpsModel? = response.body()
+//                    if (result != null) {
+//                        marker2.position = LatLng(result.latitude, result.longitude,)
+//                        marker2.map = naverMap // 고씨네
+//                        marker2.captionText = "GPS 위치마커"
+//                    }
+//                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+//                }
+//                else{
+//                    Log.d("YJ", "onResponce 실패")
+//                }
+//            }
+//            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
+//                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+//            }
+//        })
+        RetrofitManager.instance.getGPS(naverMap, marker2);
 
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)

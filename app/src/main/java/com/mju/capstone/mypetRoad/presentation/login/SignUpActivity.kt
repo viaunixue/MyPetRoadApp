@@ -17,6 +17,7 @@ import com.mju.capstone.mypetRoad.data.domain.dto.User
 import com.mju.capstone.mypetRoad.data.response.signUp.PetResponse
 import com.mju.capstone.mypetRoad.databinding.ActivitySignUpBinding
 import com.mju.capstone.mypetRoad.presentation.base.BaseActivity
+import com.mju.capstone.mypetRoad.util.RetrofitManager
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -108,27 +109,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         Log.d("SignUpFragment", "Name is " + userName)
         Log.d("SignUpFragment", "password is + $password")
 
-        val retrofitInstance = RetrofitInstance.service
-
-        val userRequest = User(userName, address, id, password, phone)
-        val petRequest = Pet(petName, age, petSex, weight, isNeutered, species)
-        val petCall = retrofitInstance.postPet(petRequest)
-        val userCall = retrofitInstance.postUser(userRequest)
-        petCall.enqueue(object : Callback<PetResponse> {
-            override fun onResponse(call: Call<PetResponse>, response: Response<PetResponse>) {
-                if (response.isSuccessful) {
-                    val result: PetResponse? = response.body()
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
-                } else {
-                    Log.d("YJ", "onResponce 실패")
-                }
-            }
-
-            override fun onFailure(call: Call<PetResponse>, t: Throwable) {
-                // handle error
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
-            }
-        })
+        // User, Pet 데이터 Post
+        RetrofitManager.instance.postUser(userName, address, id, password, phone)
+        RetrofitManager.instance.postPet(petName, age, petSex, weight, isNeutered, species)
 
         // create a user with firebase
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(userName, password)

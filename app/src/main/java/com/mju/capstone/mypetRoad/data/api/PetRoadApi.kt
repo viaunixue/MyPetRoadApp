@@ -17,8 +17,8 @@ interface PetRoadApi {
     @GET("/api/gps")
     fun getGps() : Call<GpsModel>
 
-    @POST("/api/login")
-    fun login(@Body request: User): Call<User>
+//    @POST("/api/login")
+//    fun login(@Body request: User): Call<User>
 
     @POST("/api/user")
     fun postUser(@Body request: User): Call<UserResponse>
@@ -32,6 +32,6 @@ interface PetRoadApi {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
         @Query("altitude") altitude: Double,
-        @Query("altitude") createTime: Date
+        @Query("createTime") createTime: Date
     ): Response<AddressResponse>
 }
