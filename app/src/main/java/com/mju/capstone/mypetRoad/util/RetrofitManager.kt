@@ -5,8 +5,10 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.mju.capstone.mypetRoad.data.api.RetrofitInstance
 import com.mju.capstone.mypetRoad.data.domain.dto.GpsModel
+import com.mju.capstone.mypetRoad.data.domain.dto.Login
 import com.mju.capstone.mypetRoad.data.domain.dto.Pet
 import com.mju.capstone.mypetRoad.data.domain.dto.User
+import com.mju.capstone.mypetRoad.data.response.signUp.LoginResponse
 import com.mju.capstone.mypetRoad.data.response.signUp.PetResponse
 import com.mju.capstone.mypetRoad.data.response.signUp.UserResponse
 import com.naver.maps.geometry.LatLng
@@ -22,6 +24,29 @@ class RetrofitManager {
     }
 
     private val retrofitInstance = RetrofitInstance.service
+
+    fun postLogin(
+        id: String,
+        password: String,
+    ){
+        val loginRequest = Login("user_id", "password")
+        val loginCall = retrofitInstance.login(loginRequest)
+        loginCall.enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    Log.d("user", "onResponce 성공: " + result?.toString());
+                } else {
+                    Log.d("user", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                // handle error
+                Log.d("user", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
 
     //사용자 정보 post
     fun postUser(
@@ -61,12 +86,6 @@ class RetrofitManager {
         species: String
     ){
         val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-        Log.e("YJ", "name = $name")
-        Log.e("YJ", "age = $age")
-        Log.e("YJ", "sex = $sex")
-        Log.e("YJ", "weight = $weight")
-        Log.e("YJ", "isNeutered = $isNeutered")
-        Log.e("YJ", "species = $petRequest")
         val petCall = retrofitInstance.postPet(petRequest)
 
         petCall.enqueue(object : Callback<PetResponse> {

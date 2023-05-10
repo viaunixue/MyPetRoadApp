@@ -1,9 +1,11 @@
 package com.mju.capstone.mypetRoad.data.api
 
 import com.mju.capstone.mypetRoad.data.domain.dto.GpsModel
+import com.mju.capstone.mypetRoad.data.domain.dto.Login
 import com.mju.capstone.mypetRoad.data.domain.dto.Pet
 import com.mju.capstone.mypetRoad.data.domain.dto.User
 import com.mju.capstone.mypetRoad.data.response.naverAddress.AddressResponse
+import com.mju.capstone.mypetRoad.data.response.signUp.LoginResponse
 import com.mju.capstone.mypetRoad.data.response.signUp.PetResponse
 import com.mju.capstone.mypetRoad.data.response.signUp.UserResponse
 import com.mju.capstone.mypetRoad.data.url.Url
@@ -17,8 +19,8 @@ interface PetRoadApi {
     @GET("/api/gps")
     fun getGps() : Call<GpsModel>
 
-//    @POST("/api/login")
-//    fun login(@Body request: User): Call<User>
+    @POST("/api/login")
+    fun login(@Body request: Login): Call<LoginResponse>
 
     @POST("/api/users")
     @Headers("accept: application/json",
