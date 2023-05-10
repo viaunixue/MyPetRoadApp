@@ -61,24 +61,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
 //        mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        auth = FirebaseAuth.getInstance()
-        binding.login.setOnClickListener {
-            val email = binding.editId.text.toString()
-            val password = binding.editPassword.text.toString()
-
-            Log.d("Login","Attept login with email/pw: $email/***")
-
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener{it ->
-                    if(it.isSuccessful){
-                        Toast.makeText(this,"마이펫로드에 오신것을 환영합니다.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }else{
-                        Toast.makeText(this,"이메일 및 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
 //        val callback : (OAuthToken?, Throwable?) -> Unit = { token, error ->
 //            if (error != null) {
 //            } else if (token != null) {
@@ -92,10 +74,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.sign.setOnClickListener {
             registerMove()
-        }
-
-        binding.sendReset.setOnClickListener {
-            resetPassword()
         }
         binding.eye.setOnClickListener {
             showAndHide()
@@ -190,22 +168,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
     private fun runDelayed(millis: Long, function: () -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(function, millis)
-    }
-
-    private fun resetPassword(){
-        val email = binding.editReset.text.toString().trim()
-
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(applicationContext,"이메일을 입력해주세요", Toast.LENGTH_SHORT).show()
-        }else{
-            auth!!.sendPasswordResetEmail(email)
-                .addOnCompleteListener { task ->
-                    if(task.isSuccessful){
-                        Toast.makeText(this,"이메일을 확인해주세요", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this,"메일이 정상적으로 보내지지않았습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
     }
 }

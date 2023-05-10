@@ -2,7 +2,6 @@ package com.mju.capstone.mypetRoad.di.moduleComponent.SingletonComponent
 
 import android.content.Context
 import androidx.room.Room
-import com.mju.capstone.mypetRoad.data.repository.login.UserNameRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,10 +38,10 @@ object DatabaseModule {
 //            .allowMainThreadQueries()
 //            .build()
 
-
-    @Provides
-    @Singleton
-    fun ProvideDataStoreRepository(@ApplicationContext context : Context) = UserNameRepository(context)
+//
+//    @Provides
+//    @Singleton
+//    fun ProvideDataStoreRepository(@ApplicationContext context : Context) = UserNameRepository(context)
 
 
 }

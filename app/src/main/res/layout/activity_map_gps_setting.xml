@@ -6,4 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.gps.mapGpsSettings.MapGpsSettingActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/naverMap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_curAddress"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/fbtn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/btn_setCur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 위치"
+            app:chipIcon="@drawable/baseline_location_on_24"
+            app:chipIconEnabled="true"
+            app:chipBackgroundColor="#D8F4F2"
+            app:chipIconTint="#000000"
+            tools:visibility="visible"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_curAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_location_on_24" />
+
+    <TextView
+        android:id="@+id/tv_curAddress"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:text="위치를 잡아주세요"
+        android:background="@color/white"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/btnSetCurLocation"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSetCurLocation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_btn"
+        android:text="이 위치로 주소설정"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

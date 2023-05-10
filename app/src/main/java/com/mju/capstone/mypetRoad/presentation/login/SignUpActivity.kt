@@ -1,90 +1,107 @@
 package com.mju.capstone.mypetRoad.presentation.login
 
-import android.app.Activity
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import androidx.activity.OnBackPressedCallback
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.ActivitySignUpBinding
 import com.mju.capstone.mypetRoad.presentation.base.BaseActivity
+import com.mju.capstone.mypetRoad.util.RetrofitManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
-    private val viewModel : SignUpViewModel by viewModels()
-
     private var checkEye =0
-//    var number: String = ""
-    private var doubleBackToExit = false
-
-    //create instance of firebae auth
-    lateinit var auth: FirebaseAuth
-
-    // get storedVerificationId
-    // we will use this match the sent otp from firebase
-    private var checkPhone = 0
-
-    //firebase에서 보낼 otp
-    lateinit var storedVerificationId: String
-    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+        var isFilled = false
 
-        auth = FirebaseAuth.getInstance()
+        // EditText 뷰들을 찾습니다.
+        val editTexts = listOf<EditText>(
+            binding.userName,
+            binding.userPassword,
+            binding.userId,
+            binding.userAddress,
+            binding.userPhone,
+            binding.petWeight,
+            binding.petSpecies,
+            binding.petAge,
+            binding.petName,
+        )
+        val radioGroups = listOf<RadioGroup>(
+            binding.petSex,
+            binding.isNeutered
+        )
 
-//        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//
-//            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-//                checkPhone = 1
-//            }
-//
-//            override fun onVerificationFailed(e: FirebaseException) {
-//                Toast.makeText(this@SignUpActivity, "Error Phone Message$e", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//
-//            //On code is sent by the firebase this method is called
-//            override fun onCodeSent(
-//                verificationId: String,
-//                token: PhoneAuthProvider.ForceResendingToken
-//            ) {
-//                Log.d("Msg", "onCodeSent:$verificationId")
-//                storedVerificationId = verificationId
-//                resendToken = token
-//            }
-//
-//        }
-//
-//        binding.confirmButton.setOnClickListener {
-//            val otp = binding.confirm.text.toString()
-//            if (otp.isNotEmpty()) {
-//                val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
-//                    storedVerificationId, otp
-//                )
-//                binding.confirmButton.setBackgroundResource(R.drawable.radius_btn_onclick)
-//                signInWithPhoneAuthCredential(credential)
-//            } else {
-//                Toast.makeText(this@SignUpActivity, "Enter CheckNumer", Toast.LENGTH_SHORT).show()
-//            }
-//        }
+        // EditText 뷰들의 TextChangedListener를 설정합니다.
+        editTexts.forEach { editText ->
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    // EditText의 텍스트가 변경될 때마다 EditText 뷰들이 모두 기입되었는지 확인합니다.
+                    val isAllEditTextsFilled = editTexts.all { editText ->
+                        editText.text.isNotBlank() // EditText의 텍스트가 비어있지 않은지 확인합니다.
+                    }
+                    isFilled = isAllEditTextsFilled
 
+                    if (binding.userId.text.isNotEmpty()
+                        && binding.userPassword.text.isNotEmpty()
+                        && binding.userId.text.toString().length >= 4
+                        && binding.userId.text.toString().first().isLetter()
+                        && binding.userPassword.text.toString().length >= 6
+                    ) {
+                        isFilled = isAllEditTextsFilled
+                    } else {
+                        isFilled = false
+                    }
+                    // Button의 clickable 값을 isAllEditTextsFilled 값으로 설정합니다.
+                    if(isAllEditTextsFilled
+                        && isFilled
+                        && binding.petSex.checkedRadioButtonId != -1
+                        && binding.isNeutered.checkedRadioButtonId != -1
+                    ) {
+                        binding.signBtn.isClickable = true
+                        binding.signBtn.setBackgroundResource(R.drawable.login_btn)
+                        binding.signBtn.setTextColor(getColor(R.color.white))
+                    } else {
+                        binding.signBtn.isClickable = false
+                        binding.signBtn.setBackgroundResource(R.drawable.login_textbox)
+                        binding.signBtn.setTextColor(getColor(R.color.black))
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
+        }
+        radioGroups.forEach { radioGroup ->
+            radioGroup.setOnCheckedChangeListener{ _, _ ->
+                if(isFilled
+                    && binding.petSex.checkedRadioButtonId != -1
+                    && binding.isNeutered.checkedRadioButtonId != -1 ) {
+                    binding.signBtn.isClickable = true
+                    binding.signBtn.setBackgroundResource(R.drawable.login_btn)
+                    binding.signBtn.setTextColor(getColor(R.color.white))
+                } else {
+                    binding.signBtn.isClickable = false
+                    binding.signBtn.setBackgroundResource(R.drawable.login_textbox)
+                    binding.signBtn.setTextColor(getColor(R.color.black))
+                }
+            }
+
+        }
 
     }
 
@@ -95,149 +112,56 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     override fun initViews() = with(binding) {
         super.initViews()
-        // auth
-        auth = FirebaseAuth.getInstance()
-
 //        binding.confirm.visibility = View.INVISIBLE
 //        binding.confirmButton.visibility = View.INVISIBLE
 
         binding.signBtn.setOnClickListener {
-            if (true) {
-                performRegister()
-            } else {
-                Toast.makeText(this@SignUpActivity, "전화번호 인증을 하지않았습니다.", Toast.LENGTH_SHORT).show()
-            }
+            performRegister()
         }
-
-//        sendBtn.setOnClickListener {
-//            binding.sendBtn.setBackgroundResource(R.drawable.radius_btn_onclick)
-//            sendotp()
-//            val phone = editphone.text.toString()
-//            if (phone.isNotEmpty()) {
-//                confirm.visibility = View.VISIBLE
-//                confirmButton.visibility = View.VISIBLE
-//            } else {
-//                Toast.makeText(this@SignUpActivity, "전화번호를 입력해주세요", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
-        //callback functuon for Phone Auth
-
-
-//        back.setOnClickListener {
-//            back()
-//        }
-
         eye.setOnClickListener {
             showAndHide()
         }
-
     }
 
     private fun showAndHide(){
         if(checkEye == 0){
-            binding.editpassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            binding.userPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
             binding.eye.setImageResource(R.drawable.eyes_show)
             checkEye = 1
         }else{
-            binding.editpassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.userPassword.transformationMethod = PasswordTransformationMethod.getInstance()
             binding.eye.setImageResource(R.drawable.eyes)
             checkEye = 0
         }
     }
 
-    //verifies if the code matches sent by firebase
-    //if success start the new activity in our case we move LoginActivity
-
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "SMS인증이 성공하였습니다.", Toast.LENGTH_SHORT).show()
-                    checkPhone = 1
-                    binding.signBtn.setBackgroundResource(R.drawable.login_btn)
-                } else {
-                    //Sign in failed
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-    }
-
-
     private fun performRegister() {
-        viewModel.name.value = binding.editname.text.toString()
-        viewModel.saveData()
-        viewModel.retrieveDate()
+        val userName = binding.userName.text.toString()
+        val password = binding.userPassword.text.toString()
+        val id = binding.userId.text.toString()
+        val address = binding.userAddress.text.toString()
+        val phone = binding.userPhone.text.toString()
+        val weight = binding.petWeight.text.toString().toFloat()
+        val species = binding.petSpecies.text.toString()
+        val age = binding.petAge.text.toString().toInt()
+        val petName = binding.petName.text.toString()
+        val petSexId = binding.petSex.checkedRadioButtonId
+        val petSex = findViewById<RadioButton>(petSexId).text.toString()
+        val isNeutered = binding.isNeutered.checkedRadioButtonId == R.id.Neutered
 
-        val email = binding.editEmail.text.toString()
-        val password = binding.editpassword.text.toString()
-        val username = binding.editname.text.toString()
-        if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
-            Toast.makeText(this, "이메일,비밀번호,이름 중에 비어져있는게 있습니다.", Toast.LENGTH_SHORT).show()
+        Log.d("SignUpFragment", "Name is $userName")
+        Log.d("SignUpFragment", "password is $password")
+
+        // User, Pet 데이터 Post
+        RetrofitManager.instance.postUser(userName, address, id, password, phone)
+        RetrofitManager.instance.postPet(petName, age, petSex, weight, isNeutered, species)
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            this@SignUpActivity.finish()
         }
-
-        Log.d("SignUpFragment", "Email is " + email)
-        Log.d("SignUpFragment", "password is + $password")
-
-
-        // create a user with firebase
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) return@addOnCompleteListener
-                // else if sucessful
-                Log.d("Sing", "Successfully created user with uid: ${it.result.user?.uid}")
-                Toast.makeText(this, "회원가입이 정상적으로 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            .addOnFailureListener {
-                Log.d("Sign", "Faild to create user: ${it.message}")
-                Toast.makeText(this, "Faild to create user: ${it.message}", Toast.LENGTH_SHORT)
-                    .show()
-            }
     }
-
-//    private fun sendotp() {
-////        number = binding.editphone.text.toString()
-//
-//        //get the phone number from edit text and append the country code
-//        if (number.isNotEmpty()) {
-//            number = "+82$number"
-//            sendVerificationCode(number)
-//        } else {
-//            Toast.makeText(this, "Enter mobile number", Toast.LENGTH_LONG).show()
-//        }
-//    }
-
-    //this method sends the verification code
-    //and starts the callback of verification
-    //which is implemented above in onCreate
-
-//    private fun sendVerificationCode(number: String) {
-//        val options = PhoneAuthOptions.newBuilder(auth)
-//            .setPhoneNumber(number)       // Phone number to verify
-//            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-//            .setActivity(this)                 // Activity (for callback binding)
-//            .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-//            .build()
-//        PhoneAuthProvider.verifyPhoneNumber(options)
-//        Log.d("MGS", "Auth started")
-//    }
-
-    private fun back() {
-        //startActivity(Intent(this,LoginActivity::class.java))
-        this.finish()
-    }
-
-
-
-    private fun runDelayed(millis: Long, function: () -> Unit) {
-        Handler(Looper.getMainLooper()).postDelayed(function, millis)
-    }
-
 
 //    companion object {
 //        const val TAG = "SingUpFragment"

@@ -53,11 +53,11 @@ object NetworkModule {
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideKakaoController(@TrackerRetrofitInstance retrofit: Retrofit): TrackerApiService {
-        return retrofit.create(TrackerApiService::class.java)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideKakaoController(@TrackerRetrofitInstance retrofit: Retrofit): TrackerApiService {
+//        return retrofit.create(TrackerApiService::class.java)
+//    }
 
 //    @Provides
 //    @Singleton

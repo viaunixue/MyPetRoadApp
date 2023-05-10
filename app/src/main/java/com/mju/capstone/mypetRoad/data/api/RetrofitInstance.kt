@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.data.api
 
+import com.google.gson.GsonBuilder
 import com.mju.capstone.mypetRoad.data.url.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,14 +18,10 @@ object RetrofitInstance {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
+            .baseUrl(Url.LOC_URL)
             .addConverterFactory(GsonConverterFactory.create())
 //            .client(okHttpClient)
-            .baseUrl(Url.LOC_URL)
             .build()
-    }
-
-    val api: PetRoadApi by lazy {
-        retrofit.create(PetRoadApi::class.java)
     }
 
     val service: PetRoadApi = retrofit.create(PetRoadApi::class.java)
