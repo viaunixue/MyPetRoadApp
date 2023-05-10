@@ -20,12 +20,4 @@ import javax.inject.Inject
 //}
 @HiltAndroidApp
 class PetRoadApplication : Application(){
-
-    override fun onCreate() {
-        super.onCreate()
-
-//        KakaoSdk.init(this,getString(R.string.kakao_app_key))
-
-    }
-
 }

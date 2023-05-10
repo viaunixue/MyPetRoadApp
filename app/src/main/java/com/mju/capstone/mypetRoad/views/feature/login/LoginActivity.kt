@@ -8,7 +8,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import com.google.firebase.auth.FirebaseAuth
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding
 import com.mju.capstone.mypetRoad.views.base.BaseActivity
@@ -19,45 +18,22 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-
-    private var auth : FirebaseAuth? = null
     private var doubleBackToExit = false
     private var checkEye =0
 
 //    lateinit var mGoogleSignInClient : GoogleSignInClient
     lateinit var resultLauncher : ActivityResultLauncher<Intent>
 
-
-    override fun onStart() {
-        super.onStart()
-//        val account = GoogleSignIn.getLastSignedInAccount(this)
-
-    }
+//
+//    override fun onStart() {
+//        super.onStart()
+////        val account = GoogleSignIn.getLastSignedInAccount(this)
+//
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
-
-//        setResultSignUp()
-//        var keyHash = Utility.getKeyHash(this)
-//        Log.d("hash",keyHash)
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestEmail()
-//            .build()
-
-//        mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
-
-//        val callback : (OAuthToken?, Throwable?) -> Unit = { token, error ->
-//            if (error != null) {
-//            } else if (token != null) {
-//                UserApiClient.instance.me { user, error ->
-//                    val kakaoId = user!!.id
-//                    startActivity(Intent(this, MainActivity::class.java))
-//                    finish()
-//                }
-//            }
-//        }
 
         binding.sign.setOnClickListener {
             registerMove()

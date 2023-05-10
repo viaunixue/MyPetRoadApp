@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.feature.gps.myGpsLocation.MyGpsLocationActivity">
+    tools:context=".views.feature.mygps.myGpsLocation.MyGpsLocationActivity">
 
     <LinearLayout
         android:id="@+id/linear"
@@ -90,13 +90,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="30dp"
+        android:layout_marginStart="28dp"
+        android:orientation="vertical"
         android:scrollbarFadeDuration="0"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recentAddr"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintVertical_bias="0.491"
         tools:listitem="@layout/recycler_recent_addr_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
