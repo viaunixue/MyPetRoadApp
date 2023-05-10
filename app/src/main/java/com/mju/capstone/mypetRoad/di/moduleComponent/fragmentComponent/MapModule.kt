@@ -1,9 +1,9 @@
 package com.mju.capstone.mypetRoad.di.moduleComponent.fragmentComponent
 
 import androidx.fragment.app.Fragment
-import com.mju.capstone.mypetRoad.presentation.ui.map.MapFragment
-import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.MarkerFactory
-import com.mju.capstone.mypetRoad.presentation.ui.map.navermap.NaverMapHandler
+import com.mju.capstone.mypetRoad.views.feature.map.MapFragment
+import com.mju.capstone.mypetRoad.views.feature.map.navermap.MarkerFactory
+import com.mju.capstone.mypetRoad.views.feature.map.navermap.NaverMapHandler
 import com.naver.maps.map.NaverMap
 import dagger.Module
 import dagger.Provides

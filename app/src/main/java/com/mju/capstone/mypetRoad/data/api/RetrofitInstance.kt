@@ -1,7 +1,6 @@
 package com.mju.capstone.mypetRoad.data.api
 
-import com.google.gson.GsonBuilder
-import com.mju.capstone.mypetRoad.data.url.Url
+import com.mju.capstone.mypetRoad.util.Url
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.settings.SettingFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.settings.SettingFragment"
         android:label="@string/settings" />
 
 </navigation>

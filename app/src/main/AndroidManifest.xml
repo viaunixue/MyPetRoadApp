@@ -23,21 +23,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.login.SignUpActivity"
+            android:name=".views.feature.login.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".views.feature.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.gps.myGpsLocation.MyGpsLocationActivity"
+            android:name=".views.feature.gps.myGpsLocation.MyGpsLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.gps.mapGpsSettings.MapGpsSettingActivity"
+            android:name=".views.feature.gps.mapGpsSettings.MapGpsSettingActivity"
             android:exported="false"
             android:label="@string/title_activity_map_gps_setting"
             android:theme="@style/Theme.mypetRoad.NoActionBar" />
         <activity
-            android:name=".presentation.ui.SplashActivity"
+            android:name=".views.SplashActivity"
             android:exported="true"
             android:theme="@style/Splash">
             <intent-filter>
@@ -51,7 +51,7 @@
             android:value="byowz1na59" />
 
         <activity
-            android:name=".presentation.ui.MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
         </activity>
 

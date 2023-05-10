@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.ui.analysis.AnalysisFragment">
+        tools:context=".views.feature.analysis.AnalysisFragment">
 
         <TextView
             android:layout_width="match_parent"

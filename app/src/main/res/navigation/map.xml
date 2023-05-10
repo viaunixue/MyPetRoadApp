@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.map.MapFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.map.MapFragment"
         android:label="@string/map" />
 
 </navigation>

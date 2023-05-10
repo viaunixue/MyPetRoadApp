@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/analysisFragment"
-        android:name="com.mju.capstone.mypetRoad.presentation.ui.analysis.AnalysisFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisFragment"
         android:label="@string/analysis"/>
 
 </navigation>
