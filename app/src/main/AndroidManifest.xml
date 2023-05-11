@@ -66,9 +66,9 @@
                 tools:node="remove" />
         </provider>
 
-        <meta-data
-            android:name="com.kakao.sdk.AppKey"
-            android:value="0872502e33b867f022f699865e88cdb5"/>
+<!--        <meta-data-->
+<!--            android:name="com.kakao.sdk.AppKey"-->
+<!--            android:value="0872502e33b867f022f699865e88cdb5"/>-->
     </application>
 
 </manifest>

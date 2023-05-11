@@ -6,6 +6,5 @@ import retrofit2.http.*
 
 interface TrackerApi {
     @GET("/api/gps")
-    fun getGps() : Call<GpsModel>
-
+    fun getGps(@Header("Authorization") jwt: String?): Call<GpsModel>
 }
