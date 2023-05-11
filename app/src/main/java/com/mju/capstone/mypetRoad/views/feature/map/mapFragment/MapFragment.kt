@@ -1,11 +1,16 @@
 package com.mju.capstone.mypetRoad.views.feature.map.mapFragment
 
+import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.fragment.app.viewModels
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitInstance
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
+import com.mju.capstone.mypetRoad.domain.model.GpsModel
+import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -17,6 +22,9 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
@@ -32,17 +40,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private val marker1 = Marker()
     private val marker2 = Marker()
 
-//    @Inject
-//    lateinit var resourcesProvider: ResourcesProvider
-////
-//    @Inject
-//    lateinit var markerFactory: MarkerFactory
+    lateinit var mainActivity: MainActivity
 
-    // 네이버 지도를 불러와 Handler 에 지도를 주입
-//    @Inject
-//    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-//    private val naverMapHandler get() = naverMapHandlerProvider.get()
+        // Context를 액티비티로 형변환해서 할당
+        mainActivity = context as MainActivity
+    }
 
     lateinit var naverMap: NaverMap
 
@@ -59,10 +64,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-//        var retrofitInstance = RetrofitInstance.service
+//        var retrofitInstance = RetrofitInstance.trackerService
 ////        var temp: GpsModel?
 //
-//        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
+//        retrofitInstance.getGps().enqueue(object : Callback<GpsModel> {
 //            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
 //                if(response.isSuccessful){
 //                    var result: GpsModel? = response.body()
@@ -81,7 +86,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 //                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
 //            }
 //        })
-        RetrofitManager.instance.getGPS(naverMap, marker2);
+        RetrofitManager.instance.getGPS(naverMap, marker, mainActivity)
 
         // 현재 위치 마커
         marker.position = LatLng(37.6281, 127.0905)

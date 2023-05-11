@@ -1,6 +1,10 @@
 package com.mju.capstone.mypetRoad.data.retrofit
 
+import android.content.Context
+import android.content.Intent
+import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
@@ -8,6 +12,9 @@ import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
+import com.mju.capstone.mypetRoad.views.MainActivity
+import com.mju.capstone.mypetRoad.views.feature.login.LoginActivity
+import com.mju.capstone.mypetRoad.views.feature.mygps.myGpsLocation.MyGpsLocationActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -27,20 +34,31 @@ class RetrofitManager {
     fun postLogin(
         id: String,
         password: String,
+        context: Context
     ){
         val loginRequest = Login(id, password)
         val loginCall = serverInstance.login(loginRequest)
         loginCall.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d("user", "Responce : $response");
-                Log.d("user", "ResponceBody 성공: " + response.body());
-                Log.d("user", "ResponceHeader 성공: " + response.headers());
+                Log.d("user", "Responce : $response")
+                Log.d("user", "ResponceBody 성공: " + response.body())
+                Log.d("user", "ResponceHeader 성공: " + response.headers())
+                val jwt = response.headers().get("Authorization")
+                Log.d("user", "tk : $jwt")
 
                 if (response.isSuccessful) {
-                    val result = response.body()
-                    Log.d("user", "onResponce 성공: " + result?.toString());
+                    val result : ResponseBody? = response.body()
+                    val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
 
+                    val editor = sharedPreferences.edit()
+                    editor.putString("jwt_token", jwt)
+                    editor.apply()
+                    Log.d("user", "onResponce 성공: " + result?.toString())
+
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
                 } else {
+                    Toast.makeText(context, "등록되지 않은 아이디 혹은 비밀번호입니다.", Toast.LENGTH_SHORT).show()
                     Log.d("user", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
@@ -58,10 +76,13 @@ class RetrofitManager {
         address: String,
         userId: String,
         password: String,
-        phone: String
+        phone: String,
+        context: Context
     ){
         val userRequest = User(name, address, userId, password, phone)
-        val userCall = serverInstance.postUser(userRequest)
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
+        val userCall = serverInstance.postUser(userRequest, jwt)
 
         userCall.enqueue(object : Callback<UserDto> {
             override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
@@ -87,10 +108,13 @@ class RetrofitManager {
         sex: String,
         weight: Float,
         isNeutered: Boolean?,
-        species: String
+        species: String,
+        context: Context
     ){
         val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-        val petCall = serverInstance.postPet(petRequest)
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
+        val petCall = serverInstance.postPet(petRequest, jwt)
 
         petCall.enqueue(object : Callback<PetDto> {
             override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
@@ -111,9 +135,12 @@ class RetrofitManager {
 
     fun getGPS(
         naverMap: NaverMap,
-        marker: Marker
+        marker: Marker,
+        context: Context
     ) {
-        trackerInstance.getGps().enqueue(object : Callback<GpsModel>{
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
+        trackerInstance.getGps("Bearer $jwt").enqueue(object : Callback<GpsModel>{
             override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
                 if(response.isSuccessful){
                     var result: GpsModel? = response.body()

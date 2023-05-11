@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.views.feature.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -27,9 +28,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         binding.login.setOnClickListener {
             if(binding.editId.text.isNotEmpty() && binding.editPassword.text.isNotEmpty()){
-                RetrofitManager.instance.postLogin(binding.editId.text.toString(), binding.editPassword.text.toString())
+                RetrofitManager.instance.postLogin(binding.editId.text.toString(),
+                    binding.editPassword.text.toString(), this)
             } else{
-                Toast.makeText(this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show()
             }
         }
         binding.sign.setOnClickListener {
