@@ -3,13 +3,16 @@ package com.mju.capstone.mypetRoad.views.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.mju.capstone.mypetRoad.data.api.RetrofitInstance
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitInstance
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     abstract fun getViewBinding(): VB
-    var retrofitInstance = RetrofitInstance.service
+    abstract fun observeData()
 
-    val binding by lazy {
+//    var retrofitInstance = RetrofitInstance.service
+//    private val serverInstance = RetrofitInstance.serverService
+
+    protected val binding by lazy {
         getViewBinding()
     }
 
@@ -25,6 +28,4 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     }
 
     open fun initViews() = Unit
-
-    abstract fun observeData()
 }

@@ -1,4 +1,4 @@
-package com.mju.capstone.mypetRoad.views.feature.map.navermap
+package com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap
 
 import android.graphics.Color
 import com.naver.maps.geometry.LatLng

@@ -1,12 +1,11 @@
-package com.mju.capstone.mypetRoad.views.feature.map
+package com.mju.capstone.mypetRoad.views.feature.map.mapFragment
 
 import android.graphics.Color
 import androidx.fragment.app.viewModels
 //import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
-import com.mju.capstone.mypetRoad.views.feature.map.navermap.NaverMapHandler
-import com.mju.capstone.mypetRoad.data.api.RetrofitManager
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -18,8 +17,6 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
-import javax.inject.Provider
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
@@ -37,13 +34,13 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
 //    @Inject
 //    lateinit var resourcesProvider: ResourcesProvider
-//
+////
 //    @Inject
 //    lateinit var markerFactory: MarkerFactory
 
     // 네이버 지도를 불러와 Handler 에 지도를 주입
-    @Inject
-    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
+//    @Inject
+//    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
 
 //    private val naverMapHandler get() = naverMapHandlerProvider.get()
 

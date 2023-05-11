@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.views.feature.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,7 +14,8 @@ import androidx.activity.OnBackPressedCallback
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.ActivitySignUpBinding
 import com.mju.capstone.mypetRoad.views.base.BaseActivity
-import com.mju.capstone.mypetRoad.data.api.RetrofitManager
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
+import com.mju.capstone.mypetRoad.views.feature.mygps.myGpsLocation.MyGpsLocationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -113,13 +115,21 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         super.initViews()
 //        binding.confirm.visibility = View.INVISIBLE
 //        binding.confirmButton.visibility = View.INVISIBLE
+        userAddress.setOnClickListener{
+            registerAddress()
+        }
 
-        binding.signBtn.setOnClickListener {
+        signBtn.setOnClickListener {
             performRegister()
         }
         eye.setOnClickListener {
             showAndHide()
         }
+    }
+
+    private fun registerAddress(){
+        val intent = Intent(this, MyGpsLocationActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showAndHide(){

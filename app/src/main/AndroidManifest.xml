@@ -29,10 +29,10 @@
             android:name=".views.feature.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".views.feature.gps.myGpsLocation.MyGpsLocationActivity"
+            android:name=".views.feature.mygps.myGpsLocation.MyGpsLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".views.feature.gps.mapGpsSettings.MapGpsSettingActivity"
+            android:name=".views.feature.mygps.mapGpsSettings.MapGpsSettingActivity"
             android:exported="false"
             android:label="@string/title_activity_map_gps_setting"
             android:theme="@style/Theme.mypetRoad.NoActionBar" />
@@ -65,6 +65,10 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
         </provider>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="0872502e33b867f022f699865e88cdb5"/>
     </application>
 
 </manifest>

@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity() {
 
 //    private lateinit var myLocationListener: MyLocationListener
 
-//    companion object {
-//        private const val MY_LOCATION_KEY = "MY_LOCATION_KEY"
-//
+    companion object {
+        const val MY_LOCATION_KEY = "MY_LOCATION_KEY"
+
 //        val PERMISSIONS = arrayOf(
 //            android.Manifest.permission.ACCESS_FINE_LOCATION,
 //            android.Manifest.permission.ACCESS_COARSE_LOCATION)
-//    }
+    }
 
 
 //    private val permissionLauncher =

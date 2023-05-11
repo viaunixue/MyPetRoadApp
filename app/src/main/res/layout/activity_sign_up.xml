@@ -67,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
+                android:focusable="false"
                 android:hint="@string/address_hint"
                 android:background="@drawable/login_textbox"
                 app:layout_constraintStart_toStartOf="@id/userPhone"

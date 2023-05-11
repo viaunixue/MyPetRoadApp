@@ -1,13 +1,13 @@
-package com.mju.capstone.mypetRoad.data.api
+package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.util.Log
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
-import com.mju.capstone.mypetRoad.data.response.signUp.LoginResponse
-import com.mju.capstone.mypetRoad.data.response.signUp.PetResponse
-import com.mju.capstone.mypetRoad.data.response.signUp.UserResponse
+import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
+import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
+import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -20,16 +20,17 @@ class RetrofitManager {
         val instance = RetrofitManager()
     }
 
-    private val retrofitInstance = RetrofitInstance.service
+    private val serverInstance = RetrofitInstance.serverService
+    private val trackerInstance = RetrofitInstance.trackerService
 
     fun postLogin(
         id: String,
         password: String,
     ){
         val loginRequest = Login("user_id", "password")
-        val loginCall = retrofitInstance.login(loginRequest)
-        loginCall.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        val loginCall = serverInstance.login(loginRequest)
+        loginCall.enqueue(object : Callback<LoginDto> {
+            override fun onResponse(call: Call<LoginDto>, response: Response<LoginDto>) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     Log.d("user", "onResponce 성공: " + result?.toString());
@@ -38,7 +39,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginDto>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
@@ -54,19 +55,19 @@ class RetrofitManager {
         phone: String
     ){
         val userRequest = User(name, address, userId, password, phone)
-        val userCall = retrofitInstance.postUser(userRequest)
+        val userCall = serverInstance.postUser(userRequest)
 
-        userCall.enqueue(object : Callback<UserResponse> {
-            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+        userCall.enqueue(object : Callback<UserDto> {
+            override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
                 if (response.isSuccessful) {
-                    val result: UserResponse? = response.body()
+                    val result: UserDto? = response.body()
                     Log.d("user", "onResponce 성공: " + result?.toString());
                 } else {
                     Log.d("user", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
-            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+            override fun onFailure(call: Call<UserDto>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
@@ -83,19 +84,19 @@ class RetrofitManager {
         species: String
     ){
         val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-        val petCall = retrofitInstance.postPet(petRequest)
+        val petCall = serverInstance.postPet(petRequest)
 
-        petCall.enqueue(object : Callback<PetResponse> {
-            override fun onResponse(call: Call<PetResponse>, response: Response<PetResponse>) {
+        petCall.enqueue(object : Callback<PetDto> {
+            override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
                 if (response.isSuccessful) {
-                    val result: PetResponse? = response.body()
+                    val result: PetDto? = response.body()
                     Log.d("pet", "onResponce 성공: " + result?.toString());
                 } else {
                     Log.d("pet", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
-            override fun onFailure(call: Call<PetResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PetDto>, t: Throwable) {
                 // handle error
                 Log.d("pet", "네트워크 에러 : " + t.message.toString())
             }
@@ -106,7 +107,7 @@ class RetrofitManager {
         naverMap: NaverMap,
         marker: Marker
     ) {
-        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
+        trackerInstance.getGps().enqueue(object : Callback<GpsModel>{
             override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
                 if(response.isSuccessful){
                     var result: GpsModel? = response.body()
