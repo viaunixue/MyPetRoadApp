@@ -11,6 +11,7 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,19 +28,24 @@ class RetrofitManager {
         id: String,
         password: String,
     ){
-        val loginRequest = Login("user_id", "password")
+        val loginRequest = Login(id, password)
         val loginCall = serverInstance.login(loginRequest)
-        loginCall.enqueue(object : Callback<LoginDto> {
-            override fun onResponse(call: Call<LoginDto>, response: Response<LoginDto>) {
+        loginCall.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.d("user", "Responce : $response");
+                Log.d("user", "ResponceBody 성공: " + response.body());
+                Log.d("user", "ResponceHeader 성공: " + response.headers());
+
                 if (response.isSuccessful) {
                     val result = response.body()
                     Log.d("user", "onResponce 성공: " + result?.toString());
+
                 } else {
                     Log.d("user", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
-            override fun onFailure(call: Call<LoginDto>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }

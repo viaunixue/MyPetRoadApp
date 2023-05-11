@@ -8,5 +8,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class LoginDto(
     @SerializedName("token") @Expose val token: String,
-    @SerializedName("user_id") @Expose val userId: String
 ): Parcelable

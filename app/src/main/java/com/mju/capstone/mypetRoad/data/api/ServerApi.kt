@@ -6,12 +6,13 @@ import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface ServerApi {
     @POST("/api/login")
-    fun login(@Body request: Login): Call<LoginDto>
+    fun login(@Body request: Login): Call<ResponseBody>
 
     @POST("/api/users")
     @Headers("accept: application/json",
