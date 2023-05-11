@@ -13,16 +13,18 @@ class RecentAddrAdapter(val itemClick: (AddressHistoryDto) -> Unit) :
     var datas = mutableListOf<AddressHistoryDto>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val b = RecyclerRecentAddrItemBinding.inflate(
-            LayoutInflater.from(parent.context),
+        val b = RecyclerRecentAddrItemBinding.inflate(LayoutInflater.from(parent.context),
             parent, false)
         return ViewHolder(b, itemClick)
     }
-
     fun clear() {
         datas.clear()
     }
+    override fun getItemCount(): Int = datas.size
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(datas[position])
+    }
     inner class ViewHolder(
         private val binding: RecyclerRecentAddrItemBinding,
         itemClick: (AddressHistoryDto) -> Unit
@@ -31,13 +33,5 @@ class RecentAddrAdapter(val itemClick: (AddressHistoryDto) -> Unit) :
             binding.tvAddr.text = item.fullAddress
             binding.root.setOnClickListener { itemClick(item) }
         }
-    }
-
-
-
-    override fun getItemCount(): Int = datas.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datas[position])
     }
 }
