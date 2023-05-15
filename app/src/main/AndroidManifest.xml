@@ -29,6 +29,14 @@
             android:name=".views.feature.login.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".views.MainActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        </activity>
+        <activity
             android:name=".views.feature.mygps.myGpsLocation.MyGpsLocationActivity"
             android:exported="false" />
         <activity
@@ -36,23 +44,12 @@
             android:exported="false"
             android:label="@string/title_activity_map_gps_setting"
             android:theme="@style/Theme.mypetRoad.NoActionBar" />
+        <activity android:name=".views.feature.map.searchAddress.SearchAddressActivity"
+            android:exported="false"/>
         <activity
             android:name=".views.SplashActivity"
             android:exported="true"
             android:theme="@style/Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="byowz1na59" />
-
-        <activity
-            android:name=".views.MainActivity"
-            android:exported="true">
         </activity>
 
         <provider
@@ -66,9 +63,13 @@
                 tools:node="remove" />
         </provider>
 
-<!--        <meta-data-->
-<!--            android:name="com.kakao.sdk.AppKey"-->
-<!--            android:value="0872502e33b867f022f699865e88cdb5"/>-->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="eq895stsx1" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="0872502e33b867f022f699865e88cdb5"/>
+
     </application>
 
 </manifest>
