@@ -2,7 +2,6 @@ package com.mju.capstone.mypetRoad.views.feature.map.mapFragment
 
 import android.graphics.Color
 import androidx.fragment.app.viewModels
-//import com.mju.capstone.mypetRoad.data.db.MapDB
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
@@ -24,6 +23,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private val mapViewModel by viewModels<MapViewModel>()
 
+    // CoroutineScope -> Coroutine 관리, 조정 interface
+    // 예를 들어, Activity, Fragment 생명 주기 관련 Coroutine 실행 하는데 사용
+    // 이를 통해 UI 작업 비 동기적 처리, 스레드 관리와 관련된 일반적 문제 해결
+    // CoroutineScope -> 'launch', 'async' 함수 사용해 Coroutine 생성, 실행에 사용
+    // uiScope 통해 생성된 Coroutine -> uiScope 속한 생명 주기에 따라 자동 관리
     private lateinit var  uiScope: CoroutineScope
     private lateinit var mapView: MapView
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
@@ -59,28 +63,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-//        var retrofitInstance = RetrofitInstance.service
-////        var temp: GpsModel?
-//
-//        retrofitInstance.getGps().enqueue(object : Callback<GpsModel>{
-//            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
-//                if(response.isSuccessful){
-//                    var result: GpsModel? = response.body()
-//                    if (result != null) {
-//                        marker2.position = LatLng(result.latitude, result.longitude,)
-//                        marker2.map = naverMap // 고씨네
-//                        marker2.captionText = "GPS 위치마커"
-//                    }
-//                    Log.d("YJ", "onResponce 성공: " + result?.toString());
-//                }
-//                else{
-//                    Log.d("YJ", "onResponce 실패")
-//                }
-//            }
-//            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
-//                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
-//            }
-//        })
         RetrofitManager.instance.getGPS(naverMap, marker2);
 
         // 현재 위치 마커

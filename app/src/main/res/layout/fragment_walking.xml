@@ -12,10 +12,23 @@
         android:layout_height="match_parent"
         tools:context=".views.feature.walking.WalkingFragment">
 
-        <TextView
+        <com.naver.maps.map.MapView
+            android:id="@+id/walking_map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingFragment"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_walking_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn"
+            android:layout_marginBottom="20dp"
+            android:text="산책 시작"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,6 +8,7 @@ import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
+import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -107,10 +108,10 @@ class RetrofitManager {
         naverMap: NaverMap,
         marker: Marker
     ) {
-        trackerInstance.getGps().enqueue(object : Callback<GpsModel>{
-            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
+        trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
+            override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
-                    var result: GpsModel? = response.body()
+                    var result: TrackerDto? = response.body()
                     if (result != null) {
                         marker.position = LatLng(result.latitude, result.longitude,)
                         marker.map = naverMap // 고씨네
@@ -122,7 +123,7 @@ class RetrofitManager {
                     Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
-            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
+            override fun onFailure(call: Call<TrackerDto>, t: Throwable) {
                 Log.d("YJ", "네트워크 에러 : " + t.message.toString())
             }
         })
