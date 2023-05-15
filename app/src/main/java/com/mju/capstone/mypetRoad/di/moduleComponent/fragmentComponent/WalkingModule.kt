@@ -1,11 +1,11 @@
 package com.mju.capstone.mypetRoad.di.moduleComponent.fragmentComponent
 
 import androidx.fragment.app.Fragment
-import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.MapFragment
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.MarkerFactory
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.NaverMapHandler
 import com.mju.capstone.mypetRoad.views.feature.walking.WalkingFragment
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Marker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,23 +16,20 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @Module
 @InstallIn(FragmentComponent::class)
-object MapModule {
-    //fragment 매개변수는 Dagger Hilt가 자동으로 제공하는 의존성
+object WalkingModule {
+    // fragment 매개변수는 Dagger Hilt가 자동으로 제공하는 의존성
     @Provides
-    fun provideMapFragment(fragment: Fragment) = fragment as MapFragment
+    fun provideWalkingMapFragment(fragment: Fragment) = fragment as WalkingFragment
 
     @Provides
-    fun provideNaverMap(mapFragment: MapFragment) = mapFragment.naverMap
+    fun provideWalkingNaverMap(walkingFragment: WalkingFragment) = walkingFragment. naverMap
 
     @Provides
     fun provideMarkerFactory() = MarkerFactory()
 
-    //Activity가 생성 됬을 때 inject가 이루어져서 naverMap가 아직 null이다.
-    //naverMap의 경우 OnMapReadyCallback 이 후에 값이 들어옴.
-    //lazy하게 이루어질 수 있도록 해야함.
     @Provides
     @FragmentScoped
-    fun provideNaverMapHandler(
+    fun provideWalkingNaverMapHandler(
         markerFactory: MarkerFactory,
         naverMap: NaverMap
     ) = NaverMapHandler(markerFactory, naverMap)

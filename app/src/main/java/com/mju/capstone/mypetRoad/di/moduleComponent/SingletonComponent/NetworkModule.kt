@@ -1,6 +1,7 @@
 package com.mju.capstone.mypetRoad.di.moduleComponent.SingletonComponent
 
 import com.mju.capstone.mypetRoad.BuildConfig
+import com.mju.capstone.mypetRoad.data.api.KakaoMapApi
 import com.mju.capstone.mypetRoad.util.Url
 import com.mju.capstone.mypetRoad.di.annotation.networkModule.TrackerRetrofitInstance
 import dagger.Module
@@ -53,11 +54,11 @@ object NetworkModule {
             .build()
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideKakaoController(@TrackerRetrofitInstance retrofit: Retrofit): TrackerApiService {
-//        return retrofit.create(TrackerApiService::class.java)
-//    }
+    @Provides
+    @Singleton
+    fun provideKakaoController(@TrackerRetrofitInstance retrofit: Retrofit): KakaoMapApi {
+        return retrofit.create(KakaoMapApi::class.java)
+    }
 
 //    @Provides
 //    @Singleton

@@ -9,8 +9,8 @@ import java.sql.Date
 @Parcelize
 data class TrackerDto(
     @SerializedName("ID") @Expose val id: Long?,
-    @SerializedName("latitude") @Expose val latitude: Double?,
-    @SerializedName("longitude") @Expose val longitude: Double?,
-    @SerializedName("altitude") @Expose val altitude: Double?,
+    @SerializedName("latitude") @Expose val latitude: Double,
+    @SerializedName("longitude") @Expose val longitude: Double,
+    @SerializedName("altitude") @Expose val altitude: Double,
     @SerializedName("createTime") @Expose val createTime: Date?
 ): Parcelable
