@@ -13,6 +13,7 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
+import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -133,8 +134,7 @@ class RetrofitManager {
 
     fun getGPS(
         naverMap: NaverMap,
-        marker: Marker,
-        context: Context
+        marker: Marker
     ) {
         trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
