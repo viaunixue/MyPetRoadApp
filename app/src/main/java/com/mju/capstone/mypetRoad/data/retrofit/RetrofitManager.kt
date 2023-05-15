@@ -145,14 +145,14 @@ class RetrofitManager {
                         marker.map = naverMap // 고씨네
                         marker.captionText = "GPS 위치마커"
                     }
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                    Log.d("GPS", "onResponce 성공: " + result?.toString());
                 }
                 else{
-                    Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
+                    Log.d("GPS", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
             override fun onFailure(call: Call<TrackerDto>, t: Throwable) {
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+                Log.d("GPS", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
