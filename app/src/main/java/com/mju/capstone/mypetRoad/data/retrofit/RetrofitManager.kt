@@ -12,9 +12,7 @@ import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
-import com.mju.capstone.mypetRoad.views.MainActivity
-import com.mju.capstone.mypetRoad.views.feature.login.LoginActivity
-import com.mju.capstone.mypetRoad.views.feature.mygps.myGpsLocation.MyGpsLocationActivity
+import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
@@ -138,12 +136,10 @@ class RetrofitManager {
         marker: Marker,
         context: Context
     ) {
-        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = sharedPreferences.getString("jwt_token", null)
-        trackerInstance.getGps("Bearer $jwt").enqueue(object : Callback<GpsModel>{
-            override fun onResponse(call: Call<GpsModel>, response: Response<GpsModel>) {
+        trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
+            override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
-                    var result: GpsModel? = response.body()
+                    var result: TrackerDto? = response.body()
                     if (result != null) {
                         marker.position = LatLng(result.latitude, result.longitude,)
                         marker.map = naverMap // 고씨네
@@ -155,7 +151,7 @@ class RetrofitManager {
                     Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
-            override fun onFailure(call: Call<GpsModel>, t: Throwable) {
+            override fun onFailure(call: Call<TrackerDto>, t: Throwable) {
                 Log.d("YJ", "네트워크 에러 : " + t.message.toString())
             }
         })
