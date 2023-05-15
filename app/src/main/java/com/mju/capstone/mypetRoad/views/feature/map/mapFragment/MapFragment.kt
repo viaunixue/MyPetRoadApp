@@ -1,10 +1,14 @@
 package com.mju.capstone.mypetRoad.views.feature.map.mapFragment
 
+import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
+import com.mju.capstone.mypetRoad.domain.model.GpsModel
+import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -16,6 +20,9 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
@@ -36,17 +43,14 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private val marker1 = Marker()
     private val marker2 = Marker()
 
-//    @Inject
-//    lateinit var resourcesProvider: ResourcesProvider
-////
-//    @Inject
-//    lateinit var markerFactory: MarkerFactory
+    lateinit var mainActivity: MainActivity
 
-    // 네이버 지도를 불러와 Handler 에 지도를 주입
-//    @Inject
-//    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-//    private val naverMapHandler get() = naverMapHandlerProvider.get()
+        // Context를 액티비티로 형변환해서 할당
+        mainActivity = context as MainActivity
+    }
 
     lateinit var naverMap: NaverMap
 

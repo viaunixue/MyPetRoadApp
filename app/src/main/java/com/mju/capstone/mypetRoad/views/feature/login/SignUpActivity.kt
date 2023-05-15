@@ -162,8 +162,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         Log.d("SignUpFragment", "password is $password")
 
         // User, Pet 데이터 Post
-        RetrofitManager.instance.postUser(userName, address, id, password, phone)
-        RetrofitManager.instance.postPet(petName, age, petSex, weight, isNeutered, species)
+        RetrofitManager.instance.postUser(userName, address, id, password, phone, this)
+        RetrofitManager.instance.postPet(petName, age, petSex, weight, isNeutered, species, this)
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {

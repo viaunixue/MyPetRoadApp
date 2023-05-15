@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.views.feature.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import com.mju.capstone.mypetRoad.R
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding
 import com.mju.capstone.mypetRoad.views.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,67 +23,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private var doubleBackToExit = false
     private var checkEye =0
 
-//    lateinit var mGoogleSignInClient : GoogleSignInClient
-    lateinit var resultLauncher : ActivityResultLauncher<Intent>
-
-//
-//    override fun onStart() {
-//        super.onStart()
-////        val account = GoogleSignIn.getLastSignedInAccount(this)
-//
-//    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding.login.setOnClickListener {
+            if(binding.editId.text.isNotEmpty() && binding.editPassword.text.isNotEmpty()){
+                RetrofitManager.instance.postLogin(binding.editId.text.toString(),
+                    binding.editPassword.text.toString(), this)
+            } else{
+                Toast.makeText(this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }
+        }
         binding.sign.setOnClickListener {
             registerMove()
         }
         binding.eye.setOnClickListener {
             showAndHide()
         }
-//        binding.google.setOnClickListener {
-//            val signIntent : Intent = mGoogleSignInClient.signInIntent
-//            resultLauncher.launch(signIntent)
-//        }
-//        binding.kakao.setOnClickListener {
-//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)) {
-//                UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = callback)
-//            } else {
-//                UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = callback)
-//            }
-//        }
-    }
-
-
-//    private fun setResultSignUp(){
-//        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if(result.resultCode == Activity.RESULT_OK){
-////                val task : Task<GoogleSignInAccount> =
-////                    GoogleSignIn.getSignedInAccountFromIntent(result.data)
-////                handleSignResult(task)
-//            } else{
-//                Toast.makeText(applicationContext,"로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//    }
-
-//    private fun handleSignResult(completeTask: Task<GoogleSignInAccount>){
-//        try {
-//            val account = completeTask.getResult(ApiException::class.java)
-//            val email = account?.email.toString()
-////            val photoUrl = account?.photoUrl.toString()
-//            startActivity(Intent(this, MainActivity::class.java))
-//            finish()
-//            Toast.makeText(this, "$email 님 로그인되었습니다", Toast.LENGTH_LONG).show()
-//        } catch (e : ApiException){
-//
-//        }
-//    }
-
-    override fun initViews() {
-        super.initViews()
     }
     private fun showAndHide(){
         if(checkEye == 0){
@@ -95,18 +53,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-
-//    private fun Sliding() {
-//        val slidePanel = binding.loginframe
-//
-//        val state = slidePanel.panelState
-//        if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
-//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
-//        } else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-//        }
-//    }
-
     override fun getViewBinding(): com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding =
         com.mju.capstone.mypetRoad.databinding.ActivityLoginBinding.inflate(layoutInflater)
 
@@ -114,6 +60,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
 
     private fun registerMove(){
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+    }
+    private fun logInRequest(){
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
