@@ -7,6 +7,16 @@
 
     </data>
 
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/walking_sliding_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        app:umanoOverlay="false"
+        app:umanoPanelHeight="0dp"
+        app:umanoParallaxOffset="0dp"
+        app:umanoShadowHeight="0dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,6 +40,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </layout>
