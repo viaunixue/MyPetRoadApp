@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
@@ -18,7 +20,8 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     lateinit var navControllerProvider: Provider<NavController>
     // fragment 가 생성이 되고 fragment 가 있어야 navController 가
     // 그때 그 id 값을 반환 하면서 get 으로 가져옴
-    private val navController get() = navControllerProvider.get()
+//    private val navController get() = navControllerProvider.get()
+    private lateinit var navController: NavController
 
     override fun getViewBinding() = FragmentAnalysisBinding.inflate(layoutInflater)
 
@@ -27,11 +30,20 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     override fun initViews() {
         super.initViews()
 
+        //init navController
+        navController = findNavController()
+
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.dailyButton -> navigateToDailyFragment()
-                R.id.weeklyButton -> navigateToWeeklyFragment()
-                R.id.monthlyButton -> navigateToMonthlyFragment()
+                R.id.dailyButton -> {
+                    navController.navigate(R.id.dailyAnalysis)
+                }
+                R.id.weeklyButton -> {
+                    navController.navigate(R.id.weeklyAnalysis)
+                }
+                R.id.monthlyButton -> {
+                    navController.navigate(R.id.monthlyAnalysis)
+                }
             }
         }
     }
@@ -43,16 +55,4 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
 //            .addToBackStack(null)
 //            .commit()
 //    }
-
-    private fun navigateToDailyFragment() {
-        navController.navigate(R.id.dailyAnalysis)
-    }
-
-    private fun navigateToWeeklyFragment() {
-        navController.navigate(R.id.weeklyAnalysis)
-    }
-
-    private fun navigateToMonthlyFragment() {
-        navController.navigate(R.id.monthlyAnalysis)
-    }
 }

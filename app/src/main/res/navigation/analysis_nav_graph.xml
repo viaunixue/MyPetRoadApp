@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/analysis_nav_graph"
     app:startDestination="@id/dailyAnalysis">
+    <fragment
+        android:id="@+id/dailyAnalysis"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.DailyFragment"
+        android:label="Destination 1"
+        tools:layout="@layout/fragment_daily" />
 
-    <include app:graph="@navigation/daily" />
-    <include app:graph="@navigation/monthly" />
-    <include app:graph="@navigation/weekly" />
+    <fragment
+        android:id="@+id/weeklyAnalysis"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.WeeklyFragment"
+        android:label="Destination 2"
+        tools:layout="@layout/fragment_weekly" />
+
+    <fragment
+        android:id="@+id/monthlyAnalysis"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.MonthlyFragment"
+        android:label="Destination 3"
+        tools:layout="@layout/fragment_monthly" />
+
+<!--    <include app:graph="@navigation/daily" />-->
+<!--    <include app:graph="@navigation/monthly" />-->
+<!--    <include app:graph="@navigation/weekly" />-->
 </navigation>

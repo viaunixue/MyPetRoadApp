@@ -151,6 +151,7 @@ class RetrofitManager {
                             locationOverlay.isVisible = true
                             locationOverlay.position = coord
 
+                            it.uiSettings.isScrollGesturesEnabled = false
                             it.moveCamera(CameraUpdate.scrollTo(coord))
                         }
                     }
