@@ -11,11 +11,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".views.feature.analysis.AnalysisFragment">
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/dailyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:textAlignment="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="일간" />
 
+            <RadioButton
+                android:id="@+id/weeklyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:textAlignment="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="주간" />
+
+            <RadioButton
+                android:id="@+id/monthlyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radio_button"
+                android:textColor="@drawable/selector_radio_text"
+                android:button="@null"
+                android:textAlignment="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="월간" />
+        </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

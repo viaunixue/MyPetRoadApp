@@ -80,12 +80,9 @@ class RetrofitManager {
         userId: String,
         password: String,
         phone: String,
-        context: Context
     ){
         val userRequest = User(name, address, userId, password, phone)
-        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = sharedPreferences.getString("jwt_token", null)
-        val userCall = serverInstance.postUser(userRequest, jwt)
+        val userCall = serverInstance.postUser(userRequest)
 
         userCall.enqueue(object : Callback<UserDto> {
             override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
@@ -111,13 +108,12 @@ class RetrofitManager {
         sex: String,
         weight: Float,
         isNeutered: Boolean?,
-        species: String,
-        context: Context
+        species: String
     ){
         val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = sharedPreferences.getString("jwt_token", null)
-        val petCall = serverInstance.postPet(petRequest, jwt)
+//        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+//        val jwt = sharedPreferences.getString("jwt_token", null)
+        val petCall = serverInstance.postPet(petRequest)
 
         petCall.enqueue(object : Callback<PetDto> {
             override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
@@ -178,14 +174,14 @@ class RetrofitManager {
                         marker.map = naverMap // 고씨네
                         marker.captionText = "GPS 위치마커"
                     }
-                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                    Log.d("Ping", "onResponce 성공: " + result?.toString());
                 }
                 else{
-                    Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
+                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
             override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
