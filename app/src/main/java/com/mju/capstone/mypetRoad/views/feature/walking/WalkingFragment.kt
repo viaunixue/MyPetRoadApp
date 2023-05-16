@@ -60,7 +60,7 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
     override fun initViews() {
         super.initViews()
         binding.btnWalkingStart.setOnClickListener{
-            RetrofitManager.instance.getPings(naverMap, marker);
+            RetrofitManager.instance.getPings(naverMap, marker, mainActivity);
         }
     }
 
