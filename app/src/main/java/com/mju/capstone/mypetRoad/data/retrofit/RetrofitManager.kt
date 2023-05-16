@@ -13,6 +13,7 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
@@ -141,7 +142,7 @@ class RetrofitManager {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
                     if (result != null) {
-                        marker.position = LatLng(result.latitude, result.longitude,)
+                        marker.position = LatLng(result.latitude, result.longitude)
                         marker.map = naverMap // 고씨네
                         marker.captionText = "GPS 위치마커"
                     }
@@ -152,6 +153,31 @@ class RetrofitManager {
                 }
             }
             override fun onFailure(call: Call<TrackerDto>, t: Throwable) {
+                Log.d("YJ", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    fun getPings(
+        naverMap: NaverMap,
+        marker: Marker
+    ) {
+        trackerInstance.getPings().enqueue(object : Callback<WalkingDto>{
+            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                if(response.isSuccessful){
+                    var result: WalkingDto? = response.body()
+                    if (result != null) {
+                        marker.position = LatLng(result.startPoint.latitude, result.startPoint.longitude)
+                        marker.map = naverMap // 고씨네
+                        marker.captionText = "GPS 위치마커"
+                    }
+                    Log.d("YJ", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("YJ", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
                 Log.d("YJ", "네트워크 에러 : " + t.message.toString())
             }
         })

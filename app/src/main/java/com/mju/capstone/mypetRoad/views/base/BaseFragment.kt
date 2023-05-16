@@ -23,20 +23,18 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
 
     abstract fun getViewBinding(): VB
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        progressDialog = Dialog(requireContext())
-        progressDialog.setContentView(R.layout.dialog_progress)
-        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        progressDialog.setCancelable(false)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = getViewBinding()
+
+        progressDialog = Dialog(requireContext())
+        progressDialog.setContentView(R.layout.dialog_progress)
+        progressDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        progressDialog.setCancelable(false)
+
         return binding.root
     }
 

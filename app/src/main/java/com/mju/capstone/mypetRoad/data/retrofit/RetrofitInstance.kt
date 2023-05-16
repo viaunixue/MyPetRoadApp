@@ -11,19 +11,10 @@ import retrofit2.create
 import java.security.Provider.Service
 
 object RetrofitInstance {
-    private val okHttpClient: OkHttpClient by lazy {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
-        OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
-    }
-
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Url.LOC_URL)
             .addConverterFactory(GsonConverterFactory.create())
-//            .client(okHttpClient)
             .build()
     }
 

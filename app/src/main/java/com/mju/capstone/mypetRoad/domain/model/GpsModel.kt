@@ -9,12 +9,4 @@ data class GpsModel(
     var longitude: Double,
     var altitude: Double
 ): Model(id, createTime){
-    override fun toString(): String {
-        return "GetResult(" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", altitude=" + altitude +
-                ", createTime=" + createTime +
-                ")"
-    }
 }

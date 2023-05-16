@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.views.feature.walking
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
@@ -24,9 +25,9 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
     private val walkingViewModel by viewModels<WalkingViewModel>()
 
     private lateinit var uiScope: CoroutineScope
-    private lateinit var mapView: MapView
     private lateinit var locationSource: FusedLocationSource
     lateinit var naverMap: NaverMap
+    private lateinit var mapView: MapView
     private val marker = Marker()
 
     override fun initState() {
@@ -42,6 +43,17 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-        RetrofitManager.instance.getGPS(naverMap, marker);
+//        naverMap.isIndoorEnabled = false // 실내 지도
+//        naverMap.isLiteModeEnabled = false // 라이트 모드
+//        naverMap.lightness = 0.3f // 지도 밝기
+//        naverMap.buildingHeight = 0.5f // 건물 높이
+
+
+        RetrofitManager.instance.getPings(naverMap, marker);
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 }
