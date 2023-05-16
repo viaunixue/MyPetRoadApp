@@ -25,7 +25,7 @@ object MapModule {
     fun provideNaverMap(mapFragment: MapFragment) = mapFragment.naverMap
 
     @Provides
-    fun provideMarkerFactory() = MarkerFactory()
+    fun provideMapMarkerFactory() = MarkerFactory()
 
     //Activity가 생성 됬을 때 inject가 이루어져서 naverMap가 아직 null이다.
     //naverMap의 경우 OnMapReadyCallback 이 후에 값이 들어옴.
