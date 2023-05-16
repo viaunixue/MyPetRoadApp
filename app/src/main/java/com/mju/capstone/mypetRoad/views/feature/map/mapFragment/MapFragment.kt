@@ -58,7 +58,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        // Context를 액티비티로 형변환해서 할당
+        // Context를 액티비티로 형변환해서 할당(토큰 받아올 때 쓰임)
         mainActivity = context as MainActivity
     }
 
@@ -74,14 +74,16 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.uiSettings.isLocationButtonEnabled = true
         timer = Timer()
 
+        //1초마다 getGPS
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                RetrofitManager.instance.getGPS(naverMap, marker);
+                RetrofitManager.instance.getGPS(naverMap, mainActivity);
             }
         }, 0, 1000)
     }
 
     override fun onStop() {
+        //fragment 벗어나면 요청 종료
         super.onStop()
         timer?.cancel()
         timer = null
