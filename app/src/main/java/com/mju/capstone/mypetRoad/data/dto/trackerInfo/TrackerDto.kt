@@ -4,7 +4,9 @@ import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import java.sql.Date
+//import java.sql.Date
+import java.util.*
+
 
 @Parcelize
 data class TrackerDto(

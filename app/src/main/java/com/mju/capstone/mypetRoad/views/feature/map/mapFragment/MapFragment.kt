@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
@@ -66,18 +67,12 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
+        val timer = Timer()
 
-        RetrofitManager.instance.getGPS(naverMap, marker2);
-
-        // 현재 위치 마커
-        marker.position = LatLng(37.6281, 127.0905)
-        marker.map = naverMap
-        marker.icon = MarkerIcons.BLACK
-        marker.iconTintColor = Color.RED // 현재위치 마커 빨간색으로
-
-        // 장소 리스트 마커
-        marker1.position = LatLng(37.62444907132257, 127.09321109051345)
-        marker1.map = naverMap
-        marker1.captionText = "화랑대 철도공원"
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                RetrofitManager.instance.getGPS(naverMap, marker2);
+            }
+        }, 0, 1000)
     }
 }
