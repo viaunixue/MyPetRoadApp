@@ -2,6 +2,7 @@ package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
@@ -15,8 +16,10 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.MarkerIcons
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -140,10 +143,14 @@ class RetrofitManager {
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
+                    var cameraUpdate: CameraUpdate
                     if (result != null) {
+                        cameraUpdate = CameraUpdate.scrollTo(LatLng(result.latitude, result.longitude))
+                        naverMap.moveCamera(cameraUpdate)
                         marker.position = LatLng(result.latitude, result.longitude,)
-                        marker.map = naverMap // 고씨네
-                        marker.captionText = "GPS 위치마커"
+                        marker.map = naverMap
+                        marker.icon = MarkerIcons.BLACK
+                        marker.iconTintColor = Color.RED
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());
                 }
