@@ -14,7 +14,9 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallback {
 
@@ -38,16 +40,16 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
         mapView.getMapAsync(this)
     }
 
-    override fun onMapReady(naverMap: NaverMap) {
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
-
-//        naverMap.isIndoorEnabled = false // 실내 지도
-//        naverMap.isLiteModeEnabled = false // 라이트 모드
-//        naverMap.lightness = 0.3f // 지도 밝기
-//        naverMap.buildingHeight = 0.5f // 건물 높이
-
+    override fun onMapReady(map: NaverMap) {
+        naverMap = map.apply {
+            uiSettings.isLocationButtonEnabled = true
+            uiSettings.isScaleBarEnabled = true
+            uiSettings.isCompassEnabled = true
+            isIndoorEnabled = false // 실내 지도
+            isLiteModeEnabled = false // 라이트모드
+            lightness = 0.3f // 지도 밝기
+            buildingHeight = 0.5f // 건물 높이
+        }
 
         RetrofitManager.instance.getPings(naverMap, marker);
     }

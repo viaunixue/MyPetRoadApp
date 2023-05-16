@@ -9,6 +9,8 @@ import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.views.MainActivity
+import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.MarkerFactory
+import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.NaverMapHandler
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -20,16 +22,27 @@ import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Provider
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     override fun getViewBinding() = FragmentMapBinding.inflate(layoutInflater)
 
-    private val mapViewModel by viewModels<MapViewModel>()
+//    private val viewModel : MapViewModel by viewModels()
+
+//    @Inject
+//    lateinit var markerFactory: MarkerFactory
+//
+//    @Inject
+//    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
+//    private val naverMapHandler get() = naverMapHandlerProvider.get()
 
     // CoroutineScope -> Coroutine 관리, 조정 interface
     // 예를 들어, Activity, Fragment 생명 주기 관련 Coroutine 실행 하는데 사용
@@ -43,7 +56,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private val marker = Marker()
     private val marker1 = Marker()
     private val marker2 = Marker()
-
+    lateinit var naverMap: NaverMap
     lateinit var mainActivity: MainActivity
 
     override fun onAttach(context: Context) {
@@ -52,8 +65,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         // Context를 액티비티로 형변환해서 할당
         mainActivity = context as MainActivity
     }
-
-    lateinit var naverMap: NaverMap
 
     override fun initState(){
         super.initState()

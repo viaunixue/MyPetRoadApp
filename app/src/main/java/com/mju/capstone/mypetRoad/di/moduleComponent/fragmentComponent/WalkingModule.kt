@@ -25,7 +25,7 @@ object WalkingModule {
     fun provideWalkingNaverMap(walkingFragment: WalkingFragment) = walkingFragment. naverMap
 
     @Provides
-    fun provideMarkerFactory() = MarkerFactory()
+    fun provideWalkingMarkerFactory() = MarkerFactory()
 
     @Provides
     @FragmentScoped
