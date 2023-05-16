@@ -12,5 +12,5 @@ data class Ping(
     @SerializedName("latitude") @Expose val latitude: Double,
     @SerializedName("longitude") @Expose val longitude: Double,
     @SerializedName("altitude") @Expose val altitude: Double,
-    @SerializedName("timeStamp") @Expose val activityId: Date?
+    @SerializedName("timeStamp") @Expose val timeStamp: Date?
 ): Parcelable

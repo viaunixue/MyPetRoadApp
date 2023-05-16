@@ -15,11 +15,10 @@ interface ServerApi {
     fun login(@Body request: Login): Call<ResponseBody>
 
     @POST("/api/users")
-    @Headers("Authorization: Bearer {jwt_token}")
     fun postUser(@Body request: User): Call<UserDto>
 
     @POST("/api/pets")
-    @Headers("Authorization: Bearer {jwt_token}")
+//    @Headers("Authorization: Bearer {jwt_token}")
 //    fun postPet(@Body request: Pet, @Path("jwt_token") jwt: String?): Call<PetDto>
     fun postPet(@Body request: Pet): Call<PetDto>
 }

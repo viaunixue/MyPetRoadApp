@@ -135,20 +135,24 @@ class RetrofitManager {
 
     fun getGPS(
         naverMap: NaverMap,
-        marker: Marker
+        context: Context
     ) {
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
         trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
-                    var cameraUpdate: CameraUpdate
                     if (result != null) {
-                        cameraUpdate = CameraUpdate.scrollTo(LatLng(result.latitude, result.longitude))
-                        naverMap.moveCamera(cameraUpdate)
-                        marker.position = LatLng(result.latitude, result.longitude,)
-                        marker.map = naverMap
-                        marker.icon = MarkerIcons.BLACK
-                        marker.iconTintColor = Color.RED
+                        naverMap.let {
+                            val coord = LatLng(result.latitude, result.longitude)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = coord
+
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+                        }
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());
                 }
@@ -164,26 +168,33 @@ class RetrofitManager {
 
     fun getPings(
         naverMap: NaverMap,
-        marker: Marker
+        marker: Marker,
+        context: Context
     ) {
-        trackerInstance.getPings().enqueue(object : Callback<WalkingDto>{
-            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
-                if(response.isSuccessful){
-                    var result: WalkingDto? = response.body()
-                    if (result != null) {
-                        marker.position = LatLng(result.startPoint.latitude, result.startPoint.longitude)
-                        marker.map = naverMap // 고씨네
-                        marker.captionText = "GPS 위치마커"
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
+        if (jwt != null) {
+            trackerInstance.getPings(jwt).enqueue(object : Callback<WalkingDto>{
+                override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                    if(response.isSuccessful){
+                        var result: WalkingDto? = response.body()
+                        if (result != null) {
+                            marker.position = LatLng(result.startPoint.latitude, result.startPoint.longitude)
+                            marker.map = naverMap // 고씨네
+                            marker.captionText = "GPS 위치마커"
+                        }
+                        Log.d("Ping", "onResponce 성공: " + result?.toString());
                     }
-                    Log.d("Ping", "onResponce 성공: " + result?.toString());
+                    else{
+                        Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
+                    }
                 }
-                else{
-                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
+                override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+                    Log.d("Ping", "네트워크 에러 : " + t.message.toString())
                 }
-            }
-            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
-            }
-        })
+            })
+        } else {
+            //TODO 토큰 만료됐을 시 처리
+        }
     }
 }

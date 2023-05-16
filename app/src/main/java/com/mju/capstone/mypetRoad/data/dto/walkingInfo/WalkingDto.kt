@@ -13,6 +13,6 @@ data class WalkingDto(
     @SerializedName("startPoint") @Expose val startPoint: Ping,
     @SerializedName("endPoint") @Expose val endPoint: Ping,
     @SerializedName("roadMapId") @Expose val roadMapId: Double,
-    @SerializedName("activityId") @Expose val activityId: Date?,
+    @SerializedName("activityId") @Expose val activityId: Activity,
     @SerializedName("walkDate") @Expose val walkDate: Date
 ): Parcelable

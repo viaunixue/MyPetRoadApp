@@ -12,10 +12,7 @@ import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.MarkerFactory
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.NaverMapHandler
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.LocationTrackingMode
-import com.naver.maps.map.MapView
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
@@ -53,16 +50,15 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
+    private var timer: Timer? = null
     private val marker = Marker()
-    private val marker1 = Marker()
-    private val marker2 = Marker()
     lateinit var naverMap: NaverMap
     lateinit var mainActivity: MainActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        // Context를 액티비티로 형변환해서 할당
+        // Context를 액티비티로 형변환해서 할당(토큰 받아올 때 쓰임)
         mainActivity = context as MainActivity
     }
 
@@ -76,14 +72,20 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     override fun onMapReady(naverMap: NaverMap) {
         naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationSource = locationSource
-        naverMap.locationTrackingMode = LocationTrackingMode.Follow
-        val timer = Timer()
+        timer = Timer()
 
-        timer.scheduleAtFixedRate(object : TimerTask() {
+        //1초마다 getGPS
+        timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                RetrofitManager.instance.getGPS(naverMap, marker2);
+                RetrofitManager.instance.getGPS(naverMap, mainActivity);
             }
         }, 0, 1000)
+    }
+
+    override fun onStop() {
+        //fragment 벗어나면 요청 종료
+        super.onStop()
+        timer?.cancel()
+        timer = null
     }
 }
