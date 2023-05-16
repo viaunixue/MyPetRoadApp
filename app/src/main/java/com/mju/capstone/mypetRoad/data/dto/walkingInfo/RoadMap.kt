@@ -9,6 +9,6 @@ import java.sql.Date
 @Parcelize
 data class RoadMap(
     @SerializedName("id") @Expose val id: Long?,
-    @SerializedName("roadMapName") @Expose val latitude: Double,
+    @SerializedName("roadMapName") @Expose val roadMapName: String,
     @SerializedName("pingList") @Expose val pingList: List<Ping>
 ): Parcelable

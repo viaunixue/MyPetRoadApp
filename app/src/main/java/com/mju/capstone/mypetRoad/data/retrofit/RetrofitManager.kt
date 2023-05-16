@@ -140,14 +140,20 @@ class RetrofitManager {
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
-                    var cameraUpdate: CameraUpdate
                     if (result != null) {
-                        cameraUpdate = CameraUpdate.scrollTo(LatLng(result.latitude, result.longitude))
-                        naverMap.moveCamera(cameraUpdate)
-                        marker.position = LatLng(result.latitude, result.longitude,)
-                        marker.map = naverMap
-                        marker.icon = MarkerIcons.BLACK
-                        marker.iconTintColor = Color.RED
+                        naverMap.let {
+                            val coord = LatLng(result.latitude, result.longitude)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = coord
+
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+                        }
+//                        marker.position = LatLng(result.latitude, result.longitude)
+//                        marker.map = naverMap
+//                        marker.icon = MarkerIcons.BLACK
+//                        marker.iconTintColor = Color.RED
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());
                 }
