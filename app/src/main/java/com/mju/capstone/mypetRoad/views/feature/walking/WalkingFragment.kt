@@ -3,6 +3,7 @@ package com.mju.capstone.mypetRoad.views.feature.walking
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
 import com.mju.capstone.mypetRoad.views.MainActivity
@@ -13,11 +14,15 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
+import javax.inject.Provider
 import java.util.*
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -52,6 +57,13 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
         mapView.getMapAsync(this)
     }
 
+    override fun initViews() {
+        super.initViews()
+        binding.btnWalkingStart.setOnClickListener{
+            RetrofitManager.instance.getPings(naverMap, marker);
+        }
+    }
+
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
             uiSettings.isLocationButtonEnabled = true
@@ -62,6 +74,7 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
             lightness = 0.3f // 지도 밝기
             buildingHeight = 0.5f // 건물 높이
         }
+
         timer = Timer()
 
         binding.lifecycleOwner = this
@@ -88,5 +101,16 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
+    }
+
+    private fun Sliding() {
+        val slidePanel = binding.walkingSlidingFrame
+
+        val state = slidePanel.panelState
+        if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+            slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
+        } else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
     }
 }

@@ -33,6 +33,7 @@ class RetrofitManager {
 
     private val serverInstance = RetrofitInstance.serverService
     private val trackerInstance = RetrofitInstance.trackerService
+    val hashMap = HashMap<String, List<TrackerDto>>()
 
     fun postLogin(
         id: String,

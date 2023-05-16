@@ -8,55 +8,82 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/analysisFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".views.feature.analysis.AnalysisFragment">
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal">
 
-            <RadioButton
-                android:checked="true"
-                android:id="@+id/dailyButton"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_radio_text"
-                android:button="@null"
-                android:textAlignment="center"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:text="일간" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/weeklyButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_radio_text"
-                android:button="@null"
-                android:textAlignment="center"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:text="주간" />
+                    <RadioButton
+                        android:id="@+id/dailyButton"
+                        android:checked="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_radio_button"
+                        android:textColor="@drawable/selector_radio_text"
+                        android:button="@null"
+                        android:layout_marginEnd="10dp"
+                        android:textAlignment="center"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:text="일간" />
 
-            <RadioButton
-                android:id="@+id/monthlyButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radio_button"
-                android:textColor="@drawable/selector_radio_text"
-                android:button="@null"
-                android:textAlignment="center"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:text="월간" />
-        </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/weeklyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_radio_button"
+                        android:textColor="@drawable/selector_radio_text"
+                        android:button="@null"
+                        android:textAlignment="center"
+                        android:layout_marginEnd="10dp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:text="주간" />
+
+                    <RadioButton
+                        android:id="@+id/monthlyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_radio_button"
+                        android:textColor="@drawable/selector_radio_text"
+                        android:button="@null"
+                        android:textAlignment="center"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:text="월간" />
+                </RadioGroup>
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/petroad_analysis_host_fragment"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:navGraph="@navigation/analysis_nav_graph"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
