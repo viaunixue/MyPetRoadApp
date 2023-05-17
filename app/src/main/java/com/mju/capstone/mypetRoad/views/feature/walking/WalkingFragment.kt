@@ -7,19 +7,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.view.View
-import android.view.View.OnClickListener
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
-import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -30,9 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.sql.Time
-import javax.inject.Inject
-import javax.inject.Provider
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -87,12 +81,14 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 timer = Timer()
                 timer?.scheduleAtFixedRate(object : TimerTask() {
                     override fun run() {
-                        RetrofitManager.instance.getPings(naverMap, mainActivity);
+                        RetrofitManager.instance.getPings(naverMap);
                     }
-                }, 0, 1000)
+                }, 0, 2000)
             } else {
-                var roadMapName : String = ""
-                val currentDate = Date()
+                var roadMapName = ""
+                val myDate = Date()
+                val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                val formattedDate = sdf.format(myDate)
                 val et = EditText(this.requireContext())
                 et.gravity = Gravity.CENTER
                 //getGPS 종료
@@ -105,16 +101,18 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                     .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                             roadMapName = et.text.toString()
                             Toast.makeText(
-                                this.requireContext(), "저장 완료!",
+                                this.requireContext(), "$roadMapName",
                                 Toast.LENGTH_SHORT).show()
                     })
+                Log.i("WalkingFrag","$roadMapName")
                 builder.show()
 
+                roadMapName = "tetRoadMap1"
                 endTime = System.currentTimeMillis()
                 durationTime = endTime - startTime
                 binding.btnWalkingStart.text = "산책 시작"
                 binding.btnWalkingStart.setBackgroundColor(Color.BLUE)
-                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, 0.123, 1234, currentDate)
+                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, 0.123, 1234, formattedDate)
             }
 //            showToast("산책 시작!")
         }

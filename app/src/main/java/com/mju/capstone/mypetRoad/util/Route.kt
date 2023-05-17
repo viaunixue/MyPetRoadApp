@@ -6,12 +6,17 @@ import com.naver.maps.map.overlay.PathOverlay
 
 object Route {
     val path = PathOverlay()
-    fun addPing(latitude: Double, longitude: Double){
-        path.coords.add(LatLng(latitude, longitude))
+    val coords = mutableListOf<LatLng>()
+    fun addPing(latLng: LatLng){
+        //첫 add
+        if(coords.size < 2) {
+            coords.add(latLng)
+        }
+        coords.add(latLng)
+        path.coords = coords
     }
     fun clearPing(){
-        val coords = mutableListOf<LatLng>()
-        path.coords = coords
+        path.coords.clear()
     }
     fun setMap(map: NaverMap){
         path.map = map

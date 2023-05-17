@@ -13,6 +13,6 @@ data class WalkingRequestDto(
     @SerializedName("walkedTime") @Expose val walkedTime: Long,
     @SerializedName("travelDistance") @Expose val travelDistance: Double,
     @SerializedName("burnedCalories") @Expose val burnedCalories: Int,
-    @SerializedName("pingList") @Expose val pingList: List<TrackerDto>,
-    @SerializedName("walkDate") @Expose val walkDate: Date
+    @SerializedName("pingList") @Expose val pingList: List<PingRequestDto>,
+    @SerializedName("walkDate") @Expose val walkDate: String
 ): Parcelable

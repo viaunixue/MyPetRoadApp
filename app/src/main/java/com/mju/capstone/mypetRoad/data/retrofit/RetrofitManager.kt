@@ -2,19 +2,15 @@ package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
-import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
-import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
-import com.mju.capstone.mypetRoad.data.dto.walkingInfo.Ping
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.PingRequestDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import com.mju.capstone.mypetRoad.util.Config
@@ -23,16 +19,11 @@ import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
-import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.PathOverlay
-import com.naver.maps.map.util.MarkerIcons
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import kotlin.collections.HashMap
-import kotlin.time.Duration
 
 class RetrofitManager {
     companion object{
@@ -41,8 +32,8 @@ class RetrofitManager {
 
     private val serverInstance = RetrofitInstance.serverService
     private val trackerInstance = RetrofitInstance.trackerService
-    val hashMap : HashMap<String, List<TrackerDto>> = HashMap()
-    val pl : MutableList<TrackerDto> = mutableListOf()
+    val hashMap : HashMap<String, List<PingRequestDto>> = HashMap()
+    val pl : MutableList<PingRequestDto> = mutableListOf()
     val key = "ping_list"
 
     fun postLogin(
@@ -153,17 +144,6 @@ class RetrofitManager {
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
-                    if(Config.isWalking){
-                        if(!hashMap.containsKey(key)){
-                            if (result != null) {
-                                pl.add(result)
-                            }
-                        }
-                    } else {
-                        if(hashMap.containsKey(key)){
-                            hashMap[key] = pl
-                        }
-                    }
                     if (result != null) {
                         naverMap.let {
                             val coord = LatLng(result.latitude, result.longitude)
@@ -189,17 +169,75 @@ class RetrofitManager {
 
     fun getPings(
         naverMap: NaverMap,
+    ) {
+        trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
+            override fun onResponse(call: Call<PingRequestDto>, response: Response<PingRequestDto>) {
+                //
+                if(response.isSuccessful){
+                    var result: PingRequestDto? = response.body()
+                    if(Config.isWalking){
+                        if(!hashMap.containsKey(key)){
+                            if (result != null) {
+                                pl.add(result)
+                                hashMap[key] = pl
+                            }
+                        }else{
+                            //마지막 값과 다른 값일 경우
+                            if(hashMap[key]?.last()?.equals(result) == false){
+                                if (result != null) {
+                                    pl.add(result)
+                                    hashMap[key] = pl
+                                }
+                            }
+                        }
+                    }
+                    if (result != null) {
+                        naverMap.let {
+                            val coord = LatLng(result.latitude, result.longitude)
+                            Log.i("ping", hashMap[key].toString())
+
+                            Route.addPing(coord)
+                            Route.setMap(naverMap)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = coord
+
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+                        }
+                    }
+                    Log.d("GPS", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("GPS", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<PingRequestDto>, t: Throwable) {
+                Log.d("GPS", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    fun drawRoadMap(
+        naverMap: NaverMap,
         context: Context
     ) {
         val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt_token", null)
-        trackerInstance.getPings().enqueue(object : Callback<Ping>{
-            override fun onResponse(call: Call<Ping>, response: Response<Ping>) {
+        trackerInstance.getGpsList().enqueue(object : Callback<List<TrackerDto>>{
+            override fun onResponse(call: Call<List<TrackerDto>>, response: Response<List<TrackerDto>>) {
                 if(response.isSuccessful){
-                    var result: Ping? = response.body()
+                    var result: List<TrackerDto>? = response.body()
                     if (result != null) {
-                        Route.addPing(result.latitude, result.longitude)
-                        Route.setMap(naverMap)
+                        for(i in result){
+                            naverMap.let {
+                                val coord = LatLng(i.latitude, i.longitude)
+                                Log.e("ping", "$i")
+
+                                Route.addPing(coord)
+                                Route.setMap(naverMap)
+                            }
+                        }
                     }
                     Log.d("Ping", "onResponce 성공: " + result?.toString());
                 }
@@ -207,35 +245,35 @@ class RetrofitManager {
                     Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
-            override fun onFailure(call: Call<Ping>, t: Throwable) {
+            override fun onFailure(call: Call<List<TrackerDto>>, t: Throwable) {
                 Log.d("Ping", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
 
     fun WalkingOver(
-        durationTime : Long,
-        roadMapName : String,
-        travelDistance : Double,
-        burnedCalories : Int,
-        currentDate : Date
+        durationTime: Long,
+        roadMapName: String,
+        travelDistance: Double,
+        burnedCalories: Int,
+        currentDate: String
     ){
-        val p : MutableList<TrackerDto> = hashMap[key] as MutableList<TrackerDto>
+        val p : MutableList<PingRequestDto> = hashMap[key] as MutableList<PingRequestDto>
         val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
 
-        print("walkingRequestDto: $walkingRequestDto")
+        Log.i("WalkOver", "$walkingRequestDto")
         serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
             override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
                 if(response.isSuccessful){
                     var result: WalkingDto? = response.body()
-                    Log.d("Ping", "onResponce 성공: " + result?.toString());
+                    Log.d("WalkOver", "onResponce 성공: " + result?.toString());
                 }
                 else{
-                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
+                    Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
             override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
+                Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
