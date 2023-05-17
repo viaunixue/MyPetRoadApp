@@ -15,6 +15,8 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
+import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -25,6 +27,9 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.time.Duration
 
 class RetrofitManager {
     companion object{
@@ -33,7 +38,9 @@ class RetrofitManager {
 
     private val serverInstance = RetrofitInstance.serverService
     private val trackerInstance = RetrofitInstance.trackerService
-    val hashMap = HashMap<String, List<TrackerDto>>()
+    val hashMap : HashMap<String, List<TrackerDto>> = HashMap()
+    val pl : MutableList<TrackerDto> = mutableListOf()
+    val key = "ping_list"
 
     fun postLogin(
         id: String,
@@ -143,6 +150,17 @@ class RetrofitManager {
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
                     var result: TrackerDto? = response.body()
+                    if(Config.isWalking){
+                        if(!hashMap.containsKey(key)){
+                            if (result != null) {
+                                pl.add(result)
+                            }
+                        }
+                    } else {
+                        if(hashMap.containsKey(key)){
+                            hashMap[key] = pl
+                        }
+                    }
                     if (result != null) {
                         naverMap.let {
                             val coord = LatLng(result.latitude, result.longitude)
@@ -196,5 +214,32 @@ class RetrofitManager {
         } else {
             //TODO 토큰 만료됐을 시 처리
         }
+    }
+
+    fun WalkingOver(
+        durationTime : Long,
+        roadMapName : String,
+        travelDistance : Double,
+        burnedCalories : Int,
+        currentDate : Date
+    ){
+        val p : MutableList<TrackerDto> = hashMap[key] as MutableList<TrackerDto>
+        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
+
+        print("walkingRequestDto: $walkingRequestDto")
+        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
+            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                if(response.isSuccessful){
+                    var result: WalkingDto? = response.body()
+                    Log.d("Ping", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
+            }
+        })
     }
 }

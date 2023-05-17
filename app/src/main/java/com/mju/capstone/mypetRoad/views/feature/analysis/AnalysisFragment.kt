@@ -13,13 +13,6 @@ import javax.inject.Provider
 
 @AndroidEntryPoint
 class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
-
-    @Inject
-    lateinit var navControllerProvider: Provider<NavController>
-    // fragment 가 생성이 되고 fragment 가 있어야 navController 가
-    // 그때 그 id 값을 반환 하면서 get 으로 가져옴
-    private val navController get() = navControllerProvider.get()
-
     override fun getViewBinding() = FragmentAnalysisBinding.inflate(layoutInflater)
 
     private val analysisViewModel by viewModels<AnalysisViewModel>()
@@ -36,23 +29,27 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
         }
     }
 
-//    private fun addAnalysisFragment() {
-//        childFragmentManager.beginTransaction()
-//            .add(R.id.petroad_analysis_host_fragment, WeeklyFragment())
-//            .setReorderingAllowed(true)
-//            .addToBackStack(null)
-//            .commit()
-//    }
-
     private fun navigateToDailyFragment() {
-        navController.navigate(R.id.dailyAnalysis)
+        val fragment = DailyFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun navigateToWeeklyFragment() {
-        navController.navigate(R.id.weeklyAnalysis)
+        val fragment = WeeklyFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun navigateToMonthlyFragment() {
-        navController.navigate(R.id.monthlyAnalysis)
+        val fragment = MonthlyFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
