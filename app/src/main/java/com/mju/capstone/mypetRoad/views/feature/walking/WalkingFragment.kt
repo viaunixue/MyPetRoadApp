@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.LocationTrackingMode
@@ -82,11 +83,22 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 startTime = System.currentTimeMillis()
                 binding.btnWalkingStart.text = "산책 중지"
                 binding.btnWalkingStart.setBackgroundColor(Color.RED)
+                //1초마다 getPings
+                timer = Timer()
+                timer?.scheduleAtFixedRate(object : TimerTask() {
+                    override fun run() {
+                        RetrofitManager.instance.getPings(naverMap, mainActivity);
+                    }
+                }, 0, 1000)
             } else {
                 var roadMapName : String = ""
                 val currentDate = Date()
                 val et = EditText(this.requireContext())
                 et.gravity = Gravity.CENTER
+                //getGPS 종료
+                timer?.cancel()
+                timer = null
+                Route.clearPing()
                 val builder = AlertDialog.Builder(this.requireContext())
                     .setTitle("산책로 이름은?")
                     .setView(et)
@@ -122,28 +134,11 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
             lightness = 0.3f // 지도 밝기
             buildingHeight = 0.5f // 건물 높이
         }
-
-        timer = Timer()
-
-        binding.lifecycleOwner = this
-
-//        binding.btnWalkingStart.setOnClickListener {
-//            walkingViewModel.onButtonClick()
-//        }
-
-        //1초마다 getPings
-        timer?.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                RetrofitManager.instance.getPings(naverMap, marker, mainActivity);
-            }
-        }, 0, 1000)
     }
 
     override fun onStop() {
         //fragment 벗어나면 요청 종료
         super.onStop()
-        timer?.cancel()
-        timer = null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -14,14 +14,17 @@ import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.Ping
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.PathOverlay
 import com.naver.maps.map.util.MarkerIcons
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -186,34 +189,28 @@ class RetrofitManager {
 
     fun getPings(
         naverMap: NaverMap,
-        marker: Marker,
         context: Context
     ) {
         val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt_token", null)
-        if (jwt != null) {
-            trackerInstance.getPings(jwt).enqueue(object : Callback<WalkingDto>{
-                override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
-                    if(response.isSuccessful){
-                        var result: WalkingDto? = response.body()
-                        if (result != null) {
-                            marker.position = LatLng(result.startPoint.latitude, result.startPoint.longitude)
-                            marker.map = naverMap // 고씨네
-                            marker.captionText = "GPS 위치마커"
-                        }
-                        Log.d("Ping", "onResponce 성공: " + result?.toString());
+        trackerInstance.getPings().enqueue(object : Callback<Ping>{
+            override fun onResponse(call: Call<Ping>, response: Response<Ping>) {
+                if(response.isSuccessful){
+                    var result: Ping? = response.body()
+                    if (result != null) {
+                        Route.addPing(result.latitude, result.longitude)
+                        Route.setMap(naverMap)
                     }
-                    else{
-                        Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
-                    }
+                    Log.d("Ping", "onResponce 성공: " + result?.toString());
                 }
-                override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                    Log.d("Ping", "네트워크 에러 : " + t.message.toString())
+                else{
+                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
                 }
-            })
-        } else {
-            //TODO 토큰 만료됐을 시 처리
-        }
+            }
+            override fun onFailure(call: Call<Ping>, t: Throwable) {
+                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
+            }
+        })
     }
 
     fun WalkingOver(
