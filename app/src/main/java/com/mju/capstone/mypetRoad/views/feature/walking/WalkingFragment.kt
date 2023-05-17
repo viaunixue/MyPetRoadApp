@@ -1,11 +1,21 @@
 package com.mju.capstone.mypetRoad.views.feature.walking
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.view.View.OnClickListener
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
+import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.LocationTrackingMode
@@ -19,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.sql.Time
 import javax.inject.Inject
 import javax.inject.Provider
 import java.util.*
@@ -42,6 +53,10 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
     private var timer: Timer? = null
     lateinit var mainActivity: MainActivity
 
+    private var startTime : Long = 0
+    private var endTime : Long = 0
+    private var durationTime : Long = 0
+//    = System.currentTimeMillis()
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -59,9 +74,42 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
 
     override fun initViews() {
         super.initViews()
-        binding.btnWalkingStart.setOnClickListener{
-            RetrofitManager.instance.getPings(naverMap, marker, mainActivity);
+        binding.btnWalkingStart.setOnClickListener {
+            // RetrofitManager.instance.getPings(naverMap, marker, mainActivity);
+            Config.isWalking = !Config.isWalking
+            Log.d("Config", "Config: " + Config.isWalking)
+            if(Config.isWalking){
+                startTime = System.currentTimeMillis()
+                binding.btnWalkingStart.text = "산책 중지"
+                binding.btnWalkingStart.setBackgroundColor(Color.RED)
+            } else {
+                var roadMapName : String = ""
+                val currentDate = Date()
+                val et = EditText(this.requireContext())
+                et.gravity = Gravity.CENTER
+                val builder = AlertDialog.Builder(this.requireContext())
+                    .setTitle("산책로 이름은?")
+                    .setView(et)
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                            roadMapName = et.text.toString()
+                            Toast.makeText(
+                                this.requireContext(), "저장 완료!",
+                                Toast.LENGTH_SHORT).show()
+                    })
+                builder.show()
+
+                endTime = System.currentTimeMillis()
+                durationTime = endTime - startTime
+                binding.btnWalkingStart.text = "산책 시작"
+                binding.btnWalkingStart.setBackgroundColor(Color.BLUE)
+                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, 0.123, 1234, currentDate)
+            }
+//            showToast("산책 시작!")
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -79,9 +127,9 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
 
         binding.lifecycleOwner = this
 
-        binding.btnWalkingStart.setOnClickListener {
-            walkingViewModel.onButtonClick()
-        }
+//        binding.btnWalkingStart.setOnClickListener {
+//            walkingViewModel.onButtonClick()
+//        }
 
         //1초마다 getPings
         timer?.scheduleAtFixedRate(object : TimerTask() {

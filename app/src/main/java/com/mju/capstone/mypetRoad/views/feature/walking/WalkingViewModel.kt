@@ -9,14 +9,14 @@ import javax.inject.Inject
 class WalkingViewModel @Inject constructor(
 
 ): ViewModel(){
-    val buttonText: MutableLiveData<String> = MutableLiveData("산책 시작")
+//    val buttonText: MutableLiveData<String> = MutableLiveData("산책 시작")
 
-    fun onButtonClick() {
-        val currentText = buttonText.value
-        if (currentText == "산책 시작") {
-            buttonText.value = "산책 종료"
-        } else {
-            buttonText.value = "산책 시작"
-        }
-    }
+//    fun onButtonClick() {
+//        val currentText = buttonText.value
+//        if (currentText == "산책 시작") {
+//            buttonText.value = "산책 종료"
+//        } else {
+//            buttonText.value = "산책 시작"
+//        }
+//    }
 }
