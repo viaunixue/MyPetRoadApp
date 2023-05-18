@@ -11,5 +11,5 @@ data class PingRequestDto(
     @SerializedName("latitude") @Expose val latitude: Double,
     @SerializedName("longitude") @Expose val longitude: Double,
     @SerializedName("altitude") @Expose val altitude: Double,
-    @SerializedName("createTime") @Expose val createTime: Date
+    @SerializedName("createTime") @Expose val createTime: String
 ): Parcelable
