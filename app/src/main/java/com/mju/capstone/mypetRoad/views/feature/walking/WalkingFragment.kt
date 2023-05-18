@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingBinding
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
@@ -95,6 +96,7 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 timer?.cancel()
                 timer = null
                 Route.clearPing()
+                Distance.clearDistance()
                 val builder = AlertDialog.Builder(this.requireContext())
                     .setTitle("산책로 이름은?")
                     .setView(et)

@@ -14,6 +14,7 @@ import com.mju.capstone.mypetRoad.data.dto.walkingInfo.PingRequestDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
@@ -143,7 +144,7 @@ class RetrofitManager {
         trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
-                    var result: TrackerDto? = response.body()
+                    val result: TrackerDto? = response.body()
                     if (result != null) {
                         naverMap.let {
                             val coord = LatLng(result.latitude, result.longitude)
@@ -174,29 +175,29 @@ class RetrofitManager {
             override fun onResponse(call: Call<PingRequestDto>, response: Response<PingRequestDto>) {
                 //
                 if(response.isSuccessful){
-                    var result: PingRequestDto? = response.body()
-                    if(Config.isWalking){
-                        if(!hashMap.containsKey(key)){
-                            if (result != null) {
+                    val result: PingRequestDto? = response.body()
+                    if (result != null) {
+                        val coord = LatLng(result.latitude, result.longitude)
+                        var differenceInSeconds: Long = 0
+                        if(Config.isWalking){
+                            if(!hashMap.containsKey(key)){
                                 pl.add(result)
                                 hashMap[key] = pl
-                            }
-                        }else{
-                            //마지막 값과 다른 값일 경우
-                            if(hashMap[key]?.last()?.equals(result) == false){
-                                if (result != null) {
+                            }else{
+                                //마지막 값과 다른 값일 경우
+                                if(!hashMap[key]?.last()?.equals(result)!!){
+                                    hashMap[key]?.let { Distance.addDistance(it, coord) }
+                                    differenceInSeconds =
+                                        (hashMap[key]?.last()?.createTime?.time!! - result.createTime.time) / 1000
                                     pl.add(result)
                                     hashMap[key] = pl
                                 }
                             }
                         }
-                    }
-                    if (result != null) {
                         naverMap.let {
-                            val coord = LatLng(result.latitude, result.longitude)
                             Log.i("ping", hashMap[key].toString())
 
-                            Route.addPing(coord)
+                            Route.addPing(coord, differenceInSeconds)
                             Route.setMap(naverMap)
 
                             val locationOverlay = it.locationOverlay
@@ -224,17 +225,16 @@ class RetrofitManager {
     ) {
         val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt_token", null)
-        trackerInstance.getGpsList().enqueue(object : Callback<List<TrackerDto>>{
-            override fun onResponse(call: Call<List<TrackerDto>>, response: Response<List<TrackerDto>>) {
+        trackerInstance.getGpsList().enqueue(object : Callback<List<PingRequestDto>>{
+            override fun onResponse(call: Call<List<PingRequestDto>>, response: Response<List<PingRequestDto>>) {
                 if(response.isSuccessful){
-                    var result: List<TrackerDto>? = response.body()
+                    var result: List<PingRequestDto>? = response.body()
                     if (result != null) {
                         for(i in result){
                             naverMap.let {
                                 val coord = LatLng(i.latitude, i.longitude)
                                 Log.e("ping", "$i")
-
-                                Route.addPing(coord)
+                                Route.addPing(coord, 0)
                                 Route.setMap(naverMap)
                             }
                         }
@@ -245,7 +245,7 @@ class RetrofitManager {
                     Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
-            override fun onFailure(call: Call<List<TrackerDto>>, t: Throwable) {
+            override fun onFailure(call: Call<List<PingRequestDto>>, t: Throwable) {
                 Log.d("Ping", "네트워크 에러 : " + t.message.toString())
             }
         })

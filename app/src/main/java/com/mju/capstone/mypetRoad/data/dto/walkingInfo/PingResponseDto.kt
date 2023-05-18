@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class PingRequestDto(
+data class PingResponseDto(
     @SerializedName("latitude") @Expose val latitude: Double,
     @SerializedName("longitude") @Expose val longitude: Double,
     @SerializedName("altitude") @Expose val altitude: Double,

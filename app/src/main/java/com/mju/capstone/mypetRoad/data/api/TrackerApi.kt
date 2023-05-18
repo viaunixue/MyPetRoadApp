@@ -20,5 +20,5 @@ interface TrackerApi {
     fun getPings() : Call<Ping>
 
     @GET("/api/gps/test")
-    fun getGpsList(): Call<List<TrackerDto>>
+    fun getGpsList(): Call<List<PingRequestDto>>
 }
