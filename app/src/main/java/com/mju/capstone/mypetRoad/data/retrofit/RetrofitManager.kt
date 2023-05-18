@@ -2,8 +2,10 @@ package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
@@ -24,6 +26,9 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
 
 class RetrofitManager {
@@ -135,6 +140,7 @@ class RetrofitManager {
         })
     }
 
+    //실시간 위치표시
     fun getGPS(
         naverMap: NaverMap,
         context: Context
@@ -168,10 +174,12 @@ class RetrofitManager {
         })
     }
 
+    //핑 받아서 실시간으로 경로그리기
     fun getPings(
         naverMap: NaverMap,
     ) {
         trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<PingRequestDto>, response: Response<PingRequestDto>) {
                 //
                 if(response.isSuccessful){
@@ -187,8 +195,17 @@ class RetrofitManager {
                                 //마지막 값과 다른 값일 경우
                                 if(!hashMap[key]?.last()?.equals(result)!!){
                                     hashMap[key]?.let { Distance.addDistance(it, coord) }
-                                    differenceInSeconds =
-                                        (hashMap[key]?.last()?.createTime?.time!! - result.createTime.time) / 1000
+
+                                    val dateString1 = hashMap[key]?.last()?.createTime
+                                    val dateString2 = result.createTime
+
+                                    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+                                    val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat)
+                                    val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
+
+                                    val duration: Duration = Duration.between(localDateTime1, localDateTime2)
+                                    differenceInSeconds = duration.seconds
+                                    Log.d("differenceInSeconds", "$differenceInSeconds")
                                     pl.add(result)
                                     hashMap[key] = pl
                                 }
@@ -219,6 +236,7 @@ class RetrofitManager {
         })
     }
 
+    //list받아서 경로그리기
     fun drawRoadMap(
         naverMap: NaverMap,
         context: Context
@@ -251,6 +269,7 @@ class RetrofitManager {
         })
     }
 
+    //산책끝나면 정보전송
     fun WalkingOver(
         durationTime: Long,
         roadMapName: String,

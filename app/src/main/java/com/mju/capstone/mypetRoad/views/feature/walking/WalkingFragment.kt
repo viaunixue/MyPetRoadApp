@@ -96,7 +96,6 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 timer?.cancel()
                 timer = null
                 Route.clearPing()
-                Distance.clearDistance()
                 val builder = AlertDialog.Builder(this.requireContext())
                     .setTitle("산책로 이름은?")
                     .setView(et)
@@ -114,7 +113,8 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 durationTime = endTime - startTime
                 binding.btnWalkingStart.text = "산책 시작"
                 binding.btnWalkingStart.setBackgroundColor(Color.BLUE)
-                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, 0.123, 1234, formattedDate)
+                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, 1234, formattedDate)
+                Distance.clearDistance()
             }
 //            showToast("산책 시작!")
         }
