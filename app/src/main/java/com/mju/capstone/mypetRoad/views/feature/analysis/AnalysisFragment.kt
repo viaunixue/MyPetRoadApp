@@ -25,6 +25,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
                 R.id.dailyButton -> navigateToDailyFragment()
                 R.id.weeklyButton -> navigateToWeeklyFragment()
                 R.id.monthlyButton -> navigateToMonthlyFragment()
+                R.id.entireButton -> navigateToEntireFragment()
             }
         }
     }
@@ -32,7 +33,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     private fun navigateToDailyFragment() {
         val fragment = DailyFragment()
         childFragmentManager.beginTransaction()
-            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .replace(R.id.analysis_host_fragment, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -40,7 +41,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     private fun navigateToWeeklyFragment() {
         val fragment = WeeklyFragment()
         childFragmentManager.beginTransaction()
-            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .replace(R.id.analysis_host_fragment, fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -48,7 +49,15 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     private fun navigateToMonthlyFragment() {
         val fragment = MonthlyFragment()
         childFragmentManager.beginTransaction()
-            .replace(R.id.petroad_analysis_host_fragment, fragment)
+            .replace(R.id.analysis_host_fragment, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun navigateToEntireFragment() {
+        val fragment = EntireFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.analysis_host_fragment, fragment)
             .addToBackStack(null)
             .commit()
     }

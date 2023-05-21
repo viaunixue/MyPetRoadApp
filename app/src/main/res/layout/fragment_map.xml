@@ -12,6 +12,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_search"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:hint="Search.."
+            android:padding="4dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textAutoComplete" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.naver.maps.map.MapView
             android:id="@+id/map_view"
             android:name="com.mju.capstone.mypetRoad.ui.view.MapFragment"
@@ -31,6 +52,8 @@
             app:singleLine="true"
             app:singleSelection="true"
             tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints">
 
             <com.google.android.material.chip.Chip
@@ -72,38 +95,6 @@
                 app:chipBackgroundColor="#D8F4F2" />
 
         </com.google.android.material.chip.ChipGroup>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_search_around"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="@color/white"
-            android:text="산책로 추천"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/viewPager2"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager2"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fbtn_close_viewPager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/ic_baseline_close_24"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/viewPager2"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

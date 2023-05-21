@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
@@ -22,6 +23,7 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.MarkerIcons
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -170,6 +172,7 @@ class RetrofitManager {
                             locationOverlay.position = coord
 
                             it.moveCamera(CameraUpdate.scrollTo(coord))
+                            OverlayImage.fromResource(R.drawable.marker_icon)
                         }
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());
