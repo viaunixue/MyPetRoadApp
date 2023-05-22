@@ -70,8 +70,18 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         mapView.getMapAsync(this)
     }
 
-    override fun onMapReady(naverMap: NaverMap) {
-        naverMap.uiSettings.isLocationButtonEnabled = true
+    override fun onMapReady(map: NaverMap) {
+        naverMap = map.apply {
+            uiSettings.isLocationButtonEnabled = true
+            uiSettings.isScaleBarEnabled = true
+            uiSettings.isCompassEnabled = true
+            uiSettings.isZoomControlEnabled = true
+            uiSettings.setLogoMargin(20, 20, 100, 1520)
+            isIndoorEnabled = false // 실내 지도
+            isLiteModeEnabled = false // 라이트모드
+            //lightness = -0.5f // 지도 밝기
+            // buildingHeight = 0.8f // 건물 높이
+        }
         timer = Timer()
 
         //1초마다 getGPS

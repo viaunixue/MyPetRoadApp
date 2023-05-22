@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/weeklyBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="210dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/rectangle_analysis"
             android:layout_marginTop="45sp"
@@ -46,7 +46,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/weeklyBox"
             app:layout_constraintStart_toStartOf="@+id/weeklyBox"
             app:layout_constraintTop_toTopOf="@+id/weeklyBox" />
