@@ -16,10 +16,13 @@ import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingStartBinding
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Distance
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.MapView
@@ -31,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.text.SimpleDateFormat
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -49,8 +53,11 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
     lateinit var mainActivity: MainActivity
 
     private var startTime : Long = 0
-//    private var endTime : Long = 0
-//    private var durationTime : Long = 0
+    private var endTime : Long = 0
+    private var pauseTime : Long = 0
+    private var durationTime : Long = 0
+
+    private var isPanelExpanded = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,20 +76,61 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
     override fun initViews() {
         super.initViews()
+        Log.d("Config", "Config: " + Config.isWalking)
+        startTime = System.currentTimeMillis()
+
         binding.btnWalkingStop.setOnClickListener {
+            pauseTime = System.currentTimeMillis()
+            Config.isWalking = false
             Log.d("Config", "Config: " + Config.isWalking)
+            binding.btnWalkingStop.visibility = View.INVISIBLE
             Sliding()
-            if(Config.isWalking){
+        }
 
-            } else {
+        binding.btnWalkingRestart.setOnClickListener {
+            val pauseStartTime = System.currentTimeMillis() - pauseTime
+            startTime += pauseStartTime
+            Config.isWalking = true
+            binding.btnWalkingStop.visibility = View.VISIBLE
+            Sliding()
+        }
 
+        binding.btnWalkingEnd.setOnClickListener {
+            var roadMapName = ""
+            val myDate = Date()
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            val formattedDate = sdf.format(myDate)
+            val et = EditText(this.requireContext())
+            et.gravity = Gravity.CENTER
+            //getGPS 종료
+            timer?.cancel()
+            timer = null
+            Route.clearPing()
+            val builder = AlertDialog.Builder(this.requireContext())
+                .setTitle("산책로 이름은?")
+                .setView(et)
+                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                    roadMapName = et.text.toString()
+                    Toast.makeText(
+                        this.requireContext(), "$roadMapName",
+                        Toast.LENGTH_SHORT).show()
+                })
+            Log.i("WalkingFrag","$roadMapName")
+            builder.show()
+
+            roadMapName = "tetRoadMap1"
+            endTime = System.currentTimeMillis()
+            durationTime = endTime - startTime
+            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, 1234, formattedDate)
+            Distance.clearDistance()
+
+            view?.let { walkingMode ->
+                Navigation.findNavController(walkingMode)
+                    .navigate(R.id.action_walkingStartFragment_to_walkingHomeFragment)
             }
         }
 
-    }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -131,4 +179,16 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         }
     }
 
+//    private fun toggleSlidingPanel() {
+//        val slidePanel = binding.walkingSlidingFrame
+//        if(isPanelExpanded){
+//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+//        } else {
+//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+//        }
+//    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }
