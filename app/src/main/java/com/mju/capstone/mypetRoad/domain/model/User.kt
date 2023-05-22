@@ -4,9 +4,15 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class User (
-    @SerializedName("name") val name: String,
-    @SerializedName("address") val address: String,
+    @SerializedName("userName") val name: String,
+    @SerializedName("userAddress") val address: String,
     @SerializedName("userId") val userId: String,
-    @SerializedName("password") val password: String,
-    @SerializedName("phone") val phone: String
+    @SerializedName("userPassword") val password: String,
+    @SerializedName("userPhone") val phone: String,
+    @SerializedName("petName") val petName: String,
+    @SerializedName("petAge") val age: Int,
+    @SerializedName("petSex") val sex: String,
+    @SerializedName("petWeight") val weight: Float,
+    @SerializedName("petIsNeutered") val isNeutered: Boolean?,
+    @SerializedName("petSpecies") val species: String
 )

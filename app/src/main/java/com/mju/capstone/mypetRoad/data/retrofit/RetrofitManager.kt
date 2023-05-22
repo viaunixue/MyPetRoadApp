@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.R
+import com.mju.capstone.mypetRoad.data.dto.signUp.LoginResponseDto
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
@@ -23,14 +24,10 @@ import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.MarkerIcons
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -59,8 +56,8 @@ class RetrofitManager {
     ){
         val loginRequest = Login(id, password)
         val loginCall = serverInstance.login(loginRequest)
-        loginCall.enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        loginCall.enqueue(object : Callback<LoginResponseDto> {
+            override fun onResponse(call: Call<LoginResponseDto>, response: Response<LoginResponseDto>) {
                 Log.d("user", "Responce : $response")
                 Log.d("user", "ResponceBody 성공: " + response.body())
                 Log.d("user", "ResponceHeader 성공: " + response.headers())
@@ -68,7 +65,7 @@ class RetrofitManager {
                 Log.d("user", "tk : $jwt")
 
                 if (response.isSuccessful) {
-                    val result : ResponseBody? = response.body()
+                    val result : LoginResponseDto? = response.body()
                     val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
 
                     val editor = sharedPreferences.edit()
@@ -84,7 +81,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
@@ -98,8 +95,16 @@ class RetrofitManager {
         userId: String,
         password: String,
         phone: String,
+        petname: String,
+        petage: Int,
+        petsex: String,
+        petweight: Float,
+        petisNeutered: Boolean?,
+        petspecies: String
     ){
-        val userRequest = User(name, address, userId, password, phone)
+        val userRequest = User(
+            name, address, userId, password, phone, petname, petage, petsex, petweight, petisNeutered, petspecies
+        )
         val userCall = serverInstance.postUser(userRequest)
 
         userCall.enqueue(object : Callback<UserDto> {
@@ -120,35 +125,35 @@ class RetrofitManager {
     }
 
     //애완동물 정보 post
-    fun postPet(
-        name: String,
-        age: Int,
-        sex: String,
-        weight: Float,
-        isNeutered: Boolean?,
-        species: String
-    ){
-        val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-//        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-//        val jwt = sharedPreferences.getString("jwt_token", null)
-        val petCall = serverInstance.postPet(petRequest)
-
-        petCall.enqueue(object : Callback<PetDto> {
-            override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
-                if (response.isSuccessful) {
-                    val result: PetDto? = response.body()
-                    Log.d("pet", "onResponce 성공: " + result?.toString());
-                } else {
-                    Log.d("pet", "onResponce 실패" + response.errorBody()?.string())
-                }
-            }
-
-            override fun onFailure(call: Call<PetDto>, t: Throwable) {
-                // handle error
-                Log.d("pet", "네트워크 에러 : " + t.message.toString())
-            }
-        })
-    }
+//    fun postPet(
+//        name: String,
+//        age: Int,
+//        sex: String,
+//        weight: Float,
+//        isNeutered: Boolean?,
+//        species: String
+//    ){
+//        val petRequest = Pet(name, age, sex, weight, isNeutered, species)
+////        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+////        val jwt = sharedPreferences.getString("jwt_token", null)
+//        val petCall = serverInstance.postPet(petRequest)
+//
+//        petCall.enqueue(object : Callback<PetDto> {
+//            override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
+//                if (response.isSuccessful) {
+//                    val result: PetDto? = response.body()
+//                    Log.d("pet", "onResponce 성공: " + result?.toString());
+//                } else {
+//                    Log.d("pet", "onResponce 실패" + response.errorBody()?.string())
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<PetDto>, t: Throwable) {
+//                // handle error
+//                Log.d("pet", "네트워크 에러 : " + t.message.toString())
+//            }
+//        })
+//    }
 
     //실시간 위치표시
     fun getGPS(
