@@ -2,22 +2,24 @@ package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.preference.PreferenceManager
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.domain.model.GpsModel
+import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
-import com.mju.capstone.mypetRoad.data.dto.signUp.LoginDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.PingRequestDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Distance
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -29,9 +31,10 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
-import kotlin.time.Duration
 
 class RetrofitManager {
     companion object{
@@ -40,8 +43,8 @@ class RetrofitManager {
 
     private val serverInstance = RetrofitInstance.serverService
     private val trackerInstance = RetrofitInstance.trackerService
-    val hashMap : HashMap<String, List<TrackerDto>> = HashMap()
-    val pl : MutableList<TrackerDto> = mutableListOf()
+    val hashMap : HashMap<String, List<PingRequestDto>> = HashMap()
+    val pl : MutableList<PingRequestDto> = mutableListOf()
     val key = "ping_list"
 
     fun postLogin(
@@ -142,6 +145,7 @@ class RetrofitManager {
         })
     }
 
+    //실시간 위치표시
     fun getGPS(
         naverMap: NaverMap,
         context: Context
@@ -151,18 +155,7 @@ class RetrofitManager {
         trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
             override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
                 if(response.isSuccessful){
-                    var result: TrackerDto? = response.body()
-                    if(Config.isWalking){
-                        if(!hashMap.containsKey(key)){
-                            if (result != null) {
-                                pl.add(result)
-                            }
-                        }
-                    } else {
-                        if(hashMap.containsKey(key)){
-                            hashMap[key] = pl
-                        }
-                    }
+                    val result: TrackerDto? = response.body()
                     if (result != null) {
                         naverMap.let {
                             val coord = LatLng(result.latitude, result.longitude)
@@ -187,61 +180,125 @@ class RetrofitManager {
         })
     }
 
+    //핑 받아서 실시간으로 경로그리기
     fun getPings(
         naverMap: NaverMap,
-        marker: Marker,
+    ) {
+        trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<PingRequestDto>, response: Response<PingRequestDto>) {
+                //
+                if(response.isSuccessful){
+                    val result: PingRequestDto? = response.body()
+                    if (result != null) {
+                        val coord = LatLng(result.latitude, result.longitude)
+                        var differenceInSeconds: Long = 0
+                        if(Config.isWalking){
+                            if(!hashMap.containsKey(key)){
+                                pl.add(result)
+                                hashMap[key] = pl
+                            }else{
+                                //마지막 값과 다른 값일 경우
+                                if(!hashMap[key]?.last()?.equals(result)!!){
+                                    hashMap[key]?.let { Distance.addDistance(it, coord) }
+
+                                    val dateString1 = hashMap[key]?.last()?.createTime
+                                    val dateString2 = result.createTime
+
+                                    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+                                    val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat)
+                                    val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
+
+                                    val duration: Duration = Duration.between(localDateTime1, localDateTime2)
+                                    differenceInSeconds = duration.seconds
+                                    Log.d("differenceInSeconds", "$differenceInSeconds")
+                                    pl.add(result)
+                                    hashMap[key] = pl
+                                }
+                            }
+                        }
+                        naverMap.let {
+                            Log.i("ping", hashMap[key].toString())
+
+                            Route.addPing(coord, differenceInSeconds)
+                            Route.setMap(naverMap)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = coord
+
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+                        }
+                    }
+                    Log.d("GPS", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("GPS", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<PingRequestDto>, t: Throwable) {
+                Log.d("GPS", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    //list받아서 경로그리기
+    fun drawRoadMap(
+        naverMap: NaverMap,
         context: Context
     ) {
         val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt_token", null)
-        if (jwt != null) {
-            trackerInstance.getPings(jwt).enqueue(object : Callback<WalkingDto>{
-                override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
-                    if(response.isSuccessful){
-                        var result: WalkingDto? = response.body()
-                        if (result != null) {
-                            marker.position = LatLng(result.startPoint.latitude, result.startPoint.longitude)
-                            marker.map = naverMap // 고씨네
-                            marker.captionText = "GPS 위치마커"
-                        }
-                        Log.d("Ping", "onResponce 성공: " + result?.toString());
-                    }
-                    else{
-                        Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
-                    }
-                }
-                override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                    Log.d("Ping", "네트워크 에러 : " + t.message.toString())
-                }
-            })
-        } else {
-            //TODO 토큰 만료됐을 시 처리
-        }
-    }
-
-    fun WalkingOver(
-        durationTime : Long,
-        roadMapName : String,
-        travelDistance : Double,
-        burnedCalories : Int,
-        currentDate : Date
-    ){
-        val p : MutableList<TrackerDto> = hashMap[key] as MutableList<TrackerDto>
-        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
-
-        print("walkingRequestDto: $walkingRequestDto")
-        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
-            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+        trackerInstance.getGpsList().enqueue(object : Callback<List<PingRequestDto>>{
+            override fun onResponse(call: Call<List<PingRequestDto>>, response: Response<List<PingRequestDto>>) {
                 if(response.isSuccessful){
-                    var result: WalkingDto? = response.body()
+                    var result: List<PingRequestDto>? = response.body()
+                    if (result != null) {
+                        for(i in result){
+                            naverMap.let {
+                                val coord = LatLng(i.latitude, i.longitude)
+                                Log.e("ping", "$i")
+                                Route.addPing(coord, 0)
+                                Route.setMap(naverMap)
+                            }
+                        }
+                    }
                     Log.d("Ping", "onResponce 성공: " + result?.toString());
                 }
                 else{
                     Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
-            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+            override fun onFailure(call: Call<List<PingRequestDto>>, t: Throwable) {
                 Log.d("Ping", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    //산책끝나면 정보전송
+    fun WalkingOver(
+        durationTime: Long,
+        roadMapName: String,
+        travelDistance: Double,
+        burnedCalories: Int,
+        currentDate: String
+    ){
+        val p : MutableList<PingRequestDto> = hashMap[key] as MutableList<PingRequestDto>
+        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
+
+        Log.i("WalkOver", "$walkingRequestDto")
+        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
+            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                if(response.isSuccessful){
+                    var result: WalkingDto? = response.body()
+                    Log.d("WalkOver", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+                Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
             }
         })
     }
