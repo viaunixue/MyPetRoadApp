@@ -7,16 +7,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.R
-import com.mju.capstone.mypetRoad.data.dto.signUp.LoginResponseDto
+import com.mju.capstone.mypetRoad.data.dto.signUp.UserResponseDto
 import com.mju.capstone.mypetRoad.domain.model.Login
-import com.mju.capstone.mypetRoad.domain.model.Pet
-import com.mju.capstone.mypetRoad.domain.model.User
-import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
-import com.mju.capstone.mypetRoad.data.dto.signUp.UserDto
+import com.mju.capstone.mypetRoad.domain.model.SignUp
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.Ping
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.PingRequestDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
+import com.mju.capstone.mypetRoad.domain.model.Pet
+import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
@@ -29,11 +29,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.Duration
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
-import java.util.Date
 import kotlin.collections.HashMap
 
 class RetrofitManager {
@@ -56,8 +53,8 @@ class RetrofitManager {
     ){
         val loginRequest = Login(id, password)
         val loginCall = serverInstance.login(loginRequest)
-        loginCall.enqueue(object : Callback<LoginResponseDto> {
-            override fun onResponse(call: Call<LoginResponseDto>, response: Response<LoginResponseDto>) {
+        loginCall.enqueue(object : Callback<UserResponseDto> {
+            override fun onResponse(call: Call<UserResponseDto>, response: Response<UserResponseDto>) {
                 Log.d("user", "Responce : $response")
                 Log.d("user", "ResponceBody 성공: " + response.body())
                 Log.d("user", "ResponceHeader 성공: " + response.headers())
@@ -65,7 +62,13 @@ class RetrofitManager {
                 Log.d("user", "tk : $jwt")
 
                 if (response.isSuccessful) {
-                    val result : LoginResponseDto? = response.body()
+                    val result : UserResponseDto? = response.body()
+                    if (result != null) {
+                        Config.user = User (result.name, result.address, result.userId, result.phone)
+                        Config.pet = Pet (
+                            result.myPet.id, result.myPet.name, result.myPet.age,
+                            result.myPet.sex, result.myPet.weight, result.myPet.isNeutered, result.myPet.species)
+                    }
                     val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
 
                     val editor = sharedPreferences.edit()
@@ -81,7 +84,7 @@ class RetrofitManager {
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponseDto>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
@@ -102,22 +105,22 @@ class RetrofitManager {
         petisNeutered: Boolean?,
         petspecies: String
     ){
-        val userRequest = User(
+        val signUpRequest = SignUp(
             name, address, userId, password, phone, petname, petage, petsex, petweight, petisNeutered, petspecies
         )
-        val userCall = serverInstance.postUser(userRequest)
+        val userCall = serverInstance.postUser(signUpRequest)
 
-        userCall.enqueue(object : Callback<UserDto> {
-            override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
+        userCall.enqueue(object : Callback<UserResponseDto> {
+            override fun onResponse(call: Call<UserResponseDto>, response: Response<UserResponseDto>) {
                 if (response.isSuccessful) {
-                    val result: UserDto? = response.body()
+                    val result: UserResponseDto? = response.body()
                     Log.d("user", "onResponce 성공: " + result?.toString());
                 } else {
                     Log.d("user", "onResponce 실패" + response.errorBody()?.string())
                 }
             }
 
-            override fun onFailure(call: Call<UserDto>, t: Throwable) {
+            override fun onFailure(call: Call<UserResponseDto>, t: Throwable) {
                 // handle error
                 Log.d("user", "네트워크 에러 : " + t.message.toString())
             }
@@ -345,7 +348,7 @@ class RetrofitManager {
             )
 
             Log.i("WalkOver", "$walkingRequestDto")
-            serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto> {
+            serverInstance.postWalk(Config.pet.id, walkingRequestDto).enqueue(object : Callback<WalkingDto> {
                 override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
                     if (response.isSuccessful) {
                         var result: WalkingDto? = response.body()
@@ -362,5 +365,65 @@ class RetrofitManager {
         } else {
             Log.d("WalkOver", "pingList is null")
         }
+    }
+
+    fun getLastestWalk(
+        naverMap: NaverMap,
+        context: Context
+    ) {
+        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val jwt = sharedPreferences.getString("jwt_token", null)
+        serverInstance.getLastestWalk(Config.pet.id).enqueue(object : Callback<WalkingDto>{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                if(response.isSuccessful){
+                    val result: WalkingDto? = response.body()
+                    val savedSl: MutableList<Long> = mutableListOf()
+                    val savedCl: MutableList<LatLng> = mutableListOf()
+                    if (result != null) {
+                        // 오늘산책여부
+                        Config.todayIsWalked = Config.isDateToday(result.walkDate)
+
+                        for((index, value) in result.roadMap.pingList.withIndex()) {
+                            val coord = LatLng(value.latitude, value.longitude)
+                            var differenceInSeconds: Long = 0 // 두 핑 사이의 시간차 (초기값 0)
+                            savedCl.add(coord)
+
+                            if(index > 0){
+                                val dateString1 = result.roadMap.pingList[index - 1].createTime // 이전 핑 시간
+                                val dateString2 = value.createTime // 다음 핑 시간
+
+                                val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX") // 시간 포멧
+                                val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat) // String -> LocalDateTime 변경 + 포멕 적용
+                                val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
+
+                                val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
+                                differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
+                                Log.d("differenceInSeconds", "$differenceInSeconds")
+                                savedSl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
+                            }
+                        }
+                        naverMap.let {
+                            // coords 리스트와 선의 시간 가중치 리스트도 넘김
+                            Route.addPing(savedCl, savedSl)
+                            Route.setMap(naverMap)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = savedCl.last()
+
+                            it.moveCamera(CameraUpdate.scrollTo(savedCl.last()))
+                        }
+                    }
+                    Log.d("LastestWalk", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("LastestWalk", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+                Log.d("LastestWalk", "네트워크 에러 : " + t.message.toString())
+            }
+        })
     }
 }
