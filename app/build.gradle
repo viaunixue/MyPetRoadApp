@@ -102,6 +102,12 @@ dependencies {
     // Recyclerview
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0-alpha04"
+
+    // CardView
+    implementation "androidx.cardview:cardview:1.0.0"
+
     // Navigation
     def navi_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$navi_version"

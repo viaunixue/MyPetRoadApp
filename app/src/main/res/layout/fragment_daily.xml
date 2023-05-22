@@ -29,7 +29,7 @@
         <ImageView
             android:id="@+id/dailyBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="210dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/rectangle_analysis"
             android:layout_marginTop="45sp"
@@ -46,7 +46,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="@+id/dailyBox"
             app:layout_constraintStart_toStartOf="@+id/dailyBox"
             app:layout_constraintTop_toTopOf="@+id/dailyBox" />
@@ -89,6 +89,19 @@
             app:layout_constraintTop_toBottomOf="@id/dailyCalorie"
             app:layout_constraintEnd_toEndOf="@+id/dailyBox"
             app:layout_constraintStart_toStartOf="@+id/dailyBox" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/dailyViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:foregroundGravity="center"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@+id/dailyBox"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

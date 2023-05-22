@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
@@ -293,30 +294,68 @@ class RetrofitManager {
     }
 
     //산책끝나면 정보전송
+//    fun WalkingOver(
+//        durationTime: Long,
+//        roadMapName: String,
+//        travelDistance: Double,
+//        burnedCalories: Int,
+//        currentDate: String
+//    ){
+//        val p : MutableList<PingRequestDto> = hashMap[key] as MutableList<PingRequestDto>
+//        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
+//
+//        Log.i("WalkOver", "$walkingRequestDto")
+//        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
+//            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+//                if(response.isSuccessful){
+//                    var result: WalkingDto? = response.body()
+//                    Log.d("WalkOver", "onResponce 성공: " + result?.toString());
+//                }
+//                else{
+//                    Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
+//                }
+//            }
+//            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+//                Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
+//            }
+//        })
+//    }
     fun WalkingOver(
         durationTime: Long,
         roadMapName: String,
         travelDistance: Double,
         burnedCalories: Int,
         currentDate: String
-    ){
-        val p : MutableList<PingRequestDto> = hashMap[key] as MutableList<PingRequestDto>
-        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
+    ) {
+        val pingList = hashMap[key] as? MutableList<PingRequestDto>
 
-        Log.i("WalkOver", "$walkingRequestDto")
-        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
-            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
-                if(response.isSuccessful){
-                    var result: WalkingDto? = response.body()
-                    Log.d("WalkOver", "onResponce 성공: " + result?.toString());
+        if (pingList != null) {
+            val walkingRequestDto = WalkingRequestDto(
+                roadMapName,
+                durationTime,
+                travelDistance,
+                burnedCalories,
+                pingList,
+                currentDate
+            )
+
+            Log.i("WalkOver", "$walkingRequestDto")
+            serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto> {
+                override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
+                    if (response.isSuccessful) {
+                        var result: WalkingDto? = response.body()
+                        Log.d("WalkOver", "onResponce 성공: " + result?.toString())
+                    } else {
+                        Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
+                    }
                 }
-                else{
-                    Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
+
+                override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
+                    Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
                 }
-            }
-            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-                Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
-            }
-        })
+            })
+        } else {
+            Log.d("WalkOver", "pingList is null")
+        }
     }
 }
