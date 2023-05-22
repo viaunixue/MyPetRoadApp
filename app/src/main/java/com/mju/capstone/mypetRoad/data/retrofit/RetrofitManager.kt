@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import com.mju.capstone.mypetRoad.R
-import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
@@ -31,9 +29,13 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.time.Duration
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
+import java.util.Date
 import kotlin.collections.HashMap
 
 class RetrofitManager {
@@ -44,8 +46,10 @@ class RetrofitManager {
     private val serverInstance = RetrofitInstance.serverService
     private val trackerInstance = RetrofitInstance.trackerService
     val hashMap : HashMap<String, List<PingRequestDto>> = HashMap()
-    val pl : MutableList<PingRequestDto> = mutableListOf()
-    val key = "ping_list"
+    val pl : MutableList<PingRequestDto> = mutableListOf() // 핑 리스트
+    val cl : MutableList<LatLng> = mutableListOf() // coords 리스트
+    val key = "ping_list" // 해쉬 키값
+    val sl : MutableList<Long> = mutableListOf() // differenceInSeconds 리스트
 
     fun postLogin(
         id: String,
@@ -192,26 +196,31 @@ class RetrofitManager {
                     val result: PingRequestDto? = response.body()
                     if (result != null) {
                         val coord = LatLng(result.latitude, result.longitude)
-                        var differenceInSeconds: Long = 0
-                        if(Config.isWalking){
-                            if(!hashMap.containsKey(key)){
+                        var differenceInSeconds: Long = 0 // 두 핑 사이의 시간차 (초기값 0)
+                        if(Config.isWalking){ // 산책 중일 시
+                            if(!hashMap.containsKey(key)){ // 해쉬맵에 해당 키가 없을시 (첫 핑)
                                 pl.add(result)
+                                cl.add(coord) // coord 리스트에 추가
                                 hashMap[key] = pl
-                            }else{
-                                //마지막 값과 다른 값일 경우
+                            }else{ // 해쉬맵에 해당 키가 존재 (첫 핑 이후)
+                                //마지막 값과 다른 값일 경우 (트래커 위치가 변경시)
                                 if(!hashMap[key]?.last()?.equals(result)!!){
+                                    cl.add(coord) // coord 리스트에 추가
                                     hashMap[key]?.let { Distance.addDistance(it, coord) }
 
-                                    val dateString1 = hashMap[key]?.last()?.createTime
-                                    val dateString2 = result.createTime
+                                    val dateString1 = hashMap[key]?.last()?.createTime // 기존 핑 시간
+                                    val dateString2 = result.createTime // 지금 받은 핑 시간
 
-                                    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-                                    val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat)
+                                    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX") // 시간 포멧
+                                    val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat) // String -> LocalDateTime 변경 + 포멕 적용
                                     val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
 
-                                    val duration: Duration = Duration.between(localDateTime1, localDateTime2)
-                                    differenceInSeconds = duration.seconds
+                                    val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
+                                    differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
                                     Log.d("differenceInSeconds", "$differenceInSeconds")
+                                    sl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
+//                                    differenceInSeconds =
+//                                        (localDate1 - localDate2) / 1000
                                     pl.add(result)
                                     hashMap[key] = pl
                                 }
@@ -220,8 +229,16 @@ class RetrofitManager {
                         naverMap.let {
                             Log.i("ping", hashMap[key].toString())
 
-                            Route.addPing(coord, differenceInSeconds)
-                            Route.setMap(naverMap)
+//                            Route.addPing(coord, differenceInSeconds)
+//                            Route.setMap(naverMap)
+
+
+                            // 점이 3개 이상일때 (즉, 선이 2개 일때부터)
+                            if(cl.size > 2) {
+                                // coords 리스트와 선의 시간 가중치 리스트도 넘김
+                                Route.addPing(cl, sl)
+                                Route.setMap(naverMap)
+                            }
 
                             val locationOverlay = it.locationOverlay
                             locationOverlay.isVisible = true
@@ -258,7 +275,7 @@ class RetrofitManager {
                             naverMap.let {
                                 val coord = LatLng(i.latitude, i.longitude)
                                 Log.e("ping", "$i")
-                                Route.addPing(coord, 0)
+//                                Route.addPing(coord, 0)
                                 Route.setMap(naverMap)
                             }
                         }
