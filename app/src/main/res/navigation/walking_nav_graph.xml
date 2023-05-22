@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/walking_nav_graph"
+    app:startDestination="@id/walkingHomeFragment">
+
+    <fragment
+        android:id="@+id/walkingHomeFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingHomeFragment"
+        android:label="WalkingHomeFragment"
+        tools:layout="@layout/fragment_walking_home">
+        <action
+            android:id="@+id/action_walkingHomeFragment_to_walkingStartFragment"
+            app:destination="@id/walkingStartFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/walkingStartFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingStartFragment"
+        android:label="fragment_walking_start"
+        tools:layout="@layout/fragment_walking_start" >
+        <action
+            android:id="@+id/action_walkingStartFragment_to_walkingHomeFragment"
+            app:destination="@id/walkingHomeFragment" />
+    </fragment>
+
+
+</navigation>

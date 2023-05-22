@@ -17,6 +17,7 @@
     <string name="daily_analysis">일간</string>
     <string name="weekly_analysis">주간</string>
     <string name="monthly_analysis">월간</string>
+    <string name="entire_analysis">전체</string>
     <string name="permission_rationale">Permission rationale</string>
     <string name="text_gps_on">GPS ON</string>
     <string name="text_network_on">Network ON</string>
@@ -61,4 +62,28 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string-array name="custom_weekdays">
+        <item>일</item>
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+        <item>토</item>
+    </string-array>
+
+    <string-array name="custom_months">
+        <item>1월</item>
+        <item>2월</item>
+        <item>3월</item>
+        <item>4월</item>
+        <item>5월</item>
+        <item>6월</item>
+        <item>7월</item>
+        <item>8월</item>
+        <item>9월</item>
+        <item>10월</item>
+        <item>11월</item>
+        <item>12월</item>
+    </string-array>
 </resources>

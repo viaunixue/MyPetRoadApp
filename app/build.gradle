@@ -49,7 +49,6 @@ apply plugin: 'com.google.gms.google-services'
 
 dependencies {
 
-    implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.browser:browser:1.5.0"
     implementation "androidx.core:core-ktx:1.7.0"
@@ -152,10 +151,17 @@ dependencies {
     // CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    // firebase
-//    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
-//    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
-//    implementation 'com.google.firebase:firebase-bom:31.5.0'
-//    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+    // MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // SlidingPanel
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+
+    // Ted Permission - RxJava3
+    implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
+
+    // Calendar
+    def calendar_version = "2.0.1"
+    implementation "com.github.prolificinteractive:material-calendarview:$calendar_version"
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
 }
