@@ -1,10 +1,12 @@
 package com.mju.capstone.mypetRoad.views.feature.walking
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.graphics.Color
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import com.mju.capstone.mypetRoad.R
 import android.util.Log
 import android.view.Gravity
 import android.widget.EditText
@@ -20,9 +22,7 @@ import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,8 +33,9 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallback {
+class WalkingFragment : BaseFragment<FragmentWalkingBinding>() {
 
+    private lateinit var navController: NavController
     override fun getViewBinding() =  FragmentWalkingBinding.inflate(layoutInflater)
 
     private val LOCATION_PERMISSION_REQUEST_CODE : Int = 1000
@@ -96,7 +97,6 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 timer?.cancel()
                 timer = null
                 Route.clearPing()
-                Distance.clearDistance()
                 val builder = AlertDialog.Builder(this.requireContext())
                     .setTitle("산책로 이름은?")
                     .setView(et)
@@ -114,7 +114,8 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>(), OnMapReadyCallba
                 durationTime = endTime - startTime
                 binding.btnWalkingStart.text = "산책 시작"
                 binding.btnWalkingStart.setBackgroundColor(Color.BLUE)
-                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, 0.123, 1234, formattedDate)
+                RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, 1234, formattedDate)
+                Distance.clearDistance()
             }
 //            showToast("산책 시작!")
         }

@@ -1,15 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.feature.analysis.MonthlyFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="월간 활동량 분석" />
+        tools:context=".views.feature.analysis.MonthlyFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/monthlyBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월간 통계"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/monthlyBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/monthlyBox"
+            android:layout_width="wrap_content"
+            android:layout_height="210dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/rectangle_analysis"
+            android:layout_marginTop="45sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.492" />
+
+        <TextView
+            android:id="@+id/monthlyTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평균 산책 시간 : 1시간 12분"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/monthlyBox"
+            app:layout_constraintStart_toStartOf="@+id/monthlyBox"
+            app:layout_constraintTop_toTopOf="@+id/monthlyBox" />
+
+        <TextView
+            android:id="@+id/monthlyDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 이동 거리 : 18.2 km"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/monthlyTime"
+            app:layout_constraintEnd_toEndOf="@+id/monthlyBox"
+            app:layout_constraintStart_toStartOf="@+id/monthlyBox" />
+
+        <TextView
+            android:id="@+id/monthlyCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 소모 칼로리 : 4,102 kal"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/monthlyDistance"
+            app:layout_constraintEnd_toEndOf="@+id/monthlyBox"
+            app:layout_constraintStart_toStartOf="@+id/monthlyBox" />
+
+        <TextView
+            android:id="@+id/monthlySteps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="총 걸음 수 : 14324 걸음"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/monthlyCalories"
+            app:layout_constraintEnd_toEndOf="@+id/monthlyBox"
+            app:layout_constraintStart_toStartOf="@+id/monthlyBox" />
+
+<!--        <com.prolificinteractive.materialcalendarview.MaterialCalendarView-->
+<!--            android:id="@+id/calendarView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:theme="@style/CalenderViewCustom"-->
+<!--            android:layout_margin="20dp"-->
+<!--            app:mcv_showOtherDates="all"-->
+<!--            app:mcv_selectionColor="#00F"-->
+<!--            app:mcv_selectionMode="range"-->
+<!--            app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"-->
+<!--            app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/monthlyBox"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            tools:ignore="MissingConstraints" />-->
+
+        <CalendarView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/monthlyBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

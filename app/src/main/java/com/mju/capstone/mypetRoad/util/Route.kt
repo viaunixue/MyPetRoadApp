@@ -44,7 +44,6 @@ object Route {
 
     val path = MultipartPathOverlay()
 
-
     fun addPing(latLngList: MutableList<LatLng>, sl: List<Long>) {
 //        if(latLngList.size < 3) {
 //            val latlng = listOf(latLngList[latLngList.size-2], latLngList.last())
@@ -88,7 +87,6 @@ object Route {
         // 각 리스트를 대입
         path.coordParts = cdList
         path.colorParts = cdColorList
-
     }
 
 

@@ -22,6 +22,9 @@ import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.MarkerIcons
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -146,6 +149,7 @@ class RetrofitManager {
         })
     }
 
+    //실시간 위치표시
     fun getGPS(
         naverMap: NaverMap,
         context: Context
@@ -165,6 +169,7 @@ class RetrofitManager {
                             locationOverlay.position = coord
 
                             it.moveCamera(CameraUpdate.scrollTo(coord))
+                            OverlayImage.fromResource(R.drawable.marker_icon)
                         }
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());
@@ -179,6 +184,7 @@ class RetrofitManager {
         })
     }
 
+    //핑 받아서 실시간으로 경로그리기
     fun getPings(
         naverMap: NaverMap,
     ) {
@@ -253,6 +259,7 @@ class RetrofitManager {
         })
     }
 
+    //list받아서 경로그리기
     fun drawRoadMap(
         naverMap: NaverMap,
         context: Context
@@ -285,6 +292,7 @@ class RetrofitManager {
         })
     }
 
+    //산책끝나면 정보전송
     fun WalkingOver(
         durationTime: Long,
         roadMapName: String,

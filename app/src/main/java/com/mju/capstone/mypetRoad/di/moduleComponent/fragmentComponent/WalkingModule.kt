@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.MarkerFactory
 import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.NaverMapHandler
 import com.mju.capstone.mypetRoad.views.feature.walking.WalkingFragment
+import com.mju.capstone.mypetRoad.views.feature.walking.WalkingHomeFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import dagger.Module
@@ -19,10 +20,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 object WalkingModule {
     // fragment 매개변수는 Dagger Hilt가 자동으로 제공하는 의존성
     @Provides
-    fun provideWalkingMapFragment(fragment: Fragment) = fragment as WalkingFragment
+    fun provideWalkingMapFragment(fragment: Fragment) = fragment as WalkingHomeFragment
 
     @Provides
-    fun provideWalkingNaverMap(walkingFragment: WalkingFragment) = walkingFragment. naverMap
+    fun provideWalkingNaverMap(walkingHomeFragment : WalkingHomeFragment) = walkingHomeFragment.naverMap
 
     @Provides
     fun provideWalkingMarkerFactory() = MarkerFactory()
