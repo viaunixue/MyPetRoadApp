@@ -55,7 +55,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val petNameValue = "이름 : ${Config.pet.name}"
         val petAgeValue = "나이 : ${Config.pet.age}"
         val petIsWalkedValue = if(Config.todayIsWalked){
@@ -63,21 +66,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         } else {
             "오늘 산책 안함"
         }
-        Log.d("home", petNameValue)
-        Log.d("home", petAgeValue)
-        Log.d("home", petIsWalkedValue)
         binding.petName = petNameValue
         binding.petAge = petAgeValue
         binding.petIsWalked = petIsWalkedValue
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding.executePendingBindings()
-        return binding.root
     }
 
     override fun onMapReady(map: NaverMap) {
