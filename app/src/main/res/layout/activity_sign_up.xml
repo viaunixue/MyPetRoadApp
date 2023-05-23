@@ -69,6 +69,7 @@
                 android:layout_marginTop="10dp"
                 android:focusable="false"
                 android:hint="@string/address_hint"
+                android:text="주소주소"
                 android:background="@drawable/login_textbox"
                 app:layout_constraintStart_toStartOf="@id/userPhone"
                 app:layout_constraintTop_toBottomOf="@id/userPhone" />
@@ -225,7 +226,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
                 android:background="@drawable/login_textbox"
-                android:clickable="false"
+                android:enabled="false"
                 android:text="완료"
                 android:textColor="@color/black"
                 android:textSize="32sp"
