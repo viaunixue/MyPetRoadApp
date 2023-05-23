@@ -17,6 +17,7 @@ import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
+import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
@@ -226,6 +227,7 @@ class RetrofitManager {
 
                                 val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
                                 differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
+                                Calories.updateCalories(differenceInSeconds) // 소모 칼로리 업데이트
                                 Log.d("differenceInSeconds", "$differenceInSeconds")
                                 sl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
 //                                    differenceInSeconds =
@@ -351,6 +353,7 @@ class RetrofitManager {
                 override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
                     if (response.isSuccessful) {
                         var result: WalkingDto? = response.body()
+                        Calories.clearCalories() // 칼로리 변수 초기화
                         Log.d("WalkOver", "onResponce 성공: " + result?.toString())
                     } else {
                         Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())

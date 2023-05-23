@@ -20,6 +20,7 @@ import androidx.navigation.Navigation
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingStartBinding
+import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
@@ -121,7 +122,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             roadMapName = "tetRoadMap1"
             endTime = System.currentTimeMillis()
             durationTime = endTime - startTime / 1000
-            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, 1234, formattedDate)
+            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance()
 
             view?.let { walkingMode ->

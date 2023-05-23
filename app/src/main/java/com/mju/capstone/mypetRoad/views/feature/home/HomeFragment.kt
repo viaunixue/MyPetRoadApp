@@ -4,13 +4,19 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.databinding.ObservableField
 import androidx.fragment.app.viewModels
+import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentHomeBinding
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
+import com.mju.capstone.mypetRoad.views.base.UiState
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -18,10 +24,12 @@ import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
+    override fun getViewBinding() = FragmentHomeBinding.inflate(layoutInflater)
     lateinit var naverMap: NaverMap
     lateinit var mainActivity: MainActivity
     private lateinit var  uiScope: CoroutineScope
@@ -35,7 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         // Context를 액티비티로 형변환해서 할당(토큰 받아올 때 쓰임)
         mainActivity = context as MainActivity
     }
-    override fun getViewBinding() = FragmentHomeBinding.inflate(layoutInflater)
 
     override fun initState(){
         super.initState()
@@ -56,10 +63,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         } else {
             "오늘 산책 안함"
         }
-        //데이터바인딩 오류
-//        binding.homename.text = petNameValue
-//        binding.homeage.text = petAgeValue
-//        binding.homeIswalked.text = petIsWalkedValue
+        Log.d("home", petNameValue)
+        Log.d("home", petAgeValue)
+        Log.d("home", petIsWalkedValue)
+        binding.petName = petNameValue
+        binding.petAge = petAgeValue
+        binding.petIsWalked = petIsWalkedValue
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding.executePendingBindings()
+        return binding.root
     }
 
     override fun onMapReady(map: NaverMap) {
