@@ -19,7 +19,7 @@
     <color name="tab_grey">#F3F3F3</color>
     <color name="grey">#EFEFEF</color>
     <color name="gray_cc">#cccccc</color>
-
+    <color name="colorPrimaryDark">#00574B</color>
     <color name="color_dark_000000_ffffff">#000000</color>
     <color name="color_dark_ffffff_000000">#ffffff</color>
 </resources>
