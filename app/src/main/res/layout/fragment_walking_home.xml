@@ -19,6 +19,37 @@
             android:layout_height="match_parent"
             android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingHomeFragment"/>
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/walkingLogViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:foregroundGravity="center"
+            android:overScrollMode="never"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_walking_start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/log_right_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_keyboard_arrow_right_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
+            app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
+
+        <ImageView
+            android:id="@+id/log_left_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_keyboard_arrow_left_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
+            app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_walking_start"
             android:layout_width="match_parent"

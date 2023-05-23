@@ -1,6 +1,5 @@
 package com.mju.capstone.mypetRoad.views.feature.mygps.myGpsLocation
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mju.capstone.mypetRoad.data.dto.searchAddress.MapSearchInfoDto
 import com.mju.capstone.mypetRoad.databinding.ActivityMyGpsLocationBinding
 import com.mju.capstone.mypetRoad.views.MainActivity
-import com.mju.capstone.mypetRoad.views.base.BaseActivity
-import com.mju.capstone.mypetRoad.views.feature.login.SignUpActivity
 import com.mju.capstone.mypetRoad.views.feature.map.searchAddress.SearchAddressActivity
-import com.mju.capstone.mypetRoad.views.feature.mygps.mapGpsSettings.MapGpsSettingActivity
-import com.mju.capstone.mypetRoad.widget.RecentAddrAdapter
+import com.mju.capstone.mypetRoad.widget.Adapter.RecentAddrAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
