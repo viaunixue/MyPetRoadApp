@@ -35,14 +35,11 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
 
     private val LOCATION_PERMISSION_REQUEST_CODE : Int = 1000
 
-    private lateinit var navController: NavController
     private lateinit var uiScope: CoroutineScope
     private lateinit var locationSource: FusedLocationSource
     lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
-    private var timer: Timer? = null
     lateinit var mainActivity: MainActivity
-    private var startTime : Long = 0
 
 
     override fun onAttach(context: Context) {
@@ -82,15 +79,6 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
             lightness = -0.5f // 지도 밝기
             buildingHeight = 0.8f // 건물 높이
         }
-
-        timer = Timer()
-
-        //1초마다 getGPS
-        timer?.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                RetrofitManager.instance.getGPS(naverMap, mainActivity);
-            }
-        }, 0, 1000)
     }
 
 }

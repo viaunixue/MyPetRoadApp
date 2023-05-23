@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.Date
 
 @Parcelize
-data class LoginResponseDto(
+data class UserResponseDto(
     @SerializedName("name") @Expose val name: String,
     @SerializedName("address") @Expose val address: String,
     @SerializedName("userId") @Expose val userId: String,

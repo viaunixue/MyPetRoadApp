@@ -11,37 +11,6 @@ import kotlin.properties.Delegates
 
 object Route {
 
-//    val path = MultipartPathOverlay()
-//    val coordParts = mutableListOf<MutableList<LatLng>>(
-////        mutableListOf<LatLng>(),//가장 옅은 색
-//    )
-//    val colorParts = mutableListOf<MultipartPathOverlay.ColorPart>(
-////        MultipartPathOverlay.ColorPart(
-////            Color.RED, Color.WHITE, Color.GRAY, Color.LTGRAY),
-//    )
-//    val coord = mutableListOf<LatLng>()
-
-
-
-//    fun addPing(latLng: LatLng, differenceInSeconds: Long){
-//
-//        if(differenceInSeconds < 11) {
-////            colorParts.add()
-//        } else if(differenceInSeconds in 11..19) {
-//
-//        } else {
-//
-//        }
-//        //첫 add
-//        if(coordParts[1].size < 2) {
-//            coordParts[1].add(latLng)
-//        }
-//        coordParts[1].add(latLng)
-//
-//        path.coordParts = coordParts
-//        path.colorParts = colorParts
-//    }
-
     val path = MultipartPathOverlay()
 
     fun addPing(latLngList: MutableList<LatLng>, sl: List<Long>) {

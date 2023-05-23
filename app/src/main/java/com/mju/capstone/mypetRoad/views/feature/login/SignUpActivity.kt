@@ -73,11 +73,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                         && binding.petSex.checkedRadioButtonId != -1
                         && binding.isNeutered.checkedRadioButtonId != -1
                     ) {
-                        binding.signBtn.isClickable = true
+                        binding.signBtn.isEnabled = true
                         binding.signBtn.setBackgroundResource(R.drawable.login_btn)
                         binding.signBtn.setTextColor(getColor(R.color.white))
                     } else {
-                        binding.signBtn.isClickable = false
+                        binding.signBtn.isEnabled = false
                         binding.signBtn.setBackgroundResource(R.drawable.login_textbox)
                         binding.signBtn.setTextColor(getColor(R.color.black))
                     }
@@ -92,11 +92,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                 if(isFilled
                     && binding.petSex.checkedRadioButtonId != -1
                     && binding.isNeutered.checkedRadioButtonId != -1 ) {
-                    binding.signBtn.isClickable = true
+                    binding.signBtn.isEnabled = true
                     binding.signBtn.setBackgroundResource(R.drawable.login_btn)
                     binding.signBtn.setTextColor(getColor(R.color.white))
                 } else {
-                    binding.signBtn.isClickable = false
+                    binding.signBtn.isEnabled = false
                     binding.signBtn.setBackgroundResource(R.drawable.login_textbox)
                     binding.signBtn.setTextColor(getColor(R.color.black))
                 }
@@ -120,7 +120,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         }
 
         signBtn.setOnClickListener {
-            performRegister()
+            if(signBtn.isEnabled){
+                performRegister()
+                this@SignUpActivity.finish()
+            }
         }
         eye.setOnClickListener {
             showAndHide()
