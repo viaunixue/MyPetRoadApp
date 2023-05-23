@@ -96,7 +96,7 @@
 
         <com.naver.maps.map.MapView
             android:id="@+id/home_map_view"
-            android:name="com.mju.capstone.mypetRoad.ui.view.MapFragment"
+            android:name="com.mju.capstone.mypetRoad.ui.view.HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"

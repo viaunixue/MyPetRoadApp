@@ -368,10 +368,10 @@ class RetrofitManager {
 
     fun getLastestWalk(
         naverMap: NaverMap,
-        context: Context
+//        context: Context
     ) {
-        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = sharedPreferences.getString("jwt_token", null)
+//        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+//        val jwt = sharedPreferences.getString("jwt_token", null)
         serverInstance.getLastestWalk(Config.pet.id).enqueue(object : Callback<WalkingDto>{
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
@@ -406,10 +406,6 @@ class RetrofitManager {
                             // coords 리스트와 선의 시간 가중치 리스트도 넘김
                             Route.addPing(savedCl, savedSl)
                             Route.setMap(naverMap)
-
-                            val locationOverlay = it.locationOverlay
-                            locationOverlay.isVisible = true
-                            locationOverlay.position = savedCl.last()
 
                             it.moveCamera(CameraUpdate.scrollTo(savedCl.last()))
                         }

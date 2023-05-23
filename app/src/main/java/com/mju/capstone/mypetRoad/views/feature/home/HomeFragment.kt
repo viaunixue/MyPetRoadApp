@@ -3,6 +3,7 @@ package com.mju.capstone.mypetRoad.views.feature.home
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
@@ -10,15 +11,23 @@ import com.mju.capstone.mypetRoad.databinding.FragmentHomeBinding
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
+import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     lateinit var naverMap: NaverMap
     lateinit var mainActivity: MainActivity
+    private lateinit var  uiScope: CoroutineScope
+    private lateinit var mapView: MapView
+    private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
+    private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -27,6 +36,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         mainActivity = context as MainActivity
     }
     override fun getViewBinding() = FragmentHomeBinding.inflate(layoutInflater)
+
+    override fun initState(){
+        super.initState()
+        uiScope = CoroutineScope(Dispatchers.Main)
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
+        mapView = binding.homeMapView
+        mapView.getMapAsync(this)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // lightness = -0.5f // 지도 밝기
             // buildingHeight = 0.8f // 건물 높이
         }
-        RetrofitManager.instance.getLastestWalk(naverMap, mainActivity)
+        RetrofitManager.instance.getLastestWalk(naverMap)
     }
 
     private val homeViewModel by viewModels<HomeViewModel>()
