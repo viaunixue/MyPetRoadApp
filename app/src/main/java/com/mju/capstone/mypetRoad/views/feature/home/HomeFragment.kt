@@ -39,9 +39,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         } else {
             "오늘 산책 안함"
         }
-        binding.petName = petNameValue
-        binding.petAge = petAgeValue
-        binding.petIsWalked = petIsWalkedValue
+        //데이터바인딩 오류
+//        binding.homename.text = petNameValue
+//        binding.homeage.text = petAgeValue
+//        binding.homeIswalked.text = petIsWalkedValue
     }
 
     override fun onMapReady(map: NaverMap) {
