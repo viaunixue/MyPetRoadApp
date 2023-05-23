@@ -120,7 +120,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
             roadMapName = "tetRoadMap1"
             endTime = System.currentTimeMillis()
-            durationTime = endTime - startTime
+            durationTime = endTime - startTime / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, 1234, formattedDate)
             Distance.clearDistance()
 
@@ -151,7 +151,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         //1초마다 getGPS
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                RetrofitManager.instance.getGPS(naverMap, mainActivity);
+                if(Config.isWalking) RetrofitManager.instance.getPings(naverMap);
             }
         }, 0, 1000)
     }

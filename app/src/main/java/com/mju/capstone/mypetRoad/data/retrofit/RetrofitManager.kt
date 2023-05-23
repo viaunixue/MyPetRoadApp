@@ -195,7 +195,7 @@ class RetrofitManager {
 
     //핑 받아서 실시간으로 경로그리기
     fun getPings(
-        naverMap: NaverMap,
+        naverMap: NaverMap
     ) {
         trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
             @RequiresApi(Build.VERSION_CODES.O)
@@ -206,33 +206,32 @@ class RetrofitManager {
                     if (result != null) {
                         val coord = LatLng(result.latitude, result.longitude)
                         var differenceInSeconds: Long = 0 // 두 핑 사이의 시간차 (초기값 0)
-                        if(Config.isWalking){ // 산책 중일 시
-                            if(!hashMap.containsKey(key)){ // 해쉬맵에 해당 키가 없을시 (첫 핑)
-                                pl.add(result)
+                         // 산책 중일 시
+                        if(!hashMap.containsKey(key)){ // 해쉬맵에 해당 키가 없을시 (첫 핑)
+                            pl.add(result)
+                            cl.add(coord) // coord 리스트에 추가
+                            hashMap[key] = pl
+                        }else{ // 해쉬맵에 해당 키가 존재 (첫 핑 이후)
+                            //마지막 값과 다른 값일 경우 (트래커 위치가 변경시)
+                            if(!hashMap[key]?.last()?.equals(result)!!){
                                 cl.add(coord) // coord 리스트에 추가
-                                hashMap[key] = pl
-                            }else{ // 해쉬맵에 해당 키가 존재 (첫 핑 이후)
-                                //마지막 값과 다른 값일 경우 (트래커 위치가 변경시)
-                                if(!hashMap[key]?.last()?.equals(result)!!){
-                                    cl.add(coord) // coord 리스트에 추가
-                                    hashMap[key]?.let { Distance.addDistance(it, coord) }
+                                hashMap[key]?.let { Distance.addDistance(it, coord) }
 
-                                    val dateString1 = hashMap[key]?.last()?.createTime // 기존 핑 시간
-                                    val dateString2 = result.createTime // 지금 받은 핑 시간
+                                val dateString1 = hashMap[key]?.last()?.createTime // 기존 핑 시간
+                                val dateString2 = result.createTime // 지금 받은 핑 시간
 
-                                    val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX") // 시간 포멧
-                                    val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat) // String -> LocalDateTime 변경 + 포멕 적용
-                                    val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
+                                val dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX") // 시간 포멧
+                                val localDateTime1: LocalDateTime = LocalDateTime.parse(dateString1, dateTimeFormat) // String -> LocalDateTime 변경 + 포멕 적용
+                                val localDateTime2: LocalDateTime = LocalDateTime.parse(dateString2, dateTimeFormat)
 
-                                    val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
-                                    differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
-                                    Log.d("differenceInSeconds", "$differenceInSeconds")
-                                    sl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
+                                val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
+                                differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
+                                Log.d("differenceInSeconds", "$differenceInSeconds")
+                                sl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
 //                                    differenceInSeconds =
 //                                        (localDate1 - localDate2) / 1000
-                                    pl.add(result)
-                                    hashMap[key] = pl
-                                }
+                                pl.add(result)
+                                hashMap[key] = pl
                             }
                         }
                         naverMap.let {
