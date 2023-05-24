@@ -1,0 +1,137 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/walking_log_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="#f7f2f3"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:contentPadding="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/walking_log_image"
+                    android:src="@drawable/sample_map_view"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/walking_log_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="2023/05/17"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintStart_toEndOf="@+id/walking_log_image" />
+
+                <TextView
+                    android:id="@+id/walking_log_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수요일 오후 산책"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/walking_log_date"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_image" />
+
+                <TextView
+                    android:id="@+id/walking_log_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3.67"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/walking_log_content"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_image" />
+
+                <TextView
+                    android:id="@+id/walking_log_km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="km"
+                    android:textSize="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="2dp"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_distance"
+                    app:layout_constraintBottom_toBottomOf="@id/walking_log_distance" />
+
+                <TextView
+                    android:id="@+id/walking_log_lab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-'--&quot;"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_km"
+                    app:layout_constraintBottom_toBottomOf="@id/walking_log_distance" />
+
+                <TextView
+                    android:id="@+id/walking_log_pace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avg.Pace"
+                    android:textSize="10dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_lab"
+                    app:layout_constraintBottom_toBottomOf="@id/walking_log_km" />
+
+                <TextView
+                    android:id="@+id/walking_log_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:08"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/walking_log_pace"
+                    app:layout_constraintBottom_toBottomOf="@id/walking_log_lab" />
+
+                <TextView
+                    android:id="@+id/walking_log_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textSize="10dp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/walking_log_time"
+                    app:layout_constraintBottom_toBottomOf="@+id/walking_log_pace" />
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/baseline_keyboard_arrow_right_24"-->
+<!--                    android:layout_marginBottom="50dp"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</layout>
