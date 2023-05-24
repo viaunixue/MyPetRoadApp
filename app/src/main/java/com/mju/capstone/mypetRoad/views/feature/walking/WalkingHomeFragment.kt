@@ -91,19 +91,18 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
         })
 
         binding.btnWalkingStart.setOnClickListener {
-            Config.isWalking = true
-
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.walking_nav_graph)
             navController.graph = graph
 
             try {
+                Config.isWalking = true
                 view?.let { walkingMode ->
                     Navigation.findNavController(walkingMode)
                         .navigate(R.id.action_walkingHomeFragment_to_walkingStartFragment)
                 }
             } catch (e: IllegalArgumentException) {
-
+                Log.e("에러", "에러에러")
             }
         }
     }
