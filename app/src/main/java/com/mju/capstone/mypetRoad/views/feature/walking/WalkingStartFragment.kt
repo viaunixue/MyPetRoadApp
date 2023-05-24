@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -36,6 +38,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -75,6 +79,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         mapView.getMapAsync(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
         Log.d("Config", "Config: " + Config.isWalking)
@@ -98,9 +103,10 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
         binding.btnWalkingEnd.setOnClickListener {
             var roadMapName = ""
-            val myDate = Date()
-            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val formattedDate = sdf.format(myDate)
+            val today: LocalDate = LocalDate.now() // 현재 날짜 가져오기 (로컬 위치 기준)
+            val date: Date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant())// Date타입으로 변환하기 위한 폼
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS") // 시간 포멧
+            val formattedDate: String = dateFormat.format(date) // 폼에 포멧 적용
             val et = EditText(this.requireContext())
             et.gravity = Gravity.CENTER
             //getGPS 종료
@@ -149,12 +155,12 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
         timer = Timer()
 
-        //1초마다 getGPS
+        //2초마다 getGPS
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 if(Config.isWalking) RetrofitManager.instance.getPings(naverMap);
             }
-        }, 0, 1000)
+        }, 0, 2000)
     }
 
     override fun onStop() {
