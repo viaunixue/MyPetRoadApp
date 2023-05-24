@@ -17,6 +17,7 @@ import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingStartBinding
@@ -129,6 +130,9 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
                 Navigation.findNavController(walkingMode)
                     .navigate(R.id.action_walkingStartFragment_to_walkingHomeFragment)
             }
+            val navController = findNavController()
+            val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
+            navController.graph = graph
         }
 
 

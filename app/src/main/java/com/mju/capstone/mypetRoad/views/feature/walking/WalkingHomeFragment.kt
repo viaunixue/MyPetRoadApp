@@ -11,6 +11,7 @@ import androidx.annotation.UiThread
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
@@ -91,9 +92,18 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
 
         binding.btnWalkingStart.setOnClickListener {
             Config.isWalking = true
-            view?.let { walkingMode ->
-                Navigation.findNavController(walkingMode)
-                    .navigate(R.id.action_walkingHomeFragment_to_walkingStartFragment)
+
+            val navController = findNavController()
+            val graph = navController.navInflater.inflate(R.navigation.walking_nav_graph)
+            navController.graph = graph
+
+            try {
+                view?.let { walkingMode ->
+                    Navigation.findNavController(walkingMode)
+                        .navigate(R.id.action_walkingHomeFragment_to_walkingStartFragment)
+                }
+            } catch (e: IllegalArgumentException) {
+
             }
         }
     }
