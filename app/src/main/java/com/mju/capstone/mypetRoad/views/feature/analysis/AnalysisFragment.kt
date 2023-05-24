@@ -1,7 +1,10 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.R
@@ -28,6 +31,22 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
                 R.id.entireButton -> navigateToEntireFragment()
             }
         }
+    }
+
+    override fun onCreateView( //Fragment의 onCreateView() 메서드에서 Child Fragment를 생성(첫 호출 에러 해결)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Child fragment를 생성합니다.
+        val childFragment = DailyFragment()
+
+        // Child fragment를 추가합니다.
+        childFragmentManager.beginTransaction()
+            .add(R.id.analysis_host_fragment, childFragment)
+            .commit()
+
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun navigateToDailyFragment() {
