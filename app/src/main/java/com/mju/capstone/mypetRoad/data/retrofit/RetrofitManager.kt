@@ -386,6 +386,7 @@ class RetrofitManager {
                         // 오늘산책여부
                         Config.todayIsWalked = Config.isDateToday(result.walkDate)
 
+
                         for((index, value) in result.roadMap.pingList.withIndex()) {
                             val coord = LatLng(value.latitude, value.longitude)
                             var differenceInSeconds: Long = 0 // 두 핑 사이의 시간차 (초기값 0)
