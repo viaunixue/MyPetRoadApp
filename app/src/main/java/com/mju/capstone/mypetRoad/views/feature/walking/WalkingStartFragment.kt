@@ -40,6 +40,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -104,9 +105,8 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         binding.btnWalkingEnd.setOnClickListener {
             var roadMapName = ""
             val today: LocalDate = LocalDate.now() // 현재 날짜 가져오기 (로컬 위치 기준)
-            val date: Date = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant())// Date타입으로 변환하기 위한 폼
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS") // 시간 포멧
-            val formattedDate: String = dateFormat.format(date) // 폼에 포멧 적용
+            val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS") // 시간 포멧
+            val currentDate = dateFormat.format(today)
             val et = EditText(this.requireContext())
             et.gravity = Gravity.CENTER
             //getGPS 종료
@@ -128,7 +128,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             roadMapName = "tetRoadMap1"
             endTime = System.currentTimeMillis()
             durationTime = endTime - startTime / 1000
-            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
+            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, currentDate)
             Distance.clearDistance()
 
             view?.let { walkingMode ->
