@@ -407,9 +407,10 @@ class RetrofitManager {
                         }
                         naverMap.let {
                             // coords 리스트와 선의 시간 가중치 리스트도 넘김
-                            Route.addPing(savedCl, savedSl)
-                            Route.setMap(naverMap)
-
+                            try {
+                                Route.addPing(savedCl, savedSl)
+                                Route.setMap(naverMap)
+                            } catch (_: java.lang.IllegalArgumentException) {}
                             it.moveCamera(CameraUpdate.scrollTo(savedCl.last()))
                         }
                     }
