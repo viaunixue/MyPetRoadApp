@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.AnalysisDailyItemBinding
-import com.mju.capstone.mypetRoad.databinding.FragmentDailyBinding
+import com.mju.capstone.mypetRoad.domain.model.CardItem
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.AnalysisCardAdapter.Companion.MAX_ELEVATION_FACTOR
 
-class AnalysisCardPagerAdapter(val context: Context): AnalysisCardAdapter, PagerAdapter(){
-    private var mViews: MutableList<CardView> = mutableListOf()
-    private var mData: MutableList<CardItem> = mutableListOf()
+class AnalysisCardPagerAdapter(
+    val context: Context
+): AnalysisCardAdapter, PagerAdapter() {
+    private var cardViews: MutableList<CardView> = mutableListOf()
+    private var cardData: MutableList<CardItem> = mutableListOf()
     private lateinit var binding : AnalysisDailyItemBinding
     private var mBaseElevation = 0f
 
@@ -21,11 +25,11 @@ class AnalysisCardPagerAdapter(val context: Context): AnalysisCardAdapter, Pager
     }
 
     override fun getCardViewAt(position: Int): CardView {
-        return mViews[position]
+        return cardViews[position]
     }
 
     fun addCardItem(item: CardItem) {
-        mData.add(item)
+        cardData.add(item)
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -33,7 +37,12 @@ class AnalysisCardPagerAdapter(val context: Context): AnalysisCardAdapter, Pager
                 as LayoutInflater
 
         binding = AnalysisDailyItemBinding.inflate(inflater)
-        binding.contextText.text = mData[position].getText()
+        binding.analysisCardMap.setImageResource(R.drawable.sample_map_view)
+        binding.analysisCardTime.text = cardData[position].analysisCardTime
+        binding.analysisCardDistance.text = cardData[position].analysisCardDistance.toString()
+        binding.analysisCardCalories.text = cardData[position].analysisCardCalories
+
+//        binding.contextText.text = mData[position].getText()
 
         binding.analysisCardView.maxCardElevation = mBaseElevation * MAX_ELEVATION_FACTOR
 
@@ -43,7 +52,7 @@ class AnalysisCardPagerAdapter(val context: Context): AnalysisCardAdapter, Pager
 
         binding.analysisCardView.maxCardElevation = mBaseElevation * MAX_ELEVATION_FACTOR
 
-        mViews.add(binding.analysisCardView)
+        cardViews.add(binding.analysisCardView)
         container.addView(binding.root)
 
         return binding.root
@@ -54,10 +63,13 @@ class AnalysisCardPagerAdapter(val context: Context): AnalysisCardAdapter, Pager
     }
 
     override fun getCount(): Int {
-        return mData.size
+        return cardData.size
     }
 
     fun getRegisteredView(position: Int): CardView? {
-        return mViews[position]
+        return cardViews[position]
     }
+
+    inner class AnalysisCardViewHolder(val binding: AnalysisDailyItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

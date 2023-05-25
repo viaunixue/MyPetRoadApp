@@ -1,32 +1,32 @@
-package com.mju.capstone.mypetRoad.widget.Adapter
+package com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mju.capstone.mypetRoad.R
-import com.mju.capstone.mypetRoad.databinding.WalkinglogAdapterItemBinding
+
+import com.mju.capstone.mypetRoad.databinding.WeeklylogAdapterItemBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
 
-class WalkingLogAdapter (
-   private val walkingLogs : List<WalkingLog>
-) : RecyclerView.Adapter<WalkingLogAdapter.WalkingLogViewHolder>() {
+class WeeklyLogAdapter (
+    private val walkingLogs : List<WalkingLog>
+) : RecyclerView.Adapter<WeeklyLogAdapter.WeeklyLogViewHolder>() {
 
-    inner class WalkingLogViewHolder(val binding: WalkinglogAdapterItemBinding) :
+    inner class WeeklyLogViewHolder(val binding: WeeklylogAdapterItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalkingLogViewHolder {
-        val binding = WalkinglogAdapterItemBinding.inflate(LayoutInflater.from(parent.context),
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyLogViewHolder {
+        val binding = WeeklylogAdapterItemBinding.inflate(
+            LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return WalkingLogViewHolder(binding)
+        return WeeklyLogViewHolder(binding)
     }
 
     override fun getItemCount(): Int = walkingLogs.size
 
-    override fun onBindViewHolder(holder: WalkingLogViewHolder , position: Int) {
+    override fun onBindViewHolder(holder: WeeklyLogViewHolder, position: Int) {
         val walkingLog = walkingLogs[position]
         holder.binding.walkingLogImage.setImageResource(R.drawable.sample_map_view)
         holder.binding.walkingLogDate.text = walkingLog.date
@@ -42,5 +42,4 @@ class WalkingLogAdapter (
             // 세부 정보
         }
     }
-
 }

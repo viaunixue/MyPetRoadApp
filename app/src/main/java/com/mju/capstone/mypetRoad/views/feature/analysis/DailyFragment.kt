@@ -1,18 +1,13 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
+import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentDailyBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.AnalysisCardAdapter
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.AnalysisCardPagerAdapter
-import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.CardItem
-import com.mju.capstone.mypetRoad.widget.Adapter.WalkingLogAdapter
+import com.mju.capstone.mypetRoad.domain.model.CardItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -29,32 +24,42 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
             AnalysisCardPagerAdapter(requireContext())
         analysisCardAdapter.addCardItem(
             CardItem(
-                "First Card",
-                "First Card"
+                R.drawable.sample_map_view,
+                "35",
+                3.05,
+                "250"
             )
         )
         analysisCardAdapter.addCardItem(
             CardItem(
-                "Second Card",
-                "Second Card"
+                R.drawable.sample_map_view,
+                "45",
+                3.75,
+                "370"
             )
         )
         analysisCardAdapter.addCardItem(
             CardItem(
-                "Third Card",
-                "Third Card"
+                R.drawable.sample_map_view,
+                "25",
+                2.05,
+                "220"
             )
         )
         analysisCardAdapter.addCardItem(
             CardItem(
-                "Forth Card",
-                "Forth Card"
+                R.drawable.sample_map_view,
+                "60",
+                3.35,
+                "400"
             )
         )
         analysisCardAdapter.addCardItem(
             CardItem(
-                "Fifth Card",
-                "Fifth Card"
+                R.drawable.sample_map_view,
+                "10",
+                1.25,
+                "120"
             )
         )
 

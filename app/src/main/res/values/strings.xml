@@ -18,6 +18,16 @@
     <string name="weekly_analysis">주간</string>
     <string name="monthly_analysis">월간</string>
     <string name="entire_analysis">전체</string>
+    <string name="analysis_time">산책 시간</string>
+    <string name="entire_time">총 산책 시간</string>
+    <string name="entire_number">총 산책 횟수</string>
+    <string name="entire_distance">총 이동 거리</string>
+    <string name="analysis_distance">거리</string>
+    <string name="analysis_calories">칼로리</string>
+    <string name="entire_calories">총 소모 칼로리</string>
+    <string name="entire_walking_map">모든 산책로</string>
+    <string name="entire_walking_log">모든 활동 기록</string>
+
     <string name="permission_rationale">Permission rationale</string>
     <string name="text_gps_on">GPS ON</string>
     <string name="text_network_on">Network ON</string>

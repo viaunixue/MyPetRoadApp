@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:orientation="vertical">
@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:cardBackgroundColor="#f7f2f3"
             app:cardCornerRadius="12dp"
             app:cardElevation="3dp"
             app:contentPadding="4dp">
@@ -114,20 +113,19 @@
                     android:id="@+id/walking_log_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="min"
+                    android:text="Time"
                     android:textSize="10dp"
                     android:layout_marginStart="5dp"
                     app:layout_constraintStart_toEndOf="@+id/walking_log_time"
                     app:layout_constraintBottom_toBottomOf="@+id/walking_log_pace" />
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/baseline_keyboard_arrow_right_24"-->
-<!--                    android:layout_marginBottom="50dp"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent" />-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

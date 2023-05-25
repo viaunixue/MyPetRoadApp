@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="entireText"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/walking_log_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            app:contentPadding="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/entire_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/time_frame"
+                    app:layout_constraintStart_toStartOf="parent">
+                <TextView
+                    android:id="@+id/start_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2021"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/year_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="20sp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/start_year"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/end_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2023"
+                    android:textSize="20sp"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintStart_toEndOf="@id/year_bar"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/entire_km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22.4"
+                    android:textSize="80sp"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/start_year"/>
+
+                <TextView
+                    android:id="@+id/text_kilometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kilometers"
+                    android:textSize="20sp"
+                    android:layout_marginTop="90dp"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintStart_toEndOf="@id/entire_km"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/entire_distance"
+                    android:textSize="15sp"
+                    android:textColor="@color/base"
+                    android:layout_marginStart="20dp"
+                    android:gravity="left"
+                    app:layout_constraintTop_toBottomOf="@id/entire_km"
+                    app:layout_constraintStart_toStartOf="@id/entire_km"
+                    app:layout_constraintEnd_toEndOf="@id/entire_km"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#dcdcdc"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/entire_frame" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/time_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/line1"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/entire_card_time"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="23"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/entire_card_min" />
+
+                    <TextView
+                        android:id="@+id/entire_card_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="회"
+                        android:textSize="15dp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintStart_toEndOf="@+id/entire_card_time"
+                        app:layout_constraintBottom_toBottomOf="@id/entire_card_time"/>
+
+                    <TextView
+                        android:id="@+id/entire_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/entire_number"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@color/base"
+                        app:layout_constraintTop_toBottomOf="@id/entire_card_time"
+                        app:layout_constraintStart_toStartOf="@id/entire_card_time"
+                        app:layout_constraintEnd_toEndOf="@id/entire_card_min"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:id="@+id/middle_space"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@+id/time_frame"
+                    app:layout_constraintEnd_toStartOf="@+id/distance_frame"
+                    app:layout_constraintTop_toTopOf="@id/time_frame"
+                    app:layout_constraintBottom_toBottomOf="@id/time_frame" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/distance_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/time_frame"
+                    app:layout_constraintEnd_toStartOf="@+id/calorie_frame"
+                    app:layout_constraintStart_toEndOf="@+id/time_frame"
+                    app:layout_constraintTop_toTopOf="@+id/line1">
+
+                    <TextView
+                        android:id="@+id/analysis_card_distance"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="320"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/analysis_card_km"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/analysis_card_km"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="min"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="@id/analysis_card_distance"
+                        app:layout_constraintStart_toEndOf="@+id/analysis_card_distance" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/entire_time"
+                        android:textColor="@color/base"
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="@id/analysis_card_km"
+                        app:layout_constraintStart_toStartOf="@id/analysis_card_distance"
+                        app:layout_constraintTop_toBottomOf="@id/analysis_card_distance" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Space
+                    android:id="@+id/bottom_space"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@+id/distance_frame"
+                    app:layout_constraintEnd_toStartOf="@id/calorie_frame"
+                    app:layout_constraintTop_toTopOf="@id/distance_frame"
+                    app:layout_constraintBottom_toBottomOf="@id/distance_frame" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/calorie_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    app:layout_constraintTop_toTopOf="@id/line1"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/analysis_card_calories"
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:text="70"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="2dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/analysis_card_kcal" />
+
+                    <TextView
+                        android:id="@+id/analysis_card_kcal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="kcal"
+                        android:textSize="15sp"
+                        android:layout_marginBottom="2dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/analysis_card_calories"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/entire_calories"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@color/base"
+                        app:layout_constraintTop_toBottomOf="@id/analysis_card_calories"
+                        app:layout_constraintStart_toStartOf="@id/analysis_card_calories"
+                        app:layout_constraintEnd_toEndOf="@id/analysis_card_kcal"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</layout>
