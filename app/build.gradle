@@ -169,7 +169,7 @@ dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-rx3:3.3.0'
 
     // Calendar
-    def calendar_version = "2.0.1"
-    implementation "com.github.prolificinteractive:material-calendarview:$calendar_version"
+    implementation "com.github.prolificinteractive:material-calendarview:2.0.1"
+    implementation 'com.github.kizitonwose:CalendarView:1.0.4'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
 }

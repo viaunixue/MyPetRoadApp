@@ -8,87 +8,55 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.feature.analysis.WeeklyFragment">
+        android:orientation="vertical"
+        tools:context=".calendar.CalendarFragment">
 
-        <TextView
-            android:id="@+id/weeklyBar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="주간 통계"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/weeklyBox"/>
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/weeklyBox"
-            android:layout_width="wrap_content"
-            android:layout_height="210dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/rectangle_analysis"
-            android:layout_marginTop="45sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"/>
+            <Button
+                android:id="@+id/today_btn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:text="TODAY"
+                android:textColor="#BDC0BA" />
 
-        <TextView
-            android:id="@+id/weeklyTime"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/month_year_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="AUGUST 2021"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/add_btn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:text="ADD TASK"
+                android:textColor="#BDC0BA" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendar_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="평균 산책 시간 : 1시간 12분"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/weeklyBox"
-            app:layout_constraintStart_toStartOf="@+id/weeklyBox"
-            app:layout_constraintTop_toTopOf="@+id/weeklyBox" />
+            android:overScrollMode="never"/>
 
-        <TextView
-            android:id="@+id/weeklyDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 이동 거리 : 18.2 km"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/weeklyTime"
-            app:layout_constraintEnd_toEndOf="@+id/weeklyBox"
-            app:layout_constraintStart_toStartOf="@+id/weeklyBox" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/walking_log_vertical_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
 
-        <TextView
-            android:id="@+id/weeklyCalorie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 소모 칼로리 : 4,102 kal"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/weeklyDistance"
-            app:layout_constraintEnd_toEndOf="@+id/weeklyBox"
-            app:layout_constraintStart_toStartOf="@+id/weeklyBox" />
-
-        <TextView
-            android:id="@+id/weeklySteps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 걸음 수 : 14324 걸음"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/weeklyCalorie"
-            app:layout_constraintEnd_toEndOf="@+id/weeklyBox"
-            app:layout_constraintStart_toStartOf="@+id/weeklyBox" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
