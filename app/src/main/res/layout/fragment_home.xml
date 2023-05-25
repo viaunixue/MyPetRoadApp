@@ -70,16 +70,23 @@
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toBottomOf="@id/homeage" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/homeImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/sample_dog"
             app:layout_constraintBottom_toBottomOf="@id/imageView"
             app:layout_constraintEnd_toEndOf="@id/guideline"
             app:layout_constraintStart_toStartOf="@id/imageView"
-            app:layout_constraintTop_toTopOf="@id/imageView"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="@id/imageView" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_settings_24"
+            android:layout_marginStart="15dp"
+            app:layout_constraintStart_toStartOf="@id/profile"
+            app:layout_constraintBottom_toBottomOf="@id/homeImage"/>
 
         <TextView
             android:id="@+id/homeTodayRecommend"
@@ -89,10 +96,9 @@
             android:text="최근 산책로"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/home_map_view"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView" />
-
 
         <com.naver.maps.map.MapView
             android:id="@+id/home_map_view"
