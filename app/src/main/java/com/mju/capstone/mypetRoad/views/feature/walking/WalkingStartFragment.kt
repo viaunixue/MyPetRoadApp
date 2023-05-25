@@ -133,6 +133,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
+            navController.navigate(R.id.walking)
         }
 
 
