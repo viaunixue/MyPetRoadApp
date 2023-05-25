@@ -32,4 +32,9 @@ interface ServerApi {
     fun getLastestWalk(
         @Path("petId") petId: Long
     ) : Call<WalkingDto>
+
+    @GET("/api/pets/{petId}/walks")
+    fun getAllWalk(
+        @Path("petId") petId: Long,
+    ) : Call<List<WalkingDto>>
 }

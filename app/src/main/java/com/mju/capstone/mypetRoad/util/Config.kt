@@ -2,6 +2,7 @@ package com.mju.capstone.mypetRoad.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
 import java.time.LocalDate
@@ -17,6 +18,9 @@ object Config {
 
     //오늘 날짜와 매개변수의 날짜가 같은지 함수로 이 변수를 초기화
     var todayIsWalked : Boolean = false
+
+    //Analysis fragment에 들어가면 서버값으로 초기화
+    lateinit var walkList : List<WalkingDto>
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isDateToday(date: Date): Boolean {

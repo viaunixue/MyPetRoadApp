@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.R
+import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +39,9 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //WalkList를 초기화함
+        RetrofitManager.instance.getAllWalk()
+
         // Child fragment를 생성합니다.
         val childFragment = DailyFragment()
 

@@ -122,7 +122,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
             roadMapName = "tetRoadMap1"
             endTime = System.currentTimeMillis()
-            durationTime = endTime - startTime / 1000
+            durationTime = (endTime - startTime) / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance()
 

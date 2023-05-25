@@ -1,20 +1,11 @@
 package com.mju.capstone.mypetRoad.views.feature.walking
 
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.UiThread
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.mju.capstone.mypetRoad.R
-import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingHomeBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
 import com.mju.capstone.mypetRoad.util.Config
@@ -29,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -65,11 +55,11 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
 
         val viewPager = binding.walkingLogViewPager
         var walkingLog: List<WalkingLog> = listOf(
-            WalkingLog(R.drawable.sample_map_view, "2023/05/17", "수요일 오후 산책", 3.67, "10'55\"", "12:08"),
-            WalkingLog(R.drawable.sample_map_view, "2022/04/20", "화요일 오전 산책", 2.67, "20'44\"", "10:08"),
-            WalkingLog(R.drawable.sample_map_view, "2021/03/23", "월요일 새벽 산책", 1.67, "30'33\"", "08:08"),
-            WalkingLog(R.drawable.sample_map_view, "2020/02/26", "일요일 오후 산책", 0.67, "40'22\"", "06:08"),
-            WalkingLog(R.drawable.sample_map_view, "2019/01/29", "토요일 오전 산책", 0.07, "50'11\"", "04:08")
+            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""),
+            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""),
+            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""),
+            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""),
+            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\"")
         )
 
         var walkingLogadapter = WalkingLogAdapter(walkingLog)
