@@ -23,7 +23,6 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>() {
     override fun getViewBinding() =  FragmentWalkingBinding.inflate(layoutInflater)
     private var isChildFragmentCreated = false
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,6 +35,7 @@ class WalkingFragment : BaseFragment<FragmentWalkingBinding>() {
     private fun createChildFragment() {
         // WalkingHomeFragment 생성
         val walkingHomeFragment = WalkingHomeFragment()
+
         childFragmentManager.beginTransaction()
             .add(R.id.walking_host_fragment, walkingHomeFragment)
             .commit()

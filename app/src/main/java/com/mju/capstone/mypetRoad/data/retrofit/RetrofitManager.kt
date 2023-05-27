@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.R
@@ -19,13 +21,16 @@ import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Config.gpsMarker
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.MarkerIcons
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -179,7 +184,15 @@ class RetrofitManager {
                             locationOverlay.position = coord
 
                             it.moveCamera(CameraUpdate.scrollTo(coord))
-                            OverlayImage.fromResource(R.drawable.marker_icon)
+
+                            // 이전 마커 제거
+                            gpsMarker?.map = null
+
+                            val imageMarkerIcon = OverlayImage.fromResource(R.drawable.marker_icon)
+                            gpsMarker = Marker()
+                            gpsMarker?.icon = imageMarkerIcon
+                            gpsMarker?.position = coord
+                            gpsMarker?.map = naverMap
                         }
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());

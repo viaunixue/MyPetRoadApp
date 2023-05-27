@@ -5,10 +5,10 @@ import java.sql.Time
 import java.util.*
 
 data class WalkingLog (
-    var LogImage: Int,
-    var date: String,
-    var content: String,
-    var distance: Double,
-    var lab: String,
-    var time: String
+    val LogImage: Int,
+    val date: String,
+    val content: String,
+    val distance: Double,
+    val lab: String,
+    val time: String
 )

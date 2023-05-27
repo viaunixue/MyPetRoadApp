@@ -33,11 +33,10 @@ class AnalysisCardPagerAdapter(
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)
-                as LayoutInflater
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         binding = AnalysisDailyItemBinding.inflate(inflater)
-        binding.analysisCardMap.setImageResource(R.drawable.sample_map_view)
+        binding.analysisCardMap.setImageResource(cardData[position].analysisCardMap)
         binding.analysisCardTime.text = cardData[position].analysisCardTime
         binding.analysisCardDistance.text = cardData[position].analysisCardDistance.toString()
         binding.analysisCardCalories.text = cardData[position].analysisCardCalories

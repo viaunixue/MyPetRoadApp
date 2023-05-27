@@ -51,7 +51,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
     private var timer: Timer? = null
-    private val marker = Marker()
+//    private val marker = Marker()
     lateinit var naverMap: NaverMap
     lateinit var mainActivity: MainActivity
 
@@ -72,11 +72,11 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
-            uiSettings.isLocationButtonEnabled = true
-            uiSettings.isScaleBarEnabled = true
-            uiSettings.isCompassEnabled = true
-            uiSettings.isZoomControlEnabled = true
-            uiSettings.setLogoMargin(20, 20, 100, 1520)
+            uiSettings.isLocationButtonEnabled = true // 현 위치 버튼 활성화 여부
+            uiSettings.isScaleBarEnabled = true // 축척 바 활성화 여부
+            uiSettings.isCompassEnabled = true // 나침반 활성화 여부
+            uiSettings.isZoomControlEnabled = true // 줌 컨트롤 활성화 되어 있는지 여부
+//            uiSettings.setLogoMargin(20, 20, 100, 1520)
             isIndoorEnabled = false // 실내 지도
             isLiteModeEnabled = false // 라이트모드
             //lightness = -0.5f // 지도 밝기
