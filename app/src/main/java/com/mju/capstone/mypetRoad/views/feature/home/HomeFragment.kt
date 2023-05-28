@@ -59,16 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val petNameValue = "이름 : ${Config.pet.name}"
-        val petAgeValue = "나이 : ${Config.pet.age}"
-        val petIsWalkedValue = if(Config.todayIsWalked){
-            "오늘 산책 함"
-        } else {
-            "오늘 산책 안함"
-        }
-        binding.petName = petNameValue
-        binding.petAge = petAgeValue
-        binding.petIsWalked = petIsWalkedValue
+
     }
 
     override fun onMapReady(map: NaverMap) {
@@ -84,7 +75,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // buildingHeight = 0.8f // 건물 높이
         }
         RetrofitManager.instance.getLastestWalk(naverMap)
+        letsBinding()
     }
+
+    fun letsBinding() {
+        val petNameValue = "이름 : ${Config.pet.name}"
+        val petAgeValue = "나이 : ${Config.pet.age}"
+
+        binding.petName = petNameValue
+        binding.petAge = petAgeValue
+        if(Config.todayIsWalked)
+            Config.todayIsWalkedString.set("오늘 산책 함")
+        binding.petIsWalked = Config.todayIsWalkedString.get()
+    }
+
+
 
     private val homeViewModel by viewModels<HomeViewModel>()
 
