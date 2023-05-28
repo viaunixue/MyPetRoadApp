@@ -19,6 +19,7 @@ import com.mju.capstone.mypetRoad.databinding.FragmentWalkingDetailBinding
 import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config.durationTime
 import com.mju.capstone.mypetRoad.util.Config.endTime
+import com.mju.capstone.mypetRoad.util.Config.pauseTime
 import com.mju.capstone.mypetRoad.util.Config.startTime
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
@@ -54,7 +55,7 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
         super.initViews()
 
         binding.walkingDetailBtn.setOnClickListener {
-            var roadMapName = ""
+            endTime = System.currentTimeMillis()
             val myDate = Date()
             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
             val formattedDate = sdf.format(myDate)
@@ -65,23 +66,24 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
             timer = null
             Route.clearPing()
 
-            val builder = AlertDialog.Builder(this.requireContext())
-                .setTitle("산책로 이름은?")
-                .setView(et)
-                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                    roadMapName = et.text.toString()
-                    Toast.makeText(
-                        this.requireContext(), "$roadMapName",
-                        Toast.LENGTH_SHORT).show()
-                })
-            Log.i("WalkingFrag","$roadMapName")
-            builder.show()
+            val roadMapName = binding.detailRoadName.text.toString()
 
-            roadMapName = "tetRoadMap1"
-            endTime = System.currentTimeMillis()
+//            val builder = AlertDialog.Builder(this.requireContext())
+//                .setTitle("산책로 이름은?")
+//                .setView(et)
+//                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+//                    roadMapName = et.text.toString()
+//                    Toast.makeText(
+//                        this.requireContext(), "$roadMapName",
+//                        Toast.LENGTH_SHORT).show()
+//                })
+//            Log.i("WalkingFrag","$roadMapName")
+//            builder.show()
             durationTime = endTime - startTime / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance()
+
+            initializeTimeValue()
 
             view?.let { walkingMode ->
                 Navigation.findNavController(walkingMode)
@@ -106,5 +108,12 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
             lightness = -0.5f // 지도 밝기
             buildingHeight = 0.8f // 건물 높이
         }
+    }
+
+    fun initializeTimeValue() {
+        startTime = 0
+        endTime = 0
+        pauseTime = 0
+        durationTime = 0
     }
 }
