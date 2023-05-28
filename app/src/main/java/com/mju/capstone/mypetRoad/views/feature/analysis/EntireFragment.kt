@@ -1,22 +1,28 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentEntireBinding
 import com.mju.capstone.mypetRoad.domain.model.MyWalking
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.VerticalSpaceItemDecoration
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.MyWalkingAdapter
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.WeeklyLogAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.lang.Math.floor
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -25,8 +31,10 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     private val walkingLogs = mutableListOf<WalkingLog>()
     private lateinit var myWalkingAdapter: MyWalkingAdapter
     private lateinit var entireLogAdapter: WeeklyLogAdapter
+    private val analysisViewModel by viewModels<AnalysisViewModel>()
     override fun getViewBinding() = FragmentEntireBinding.inflate(layoutInflater)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +42,10 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     ): View? {
         myWalkingAdapter = MyWalkingAdapter(mapLogLists)
         entireLogAdapter = WeeklyLogAdapter(walkingLogs)
+
+        binding.topCard.analysisViewModel = analysisViewModel //ViewModel설정
+        analysisViewModel.entireUpdateText()  //텍스트업뎃
+
         return binding.root
     }
     override fun initViews() {
@@ -50,18 +62,20 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
         binding.entireWalkingLog.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = entireLogAdapter
-            setWeeklyLogView()
+            setEntireLogView()
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
             addItemDecoration(VerticalSpaceItemDecoration(spacing))
         }
     }
 
-    private fun setWeeklyLogView() {
-        walkingLogs.add(WalkingLog(R.drawable.sample_dog, "2023/05/17", "수요일 오후 산책", 3.67, "10'55\"", "12:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2022/04/20", "화요일 오전 산책", 2.67, "20'44\"", "10:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2021/03/23", "월요일 새벽 산책", 1.67, "30'33\"", "08:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_dog, "2020/02/26", "일요일 오후 산책", 0.67, "40'22\"", "06:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2019/01/29", "토요일 오전 산책", 0.07, "50'11\"", "04:08"))
+    private fun setEntireLogView() {
+        for(i in Config.walkList){ //log add
+            val dateStr = DateFormatter.dateToString(i.walkDate)!!.take(10)
+            val min = i.activity.walkedTime.toLong() / 60
+            val sec = i.activity.walkedTime.toLong() % 60
+            val distance = String.format("%.2f", i.activity.travelDistance/1000f).toFloat()
+            walkingLogs.add(WalkingLog(R.drawable.sample_map_view, dateStr, distance, i.activity.burnedCalories, "$min:$sec"))
+        }
 
         entireLogAdapter.notifyDataSetChanged()
     }

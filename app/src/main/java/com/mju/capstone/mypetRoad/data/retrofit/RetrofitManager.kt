@@ -52,7 +52,7 @@ class RetrofitManager {
     val key = "ping_list" // 해쉬 키값
     val sl : MutableList<Long> = mutableListOf() // differenceInSeconds 리스트
 
-    fun postLogin(
+    fun postLogin( //Login하면 token을 받고 Config의 pet, user 값을 초기화
         id: String,
         password: String,
         context: Context
@@ -98,7 +98,7 @@ class RetrofitManager {
     }
 
     //사용자 정보 post
-    fun postUser(
+    fun postUser( //회원가입 정보를 서버에 Post
         name: String,
         address: String,
         userId: String,
@@ -133,39 +133,7 @@ class RetrofitManager {
         })
     }
 
-    //애완동물 정보 post
-//    fun postPet(
-//        name: String,
-//        age: Int,
-//        sex: String,
-//        weight: Float,
-//        isNeutered: Boolean?,
-//        species: String
-//    ){
-//        val petRequest = Pet(name, age, sex, weight, isNeutered, species)
-////        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-////        val jwt = sharedPreferences.getString("jwt_token", null)
-//        val petCall = serverInstance.postPet(petRequest)
-//
-//        petCall.enqueue(object : Callback<PetDto> {
-//            override fun onResponse(call: Call<PetDto>, response: Response<PetDto>) {
-//                if (response.isSuccessful) {
-//                    val result: PetDto? = response.body()
-//                    Log.d("pet", "onResponce 성공: " + result?.toString());
-//                } else {
-//                    Log.d("pet", "onResponce 실패" + response.errorBody()?.string())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<PetDto>, t: Throwable) {
-//                // handle error
-//                Log.d("pet", "네트워크 에러 : " + t.message.toString())
-//            }
-//        })
-//    }
-
-    //실시간 위치표시
-    fun getGPS(
+    fun getGPS( //naverMap에 실시간 위치표시
         naverMap: NaverMap,
         context: Context
     ) {
@@ -207,8 +175,7 @@ class RetrofitManager {
         })
     }
 
-    //핑 받아서 실시간으로 경로그리기
-    fun getPings(
+    fun getPings( //핑 받아서 실시간으로 경로그리기
         naverMap: NaverMap
     ) {
         trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
@@ -282,8 +249,7 @@ class RetrofitManager {
         })
     }
 
-    //list받아서 경로그리기
-    fun drawRoadMap(
+    fun drawRoadMap( //list받아서 경로그리기
         naverMap: NaverMap,
         context: Context
     ) {
@@ -315,34 +281,7 @@ class RetrofitManager {
         })
     }
 
-    //산책끝나면 정보전송
-//    fun WalkingOver(
-//        durationTime: Long,
-//        roadMapName: String,
-//        travelDistance: Double,
-//        burnedCalories: Int,
-//        currentDate: String
-//    ){
-//        val p : MutableList<PingRequestDto> = hashMap[key] as MutableList<PingRequestDto>
-//        val walkingRequestDto = WalkingRequestDto(roadMapName, durationTime, travelDistance, burnedCalories, p, currentDate)
-//
-//        Log.i("WalkOver", "$walkingRequestDto")
-//        serverInstance.postWalk(Config.petId, walkingRequestDto).enqueue(object : Callback<WalkingDto>{
-//            override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
-//                if(response.isSuccessful){
-//                    var result: WalkingDto? = response.body()
-//                    Log.d("WalkOver", "onResponce 성공: " + result?.toString());
-//                }
-//                else{
-//                    Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())
-//                }
-//            }
-//            override fun onFailure(call: Call<WalkingDto>, t: Throwable) {
-//                Log.d("WalkOver", "네트워크 에러 : " + t.message.toString())
-//            }
-//        })
-//    }
-    fun WalkingOver(
+    fun WalkingOver( //산책이 끝나면 서버에 산책정보를 Post
         durationTime: Long,
         roadMapName: String,
         travelDistance: Double,
@@ -382,7 +321,7 @@ class RetrofitManager {
         }
     }
 
-    fun getLastestWalk(
+    fun getLastestWalk( //마지막 산책로를 naverMap에 그리기
         naverMap: NaverMap,
 //        context: Context
     ) {
@@ -439,4 +378,31 @@ class RetrofitManager {
             }
         })
     }
+
+    fun getAllWalk( //Config.walkList 값을 서버값으로 초기화
+//        context: Context
+    ) {
+//        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+//        val jwt = sharedPreferences.getString("jwt_token", null)
+        serverInstance.getAllWalk(Config.pet.id).enqueue(object : Callback<List<WalkingDto>>{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<List<WalkingDto>>, response: Response<List<WalkingDto>>) {
+                if(response.isSuccessful){
+                    val result: List<WalkingDto>? = response.body()
+                    if (result != null) {
+                        // 오늘산책여부
+                        Config.walkList = result
+                    }
+                    Log.d("LastestWalk", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("LastestWalk", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<List<WalkingDto>>, t: Throwable) {
+                Log.d("LastestWalk", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
 }

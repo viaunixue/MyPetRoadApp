@@ -31,14 +31,9 @@ class WeeklyLogAdapter (
 //        holder.binding.walkingLogImage.setImageResource(R.drawable.sample_map_view)
         holder.binding.walkingLogImage.setImageResource(walkingLog.LogImage)
         holder.binding.walkingLogDate.text = walkingLog.date
-        holder.binding.walkingLogContent.text = walkingLog.content
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
-        holder.binding.walkingLogKm.text = "km"
-        holder.binding.walkingLogLab.text = walkingLog.lab
-        holder.binding.walkingLogPace.text = "Avg.Pace"
+        holder.binding.walkingLogKcal.text = walkingLog.calories.toString()
         holder.binding.walkingLogTime.text = walkingLog.time
-        holder.binding.walkingLogTimeText.text = "Time"
-
         holder.itemView.setOnClickListener {
             // 세부 정보
         }

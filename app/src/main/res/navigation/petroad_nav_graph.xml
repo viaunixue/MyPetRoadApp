@@ -9,5 +9,4 @@
     <include app:graph="@navigation/map" />
     <include app:graph="@navigation/walking" />
     <include app:graph="@navigation/analysis" />
-    <include app:graph="@navigation/setting" />
 </navigation>

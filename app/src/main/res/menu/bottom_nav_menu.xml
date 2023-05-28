@@ -20,9 +20,4 @@
         android:id="@+id/analysis"
         android:icon="@drawable/ic_analysis"
         android:title="@string/analysis" />
-
-    <item
-        android:id="@+id/setting"
-        android:icon="@drawable/ic_user"
-        android:title="@string/settings" />
 </menu>
