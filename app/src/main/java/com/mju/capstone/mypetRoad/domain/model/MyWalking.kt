@@ -1,6 +1,8 @@
 package com.mju.capstone.mypetRoad.domain.model
 
+import android.widget.ImageView
+
 data class MyWalking (
-    var MyWalkingImage : Int,
-    var date: String
+    val MyWalkingImage : Int,
+    val date: String
 )

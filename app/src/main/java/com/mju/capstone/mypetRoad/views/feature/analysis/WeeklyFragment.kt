@@ -67,11 +67,11 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>(){
     }
 
     private fun setWeeklyLogView() {
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2023/05/17", "수요일 오후 산책", 3.67, "10'55\"", "12:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2022/04/20", "화요일 오전 산책", 2.67, "20'44\"", "10:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2021/03/23", "월요일 새벽 산책", 1.67, "30'33\"", "08:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2020/02/26", "일요일 오후 산책", 0.67, "40'22\"", "06:08"))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2019/01/29", "토요일 오전 산책", 0.07, "50'11\"", "04:08"))
+        walkingLogs.add(WalkingLog(R.drawable.sample_dog, "2023/05/17", "수요일 오후 산책", 3.67, "10'55\"", "12:08"))
+        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2022/04/20", "화요일 오전 산책", 2.67, "20'44\"", "10:08"))
+        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2021/03/23", "월요일 새벽 산책", 1.67, "30'33\"", "08:08"))
+        walkingLogs.add(WalkingLog(R.drawable.sample_dog, "2020/02/26", "일요일 오후 산책", 0.67, "40'22\"", "06:08"))
+        walkingLogs.add(WalkingLog(R.drawable.sample_dduzzi, "2019/01/29", "토요일 오전 산책", 0.07, "50'11\"", "04:08"))
 
         weeklyLogAdapter.notifyDataSetChanged()
     }

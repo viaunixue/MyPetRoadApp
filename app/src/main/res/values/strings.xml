@@ -27,6 +27,10 @@
     <string name="entire_calories">총 소모 칼로리</string>
     <string name="entire_walking_map">모든 산책로</string>
     <string name="entire_walking_log">모든 활동 기록</string>
+    <string name="detail_pet">함께한 반려 동물</string>
+    <string name="detail_pet_stop">가장 가까운 펫 스탑</string>
+    <string name="detail_pet_memo">산책로 기록</string>
+    <string name="detail_walking_record">오늘의 산책</string>
 
     <string name="permission_rationale">Permission rationale</string>
     <string name="text_gps_on">GPS ON</string>

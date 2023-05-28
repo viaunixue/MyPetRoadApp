@@ -19,45 +19,55 @@
             android:layout_height="match_parent"
             android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingHomeFragment"/>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/walkingLogViewPager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:foregroundGravity="center"
-            android:overScrollMode="never"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_walking_start"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/walking_home_card"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent">-->
 
-        <ImageView
-            android:id="@+id/log_right_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_keyboard_arrow_right_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
-            app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
+<!--            <androidx.viewpager2.widget.ViewPager2-->
+<!--                android:id="@+id/walkingLogViewPager"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:clipChildren="false"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:foregroundGravity="center"-->
+<!--                android:overScrollMode="never"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
 
-        <ImageView
-            android:id="@+id/log_left_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_keyboard_arrow_left_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
-            app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/log_right_arrow"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/baseline_keyboard_arrow_right_24"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"-->
+<!--                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/log_left_arrow"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/baseline_keyboard_arrow_left_24"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"-->
+<!--                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_walking_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_btn"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="45dp"
+            android:layout_marginHorizontal="15dp"
             android:text="산책 시작"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

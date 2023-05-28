@@ -18,7 +18,7 @@ import javax.inject.Provider
 class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     override fun getViewBinding() = FragmentAnalysisBinding.inflate(layoutInflater)
 
-    private val analysisViewModel by viewModels<AnalysisViewModel>()
+//    private val analysisViewModel by viewModels<AnalysisViewModel>()
 
     override fun initViews() {
         super.initViews()

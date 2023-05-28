@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.WalkinglogAdapterItemBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import de.hdodenhof.circleimageview.CircleImageView
 
 class WalkingLogAdapter (
    private val walkingLogs : List<WalkingLog>
@@ -28,7 +29,8 @@ class WalkingLogAdapter (
 
     override fun onBindViewHolder(holder: WalkingLogViewHolder , position: Int) {
         val walkingLog = walkingLogs[position]
-        holder.binding.walkingLogImage.setImageResource(R.drawable.sample_map_view)
+//        holder.binding.walkingLogImage.setImageResource(R.drawable.sample_map_view)
+        holder.binding.walkingLogImage.setImageResource(walkingLog.LogImage)
         holder.binding.walkingLogDate.text = walkingLog.date
         holder.binding.walkingLogContent.text = walkingLog.content
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
@@ -42,5 +44,4 @@ class WalkingLogAdapter (
             // 세부 정보
         }
     }
-
 }

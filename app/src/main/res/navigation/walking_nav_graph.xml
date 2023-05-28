@@ -22,7 +22,15 @@
         android:label="fragment_walking_start"
         tools:layout="@layout/fragment_walking_start" >
         <action
-            android:id="@+id/action_walkingStartFragment_to_walkingHomeFragment"
+            android:id="@+id/action_walkingStartFragment_to_walkingDetailFragment"
+            app:destination="@id/walkingDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walkingDetailFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingDetailFragment"
+        android:label="WalkingDetailFragment" >
+        <action
+            android:id="@+id/action_walkingDetailFragment_to_walkingHomeFragment"
             app:destination="@id/walkingHomeFragment" />
     </fragment>
 

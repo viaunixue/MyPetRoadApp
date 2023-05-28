@@ -25,6 +25,10 @@ import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingStartBinding
 import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Config.durationTime
+import com.mju.capstone.mypetRoad.util.Config.endTime
+import com.mju.capstone.mypetRoad.util.Config.pauseTime
+import com.mju.capstone.mypetRoad.util.Config.startTime
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
@@ -58,10 +62,10 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
     private var timer: Timer? = null
     lateinit var mainActivity: MainActivity
 
-    private var startTime : Long = 0
-    private var endTime : Long = 0
-    private var pauseTime : Long = 0
-    private var durationTime : Long = 0
+//    private var startTime : Long = 0
+//    private var endTime : Long = 0
+//    private var pauseTime : Long = 0
+//    private var durationTime : Long = 0
 
     private var isPanelExpanded = false
 
@@ -91,7 +95,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             Config.isWalking = false
             Log.d("Config", "Config: " + Config.isWalking)
             binding.btnWalkingStop.visibility = View.INVISIBLE
-            Sliding()
+            binding.btnWalkingRestart.visibility = View.VISIBLE
         }
 
         binding.btnWalkingRestart.setOnClickListener {
@@ -99,7 +103,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             startTime += pauseStartTime
             Config.isWalking = true
             binding.btnWalkingStop.visibility = View.VISIBLE
-            Sliding()
+            binding.btnWalkingRestart.visibility = View.INVISIBLE
         }
 
         binding.btnWalkingEnd.setOnClickListener {
@@ -113,32 +117,36 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             timer?.cancel()
             timer = null
             Route.clearPing()
-            val builder = AlertDialog.Builder(this.requireContext())
-                .setTitle("산책로 이름은?")
-                .setView(et)
-                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                    roadMapName = et.text.toString()
+//            val builder = AlertDialog.Builder(this.requireContext())
+//                .setTitle("산책로 이름은?")
+//                .setView(et)
+//                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+//                    roadMapName = et.text.toString()
+//                    Toast.makeText(
+//                        this.requireContext(), "$roadMapName",
+//                        Toast.LENGTH_SHORT).show()
+//                })
+//            Log.i("WalkingFrag","$roadMapName")
+//            builder.show()
 
-                    Log.i("WalkingFrag", roadMapName)
-                    endTime = System.currentTimeMillis()
-                    durationTime = (endTime - startTime) / 1000
-                    RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
-                    Distance.clearDistance()
+//            roadMapName = "tetRoadMap1"
+//            endTime = System.currentTimeMillis()
+//            durationTime = endTime - startTime / 1000
+//            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
+//            Distance.clearDistance()
 
-                    Toast.makeText(
-                        this.requireContext(), "$roadMapName",
-                        Toast.LENGTH_SHORT).show()
-                })
-            builder.show()
+            Sliding()
+        }
 
+        binding.walkingEndNo.setOnClickListener {
+            Sliding()
+        }
+
+        binding.walkingEndYes.setOnClickListener {
             view?.let { walkingMode ->
                 Navigation.findNavController(walkingMode)
-                    .navigate(R.id.action_walkingStartFragment_to_walkingHomeFragment)
+                    .navigate(R.id.action_walkingStartFragment_to_walkingDetailFragment)
             }
-            val navController = findNavController()
-            val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
-            navController.graph = graph
-            navController.navigate(R.id.walking)
         }
 
 
@@ -150,7 +158,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             uiSettings.isScaleBarEnabled = true
             uiSettings.isCompassEnabled = true
             uiSettings.isZoomControlEnabled = true
-            uiSettings.setLogoMargin(20, 20, 100, 1520)
+//            uiSettings.setLogoMargin(20, 20, 100, 1740)
             isIndoorEnabled = false // 실내 지도
             isLiteModeEnabled = false // 라이트모드
             //lightness = -0.5f // 지도 밝기
@@ -176,23 +184,16 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
     private fun Sliding() {
         val slidePanel = binding.walkingSlidingFrame
-
         val state = slidePanel.panelState
+
+        slidePanel.isTouchEnabled = false
+
         if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
             slidePanel.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
         } else if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
             slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
     }
-
-//    private fun toggleSlidingPanel() {
-//        val slidePanel = binding.walkingSlidingFrame
-//        if(isPanelExpanded){
-//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-//        } else {
-//            slidePanel.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-//        }
-//    }
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
