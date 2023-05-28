@@ -29,10 +29,14 @@ import com.mju.capstone.mypetRoad.util.Config.durationTime
 import com.mju.capstone.mypetRoad.util.Config.endTime
 import com.mju.capstone.mypetRoad.util.Config.pauseTime
 import com.mju.capstone.mypetRoad.util.Config.startTime
+import com.mju.capstone.mypetRoad.util.Config.endDate
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
+import com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisViewModel
+import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.MyWalkingAdapter
+import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.WeeklyLogAdapter
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -49,6 +53,7 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapReadyCallback{
 
     override fun getViewBinding() = FragmentWalkingStartBinding.inflate(layoutInflater)
@@ -61,19 +66,30 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
     private lateinit var mapView: MapView
     private var timer: Timer? = null
     lateinit var mainActivity: MainActivity
+    private val walkingViewModel by viewModels<WalkingViewModel>()
 
 //    private var startTime : Long = 0
 //    private var endTime : Long = 0
 //    private var pauseTime : Long = 0
 //    private var durationTime : Long = 0
 
-    private var isPanelExpanded = false
+    private var isStopped = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         startTime = System.currentTimeMillis()
         // Context를 액티비티로 형변환해서 할당(토큰 받아올 때 쓰임)
         mainActivity = context as MainActivity
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding.walkingViewModel = walkingViewModel //ViewModel설정
+
+        return binding.root
     }
 
     override fun initState() {
@@ -84,7 +100,6 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         mapView.getMapAsync(this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
         Log.d("Config", "Config: " + Config.isWalking)
@@ -93,6 +108,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         binding.btnWalkingStop.setOnClickListener {
             pauseTime = System.currentTimeMillis()
             Config.isWalking = false
+            isStopped = true
             Log.d("Config", "Config: " + Config.isWalking)
             binding.btnWalkingStop.visibility = View.INVISIBLE
             binding.btnWalkingRestart.visibility = View.VISIBLE
@@ -102,17 +118,18 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             val pauseStartTime = System.currentTimeMillis() - pauseTime
             startTime += pauseStartTime
             Config.isWalking = true
+            isStopped = false
             binding.btnWalkingStop.visibility = View.VISIBLE
             binding.btnWalkingRestart.visibility = View.INVISIBLE
         }
 
         binding.btnWalkingEnd.setOnClickListener {
-            var roadMapName : String = ""
-            val myDate = LocalDateTime.now();
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val formattedDate = formatter.format(myDate)
             val et = EditText(this.requireContext())
+            walkingViewModel.updateEndWalkingText()
             et.gravity = Gravity.CENTER
+            endTime = System.currentTimeMillis()
+            endDate = Date()
+            isStopped = true
             //getGPS 종료
             timer?.cancel()
             timer = null
@@ -169,8 +186,14 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
         //1초마다 getGPS
         timer?.scheduleAtFixedRate(object : TimerTask() {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
                 if(Config.isWalking) RetrofitManager.instance.getPings(naverMap);
+                if(isStopped){
+                    walkingViewModel.stopWalkingText()
+                } else {
+                    walkingViewModel.updateWalkingText()
+                }
             }
         }, 0, 2000)
     }

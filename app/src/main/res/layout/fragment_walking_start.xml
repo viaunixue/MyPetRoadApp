@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="walkingViewModel"
+            type="com.mju.capstone.mypetRoad.views.feature.walking.WalkingViewModel" />
     </data>
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -58,7 +60,7 @@
                         android:id="@+id/live_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3.42"
+                        android:text="@{walkingViewModel.distance}"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
@@ -95,7 +97,7 @@
                         android:id="@+id/live_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="01:35"
+                        android:text="@{walkingViewModel.secTime}"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="20sp"
@@ -217,7 +219,7 @@
                         android:id="@+id/analysis_card_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="120"
+                        android:text="@{walkingViewModel.minTime}"
                         android:textSize="25sp"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -272,7 +274,7 @@
                         android:id="@+id/analysis_card_distance"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="3.36"
+                        android:text="@{walkingViewModel.distance}"
                         android:textSize="25sp"
                         android:gravity="center"
                         android:textColor="@color/black"
@@ -324,7 +326,7 @@
                         android:id="@+id/analysis_card_calories"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="140"
+                        android:text="@{walkingViewModel.calories}"
                         android:textSize="25sp"
                         android:gravity="center"
                         android:textColor="@color/black"

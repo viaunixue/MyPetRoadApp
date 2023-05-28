@@ -305,7 +305,6 @@ class RetrofitManager {
                 override fun onResponse(call: Call<WalkingDto>, response: Response<WalkingDto>) {
                     if (response.isSuccessful) {
                         var result: WalkingDto? = response.body()
-                        Calories.clearCalories() // 칼로리 변수 초기화
                         Log.d("WalkOver", "onResponce 성공: " + result?.toString())
                     } else {
                         Log.d("WalkOver", "onResponce 실패" + response.errorBody()?.string())

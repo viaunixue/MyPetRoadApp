@@ -51,6 +51,8 @@ object Config {
     }
 
     // 시간 변수
+    lateinit var startDate : Date
+    lateinit var endDate : Date
     var startTime : Long = 0
     var endTime : Long = 0
     var pauseTime : Long = 0

@@ -26,6 +26,7 @@ import java.lang.Math.floor
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     private val mapLogLists = mutableListOf<MyWalking>()
     private val walkingLogs = mutableListOf<WalkingLog>()
@@ -34,7 +35,6 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     private val analysisViewModel by viewModels<AnalysisViewModel>()
     override fun getViewBinding() = FragmentEntireBinding.inflate(layoutInflater)
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

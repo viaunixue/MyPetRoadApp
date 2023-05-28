@@ -5,7 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="walkingViewModel"
+            type="com.mju.capstone.mypetRoad.views.feature.walking.WalkingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +34,7 @@
                         android:id="@+id/walking_detail_date_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2023. 05 27 (토)"
+                        android:text="@{walkingViewModel.walkedDate}"
                         android:textColor="@color/black"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/walking_detail_ending_text"
@@ -109,7 +111,7 @@
                             android:id="@+id/start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20시 18분"
+                            android:text="@{walkingViewModel.startTime}"
                             android:textColor="@color/black"
                             android:layout_marginStart="10dp"
                             app:layout_constraintStart_toEndOf="@+id/start_text"
@@ -150,7 +152,7 @@
                             android:id="@+id/end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="22시 30분"
+                            android:text="@{walkingViewModel.endTime}"
                             android:textColor="@color/black"
                             android:layout_marginStart="10dp"
                             app:layout_constraintStart_toEndOf="@+id/end_text"
@@ -246,7 +248,7 @@
                             android:id="@+id/analysis_card_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="120"
+                            android:text="@{walkingViewModel.minTime}"
                             android:textSize="20sp"
                             android:gravity="center"
                             android:textColor="@color/black"
@@ -301,7 +303,7 @@
                             android:id="@+id/analysis_card_distance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="3.36"
+                            android:text="@{walkingViewModel.distance}"
                             android:textSize="20sp"
                             android:gravity="center"
                             android:textColor="@color/black"
@@ -353,7 +355,7 @@
                             android:id="@+id/analysis_card_calories"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="140"
+                            android:text="@{walkingViewModel.calories}"
                             android:textSize="20sp"
                             android:gravity="center"
                             android:textColor="@color/black"

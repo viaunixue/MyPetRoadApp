@@ -2,6 +2,7 @@ package com.mju.capstone.mypetRoad.views.feature.walking
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -11,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
@@ -21,6 +24,8 @@ import com.mju.capstone.mypetRoad.util.Config.durationTime
 import com.mju.capstone.mypetRoad.util.Config.endTime
 import com.mju.capstone.mypetRoad.util.Config.pauseTime
 import com.mju.capstone.mypetRoad.util.Config.startTime
+import com.mju.capstone.mypetRoad.util.Config.endDate
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
@@ -33,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import java.text.SimpleDateFormat
 import java.util.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMapReadyCallback{
     override fun getViewBinding() = FragmentWalkingDetailBinding.inflate(layoutInflater)
 
@@ -42,6 +48,7 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
     private var timer: Timer? = null
     lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
+    private val walkingViewModel by viewModels<WalkingViewModel>()
 
     override fun initState() {
         super.initState()
@@ -51,14 +58,22 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
         mapView.getMapAsync(this)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding.walkingViewModel = walkingViewModel //ViewModel설정
+        walkingViewModel.updateDetailWalkingText()
+
+        return binding.root
+    }
+
     override fun initViews() {
         super.initViews()
 
         binding.walkingDetailBtn.setOnClickListener {
-            endTime = System.currentTimeMillis()
-            val myDate = Date()
-            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val formattedDate = sdf.format(myDate)
+            val formattedDate = DateFormatter.dateToString(endDate)!!
             val et = EditText(this.requireContext())
             et.gravity = Gravity.CENTER
             //getGPS 종료
@@ -81,7 +96,8 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 //            builder.show()
             durationTime = endTime - startTime / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
-            Distance.clearDistance()
+            Distance.clearDistance() // 거리 변수 초기화
+            Calories.clearCalories() // 칼로리 변수 초기화
 
             initializeTimeValue()
 
@@ -92,7 +108,7 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
-            navController.navigate(R.id.walking)
+//            navController.navigate(R.id.walking) <- 홈 화면 못넘어가는 오류 발생
         }
     }
 
