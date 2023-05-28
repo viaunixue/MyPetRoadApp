@@ -24,7 +24,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
             AnalysisCardPagerAdapter(requireContext())
         analysisCardAdapter.addCardItem(
             CardItem(
-                R.drawable.sample_map_view,
+                R.drawable.sample_dduzzi,
                 "35",
                 3.05,
                 "250"
@@ -32,7 +32,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         )
         analysisCardAdapter.addCardItem(
             CardItem(
-                R.drawable.sample_map_view,
+                R.drawable.sample_dog,
                 "45",
                 3.75,
                 "370"

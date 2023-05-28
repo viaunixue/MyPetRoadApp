@@ -10,12 +10,12 @@
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/walking_sliding_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="bottom"
-        app:umanoOverlay="true"
+        app:umanoOverlay="false"
         app:umanoPanelHeight="0dp"
         app:umanoParallaxOffset="0dp"
-        app:umanoShadowHeight="0dp">
+        app:umanoShadowHeight="30dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,57 +29,368 @@
                 android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingStartFragment"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/walking_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background_white"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_walking_stop"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/gps_stop_button"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/live_view_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    app:layout_constraintTop_toTopOf="@+id/walking_bar"
+                    app:layout_constraintBottom_toTopOf="@id/time_control_frame">
+
+                    <ImageView
+                        android:id="@+id/live_distance_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        android:background="@drawable/pet_foot_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/live_distance"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/live_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3.42"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintStart_toEndOf="@id/live_distance_icon"
+                        app:layout_constraintEnd_toStartOf="@id/live_distance_km"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/live_distance_km"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="km"
+                        style="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintStart_toEndOf="@id/live_distance"
+                        app:layout_constraintEnd_toStartOf="@id/live_time_icon"
+                        app:layout_constraintBottom_toBottomOf="@+id/live_distance" />
+
+                    <ImageView
+                        android:id="@+id/live_time_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:background="@drawable/baseline_access_time_24"
+                        app:layout_constraintStart_toEndOf="@+id/live_distance_km"
+                        app:layout_constraintEnd_toStartOf="@+id/live_time"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/live_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="01:35"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintStart_toEndOf="@id/live_time_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/time_control_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_walking_stop"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/pet_walking_stop"
+                        android:visibility="visible"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_walking_end"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_walking_restart"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/pet_walking_start"
+                        android:visibility="invisible"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_walking_end"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_walking_end"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/pet_walking_end"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/btn_walking_stop"
+                        app:layout_constraintEnd_toStartOf="@id/btn_walking_camera"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_walking_camera"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/pet_walking_camera"
+                        android:layout_marginBottom="20dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btn_walking_end"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/walking_slide"
+            android:background="@drawable/rounded_background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="230dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_walking_end"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/gps_end_button"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:visibility="visible"
+            <View
+                android:id="@+id/top_sliding_line"
+                android:layout_width="50sp"
+                android:layout_height="2dp"
+                android:background="#dcdcdc"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_walking_restart"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/walking_end_text"/>
+
+            <TextView
+                android:id="@+id/walking_end_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="산책을 종료하시겠어요?"
+                android:textColor="@color/base"
+                android:textSize="15sp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/top_sliding_line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="35dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/walking_end_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/time_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/analysis_card_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/analysis_card_min" />
+
+                    <TextView
+                        android:id="@+id/analysis_card_min"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="min"
+                        app:layout_constraintStart_toEndOf="@+id/analysis_card_time"
+                        app:layout_constraintBottom_toBottomOf="@id/analysis_card_time"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/analysis_time"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:textColor="@color/base"
+                        app:layout_constraintTop_toBottomOf="@id/analysis_card_time"
+                        app:layout_constraintStart_toStartOf="@id/analysis_card_time"
+                        app:layout_constraintEnd_toEndOf="@id/analysis_card_min"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/middle_space"
+                    android:layout_width="2dp"
+                    android:layout_height="45dp"
+                    android:background="#dcdcdc"
+                    app:layout_constraintStart_toEndOf="@+id/time_frame"
+                    app:layout_constraintEnd_toStartOf="@+id/distance_frame"
+                    app:layout_constraintTop_toTopOf="@id/time_frame"
+                    app:layout_constraintBottom_toBottomOf="@id/time_frame" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/distance_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/time_frame"
+                    app:layout_constraintEnd_toStartOf="@+id/calorie_frame">
+                    <TextView
+                        android:id="@+id/analysis_card_distance"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="3.36"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/analysis_card_km" />
+
+                    <TextView
+                        android:id="@+id/analysis_card_km"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:text="km"
+                        app:layout_constraintStart_toEndOf="@+id/analysis_card_distance"
+                        app:layout_constraintBottom_toBottomOf="@id/analysis_card_distance"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/analysis_distance"
+                        android:textSize="15dp"
+                        android:gravity="center"
+                        android:textColor="@color/base"
+                        app:layout_constraintTop_toBottomOf="@id/analysis_card_distance"
+                        app:layout_constraintStart_toStartOf="@id/analysis_card_distance"
+                        app:layout_constraintEnd_toEndOf="@id/analysis_card_km"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/bottom_space"
+                    android:layout_width="2dp"
+                    android:layout_height="45dp"
+                    android:background="#dcdcdc"
+                    app:layout_constraintStart_toEndOf="@+id/distance_frame"
+                    app:layout_constraintEnd_toStartOf="@id/calorie_frame"
+                    app:layout_constraintTop_toTopOf="@id/distance_frame"
+                    app:layout_constraintBottom_toBottomOf="@id/distance_frame" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/calorie_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/analysis_card_calories"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="140"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_marginEnd="5sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/analysis_card_kcal" />
+
+                    <TextView
+                        android:id="@+id/analysis_card_kcal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="kcal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/analysis_card_calories"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/analysis_calories"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:textColor="@color/base"
+                        app:layout_constraintTop_toBottomOf="@id/analysis_card_calories"
+                        app:layout_constraintStart_toStartOf="@id/analysis_card_calories"
+                        app:layout_constraintEnd_toEndOf="@id/analysis_card_kcal"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--            <View-->
+<!--                android:id="@+id/slide_line"-->
+<!--                android:layout_width="320sp"-->
+<!--                android:layout_height="2dp"-->
+<!--                android:background="#dcdcdc"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/detail_info" />-->
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_walking_restart"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/gps_start_button"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:visibility="visible"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_walking_end"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:id="@+id/walking_end_no"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="조금 더 할게요"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_square"
+                app:layout_constraintTop_toBottomOf="@id/detail_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/walking_end_yes"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/walking_end_yes"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="네, 오늘은 여기까지"
+                android:textColor="@color/base"
+                android:background="@drawable/rounded_stroke_square"
+                app:layout_constraintTop_toBottomOf="@+id/detail_info"
+                app:layout_constraintStart_toEndOf="@+id/walking_end_no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -28,11 +28,11 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/walking_log_image"
-                    android:src="@drawable/sample_map_view"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:src="@drawable/sample_dduzzi"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
