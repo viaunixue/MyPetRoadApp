@@ -5,9 +5,9 @@ import java.sql.Time
 import java.util.*
 
 data class WalkingLog (
-    val LogImage: Int,
-    val date: String,
-    val distance: Float,
-    val Calories: Int,
-    val time: String
+    var LogImage: Int,
+    var date: String,
+    var distance: Float,
+    var calories: Int,
+    var time: String
 )
