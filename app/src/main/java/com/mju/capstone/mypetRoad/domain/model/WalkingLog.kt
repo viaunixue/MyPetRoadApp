@@ -7,8 +7,7 @@ import java.util.*
 data class WalkingLog (
     val LogImage: Int,
     val date: String,
-    val content: String,
-    val distance: Double,
-    val lab: String,
+    val distance: Float,
+    val Calories: Int,
     val time: String
 )
