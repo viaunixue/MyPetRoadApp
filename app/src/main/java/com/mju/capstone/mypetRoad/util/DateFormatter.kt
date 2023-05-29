@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.util
 
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -12,5 +13,10 @@ object DateFormatter {
         val formattedDateString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS"))
 
         return formattedDateString
+    }
+
+    fun formatDate(date: Calendar): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(date.time)
     }
 }

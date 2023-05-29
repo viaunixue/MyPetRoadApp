@@ -119,15 +119,6 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
             lightness = -0.5f // 지도 밝기
             buildingHeight = 0.8f // 건물 높이
         }
-
-//        timer = Timer()
-//
-//        //1초마다 getGPS
-//        timer?.scheduleAtFixedRate(object : TimerTask() {
-//            override fun run() {
-//                if(Config.isWalking) RetrofitManager.instance.getGPS(naverMap, mainActivity);
-//            }
-//        }, 0, 1000)
     }
 
 }

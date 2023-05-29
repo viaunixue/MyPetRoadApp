@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.datastore.dataStore
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
+import com.mju.capstone.mypetRoad.domain.model.WalkingLog
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -16,12 +21,24 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.*
+import kotlin.math.log
 
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), OnMapReadyCallback{
 
+    companion object {
+        private const val ARG_WALKING_LOG = "walkingLog"
+        fun newInstance(walkingLog: WalkingLog): AnalysisDetailFragment {
+            val fragment = AnalysisDetailFragment()
+            val bundle = Bundle()
+            bundle.putParcelable("walkingLog", walkingLog)
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
     override fun getViewBinding() = FragmentAnalysisDetailBinding.inflate(layoutInflater)
 
     private lateinit var  uiScope: CoroutineScope
@@ -36,6 +53,16 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
 //        mapView = binding.detailMapView
 //        mapView.getMapAsync(this)
+
+
+    }
+
+    override fun initViews() {
+        super.initViews()
+        val selectedDate = requireArguments().getString("selectedDate")
+        if(selectedDate != null){
+            binding.analysisDetailDate.text = selectedDate
+        }
     }
 
     override fun onMapReady(map: NaverMap) {

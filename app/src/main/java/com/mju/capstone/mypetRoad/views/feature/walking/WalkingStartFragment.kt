@@ -107,7 +107,6 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         }
 
         binding.btnWalkingEnd.setOnClickListener {
-            var roadMapName : String = ""
             val myDate = LocalDateTime.now();
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
             val formattedDate = formatter.format(myDate)
@@ -117,23 +116,6 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             timer?.cancel()
             timer = null
             Route.clearPing()
-//            val builder = AlertDialog.Builder(this.requireContext())
-//                .setTitle("산책로 이름은?")
-//                .setView(et)
-//                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-//                    roadMapName = et.text.toString()
-//                    Toast.makeText(
-//                        this.requireContext(), "$roadMapName",
-//                        Toast.LENGTH_SHORT).show()
-//                })
-//            Log.i("WalkingFrag","$roadMapName")
-//            builder.show()
-
-//            roadMapName = "tetRoadMap1"
-//            endTime = System.currentTimeMillis()
-//            durationTime = endTime - startTime / 1000
-//            RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
-//            Distance.clearDistance()
 
             Sliding()
         }
