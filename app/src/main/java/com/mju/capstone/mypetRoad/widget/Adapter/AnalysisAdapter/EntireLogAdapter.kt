@@ -49,7 +49,7 @@ class EntireLogAdapter(
         holder.binding.walkingLogTime.text = walkingLog.time
         holder.itemView.setOnClickListener {
             val action = AnalysisFragmentDirections.actionAnalysisFragmentToAnalysisDetailFragment()
-            navController.navigate(action)
+//            navController.navigate(action)
         }
 //        holder.itemView.setOnClickListener {view ->
 //            val navController = Navigation.findNavController(view)

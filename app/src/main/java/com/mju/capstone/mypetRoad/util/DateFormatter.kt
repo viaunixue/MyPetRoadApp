@@ -22,4 +22,18 @@ object DateFormatter { //Date를 format에 맞게 String으로 변환
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return dateFormat.format(date.time)
     }
+
+    fun getFirstDayOfMonth(date: Date): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        return calendar.time
+    }
+
+    fun getLastDayOfMonth(date: Date): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        return calendar.time
+    }
 }

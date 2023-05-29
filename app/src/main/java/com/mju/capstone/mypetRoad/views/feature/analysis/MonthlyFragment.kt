@@ -1,33 +1,17 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
-import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.Typeface.BOLD
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.ImageSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -38,23 +22,11 @@ import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
-import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint

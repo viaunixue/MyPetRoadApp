@@ -64,7 +64,6 @@ class WalkingViewModel @Inject constructor(
 
     fun updateDetailWalkingText() { // 결과 화면 업뎃
         // 텍스트 업데이트 로직
-        //2023. 05 27 (토)
         val dateStr = String.format("%tY. %tm. %td (%ta)", startDate, startDate, startDate, startDate)
         val startTimeStr = String.format("%tH시 %tM분", startDate, startDate)
         val endTimeStr = String.format("%tH시 %tM분", endDate, endDate)
