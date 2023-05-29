@@ -8,25 +8,37 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".views.feature.analysis.MonthlyFragment">
+        android:layout_height="match_parent">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/calendar_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:mcv_showOtherDates="all"
-            app:mcv_selectionColor="#00F"
-            app:mcv_selectionMode="range"
-            app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
-            app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".views.feature.analysis.MonthlyFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/monthly_card"
+                layout="@layout/entirelog_card" />
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendar_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:mcv_firstDayOfWeek="monday"
+                android:layout_margin="20dp"
+                app:mcv_showOtherDates="defaults"
+                app:mcv_selectionColor="@color/base"
+                app:mcv_calendarMode="month"
+                app:mcv_allowClickDaysOutsideCurrentMonth="false"
+                app:mcv_titleAnimationOrientation="horizontal"
+                app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+                app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+                app:layout_constraintTop_toBottomOf="@+id/monthly_card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

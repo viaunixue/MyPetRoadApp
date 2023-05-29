@@ -3,9 +3,6 @@ package com.mju.capstone.mypetRoad.util
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.mju.capstone.mypetRoad.R
-import com.mju.capstone.mypetRoad.domain.model.WalkingLog
-import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.WeeklyLogAdapter
 
 open class VerticalSpaceItemDecoration(private val verticalSpaceHeight: Int) :
     RecyclerView.ItemDecoration() {

@@ -28,7 +28,8 @@
     <fragment
         android:id="@+id/walkingDetailFragment"
         android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingDetailFragment"
-        android:label="WalkingDetailFragment" >
+        android:label="WalkingDetailFragment"
+        tools:layout="@layout/fragment_walking_detail">
         <action
             android:id="@+id/action_walkingDetailFragment_to_walkingHomeFragment"
             app:destination="@id/walkingHomeFragment" />

@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mju.capstone.mypetRoad.R
@@ -18,8 +21,8 @@ import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.VerticalSpaceItemDecoration
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
+import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.EntireLogAdapter
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.MyWalkingAdapter
-import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.WeeklyLogAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.lang.Math.floor
@@ -30,7 +33,7 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     private val mapLogLists = mutableListOf<MyWalking>()
     private val walkingLogs = mutableListOf<WalkingLog>()
     private lateinit var myWalkingAdapter: MyWalkingAdapter
-    private lateinit var entireLogAdapter: WeeklyLogAdapter
+    private lateinit var entireLogAdapter: EntireLogAdapter
     private val analysisViewModel by viewModels<AnalysisViewModel>()
     override fun getViewBinding() = FragmentEntireBinding.inflate(layoutInflater)
 
@@ -41,9 +44,9 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         myWalkingAdapter = MyWalkingAdapter(mapLogLists)
-        entireLogAdapter = WeeklyLogAdapter(walkingLogs)
+        entireLogAdapter = EntireLogAdapter(walkingLogs)
 
-        binding.topCard.analysisViewModel = analysisViewModel //ViewModel설정
+        binding.entireCard.analysisViewModel = analysisViewModel //ViewModel설정
         analysisViewModel.entireUpdateText()  //텍스트업뎃
 
         return binding.root
@@ -65,6 +68,7 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
             setEntireLogView()
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
             addItemDecoration(VerticalSpaceItemDecoration(spacing))
+
         }
     }
 
