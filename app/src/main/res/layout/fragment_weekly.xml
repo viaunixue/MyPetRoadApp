@@ -8,55 +8,29 @@
 
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".calendar.CalendarFragment">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/today_btn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:text="TODAY"
-                android:textColor="#BDC0BA" />
-
-            <TextView
-                android:id="@+id/month_year_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="AUGUST 2021"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/add_btn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:text="ADD TASK"
-                android:textColor="#BDC0BA" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendar_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/walking_log_vertical_scroll"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"/>
+            tools:context=".views.feature.analysis.WeeklyFrame">
+            <include
+                android:id="@+id/weekly_card"
+                layout="@layout/entirelog_card" />
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/walking_log_vertical_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toBottomOf="@id/weekly_card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
 </layout>

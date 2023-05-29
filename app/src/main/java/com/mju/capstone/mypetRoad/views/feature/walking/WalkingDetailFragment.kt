@@ -83,17 +83,6 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 
             val roadMapName = binding.detailRoadName.text.toString()
 
-//            val builder = AlertDialog.Builder(this.requireContext())
-//                .setTitle("산책로 이름은?")
-//                .setView(et)
-//                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-//                    roadMapName = et.text.toString()
-//                    Toast.makeText(
-//                        this.requireContext(), "$roadMapName",
-//                        Toast.LENGTH_SHORT).show()
-//                })
-//            Log.i("WalkingFrag","$roadMapName")
-//            builder.show()
             durationTime = endTime - startTime / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance() // 거리 변수 초기화
@@ -101,10 +90,10 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 
             initializeTimeValue()
 
-            view?.let { walkingMode ->
-                Navigation.findNavController(walkingMode)
-                    .navigate(R.id.action_walkingDetailFragment_to_walkingHomeFragment)
-            }
+//            view?.let { walkingMode ->
+//                Navigation.findNavController(walkingMode)
+//                    .navigate(R.id.action_walkingDetailFragment_to_walkingHomeFragment)
+//            }
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
