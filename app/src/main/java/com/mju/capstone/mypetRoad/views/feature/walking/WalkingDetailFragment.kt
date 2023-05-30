@@ -79,7 +79,7 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 //                })
 //            Log.i("WalkingFrag","$roadMapName")
 //            builder.show()
-            durationTime = endTime - startTime / 1000
+            durationTime = (endTime - startTime) / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance()
 
