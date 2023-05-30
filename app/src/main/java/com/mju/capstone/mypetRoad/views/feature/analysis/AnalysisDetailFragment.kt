@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
@@ -62,6 +64,16 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         val selectedDate = requireArguments().getString("selectedDate")
         if(selectedDate != null){
             binding.analysisDetailDate.text = selectedDate
+        }
+
+        binding.detailBackBtn.setOnClickListener {
+//            view?.let { analysisMode ->
+//                Navigation.findNavController(analysisMode)
+//                    .navigate(R.id.action_analysisDetailFragment_to_monthlyFragment2)
+//            }
+            val navController = findNavController()
+            val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
+            navController.graph = graph
         }
     }
 

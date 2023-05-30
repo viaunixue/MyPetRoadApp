@@ -4,15 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="petName"
-            type="String" />
-        <variable
-            name="petAge"
-            type="String" />
-        <variable
-            name="petIsWalked"
-            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,71 +14,9 @@
         tools:context=".views.feature.home.HomeFragment"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="117dp"
-            app:layout_constraintBottom_toTopOf="@id/homeTodayRecommend"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/signup_btn" />
-
-        <TextView
-            android:id="@+id/homename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{petName}"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/homeage"
-            app:layout_constraintEnd_toEndOf="@id/imageView"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toTopOf="@id/imageView"/>
-
-        <TextView
-            android:id="@+id/homeage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{petAge}"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/homeIswalked"
-            app:layout_constraintEnd_toEndOf="@id/imageView"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/homename"
-            app:layout_constraintVertical_bias="0.754" />
-
-        <TextView
-            android:id="@+id/homeIswalked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{petIsWalked}"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/ambient_red"
-            app:layout_constraintBottom_toBottomOf="@id/imageView"
-            app:layout_constraintEnd_toEndOf="@id/imageView"
-            app:layout_constraintStart_toStartOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/homeage" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/homeImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/sample_dog"
-            app:layout_constraintBottom_toBottomOf="@id/imageView"
-            app:layout_constraintEnd_toEndOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="@id/imageView"
-            app:layout_constraintTop_toTopOf="@id/imageView" />
-
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_settings_24"
-            android:layout_marginStart="15dp"
-            app:layout_constraintStart_toStartOf="@id/profile"
-            app:layout_constraintBottom_toBottomOf="@id/homeImage"/>
+        <include
+            android:id="@+id/pet_card"
+            layout="@layout/pet_card" />
 
         <TextView
             android:id="@+id/homeTodayRecommend"
@@ -95,27 +25,30 @@
             android:layout_marginTop="20dp"
             android:text="최근 산책로"
             android:textSize="24sp"
+            android:layout_marginBottom="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/home_map_view"
+            app:layout_constraintBottom_toTopOf="@id/home_map_card"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
+            app:layout_constraintTop_toBottomOf="@id/pet_card" />
 
-        <com.naver.maps.map.MapView
-            android:id="@+id/home_map_view"
-            android:name="com.mju.capstone.mypetRoad.ui.view.HomeFragment"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_map_card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:cardCornerRadius="13dp"
+            app:cardElevation="3dp"
+            app:contentPadding="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeTodayRecommend" />
+            app:layout_constraintTop_toBottomOf="@+id/homeTodayRecommend"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="162dp" />
+            <com.naver.maps.map.MapView
+                android:id="@+id/home_map_view"
+                android:name="com.mju.capstone.mypetRoad.ui.view.HomeFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

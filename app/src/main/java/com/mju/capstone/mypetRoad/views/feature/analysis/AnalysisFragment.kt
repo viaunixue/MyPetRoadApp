@@ -1,10 +1,12 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.mju.capstone.mypetRoad.R
@@ -61,6 +63,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
             .commit()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun navigateToWeeklyFragment() {
         val fragment = WeeklyFragment()
         childFragmentManager.beginTransaction()
@@ -77,6 +80,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
             .commit()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun navigateToEntireFragment() {
         val fragment = EntireFragment()
         childFragmentManager.beginTransaction()

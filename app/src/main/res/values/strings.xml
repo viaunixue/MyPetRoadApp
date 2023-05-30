@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">MyPetRoad</string>
     <string name="home">홈</string>
-    <string name="map">실시간위치</string>
-    <string name="analysis">활동량분석</string>
+    <string name="map">실시간 위치</string>
+    <string name="analysis">활동량 분석</string>
+    <string name="analysis_detail">상세 활동량</string>
     <string name="walking">산책</string>
     <string name="settings">내정보</string>
     <string name="id_hint"><font size="15">아이디: 영문으로 시작, 최소 4글자 </font></string>
@@ -27,7 +28,7 @@
     <string name="entire_calories">총 소모 칼로리</string>
     <string name="entire_walking_map">모든 산책로</string>
     <string name="entire_walking_log">모든 활동 기록</string>
-    <string name="detail_pet">함께한 반려 동물</string>
+    <string name="detail_pet">가장 가까운 산책 친구</string>
     <string name="detail_pet_stop">가장 가까운 펫 스탑</string>
     <string name="detail_pet_memo">산책로 기록</string>
     <string name="detail_walking_record">오늘의 산책</string>
