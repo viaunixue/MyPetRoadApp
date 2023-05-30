@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
@@ -46,6 +47,7 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
     lateinit var naverMap: NaverMap
+    private val analysisViewModel by viewModels<AnalysisViewModel>()
 
     override fun initState() {
         super.initState()
@@ -62,6 +64,8 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         val selectedDate = requireArguments().getString("selectedDate")
         if(selectedDate != null){
             binding.analysisDetailDate.text = selectedDate
+            binding.analysisViewModel = analysisViewModel //ViewModel설정
+//            analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
         }
     }
 

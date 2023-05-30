@@ -32,20 +32,30 @@ object Route {
 
             //선의 시간 가중치 값에 따라 색상 부여
             //가중치 기준값은 향후 변경 필요
-            if(sl[index] < 11) {
+            if(sl[index] < 7) {
                 cdColorList.add(
                     MultipartPathOverlay.ColorPart(
-                        Color.RED, Color.RED, Color.RED, Color.RED),
+                        Color.parseColor("#66CC33"),
+                        Color.parseColor("#66CC33"),
+                        Color.parseColor("#66CC33"),
+                        Color.parseColor("#66CC33")),
                 )
-            }else if(sl[index] < 21) {
+            }else if(sl[index] < 13) {
                 cdColorList.add(
                     MultipartPathOverlay.ColorPart(
-                        Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE),
+                        Color.parseColor("#FFE650"),
+                        Color.parseColor("#FFE650"),
+                        Color.parseColor("#FFE650"),
+                        Color.parseColor("#FFE650")),
                 )
             }else {
                 cdColorList.add(
                     MultipartPathOverlay.ColorPart(
-                        Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN),
+                        Color.parseColor("#FF0033"),
+                        Color.parseColor("#FF0033"),
+                        Color.parseColor("#FF0033"),
+                        Color.parseColor("#FF0033")
+                    ),
                 )
             }
         }

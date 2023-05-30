@@ -16,7 +16,7 @@ object DateFormatter { //Date를 format에 맞게 String으로 변환
         val dateString = date.toString()
         val dateTimeFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
         val localDateTime = LocalDateTime.parse(dateString, dateTimeFormatter)
-        val formattedDateString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm:ss.SSS"))
+        val formattedDateString = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"))
 
         return formattedDateString
     }

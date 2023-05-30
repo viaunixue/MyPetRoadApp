@@ -109,7 +109,6 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
 //            view.addSpan(RelativeSizeSpan(1.4f))
 //            view.addSpan(ForegroundColorSpan(Color.RED))
         }
-
     }
 
     private inner class SaturdayDayDecorator(private val context: Context) : DayViewDecorator {

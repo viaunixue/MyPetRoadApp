@@ -137,6 +137,28 @@ class AnalysisViewModel @Inject constructor(
         WalkingCardKcal.set(totalKcal.toString())
     }
 
+    fun monthlyDetailUpdateText(dateStr: String) { //monthly log 변경 업뎃
+        // 텍스트 업데이트 로직
+        var totalM = 0F
+        var cnt = 0
+        var totalSec : Long = 0
+        var totalKcal = 0
+
+        for(i in Config.walkList){
+            if (i.walkDate) {
+                totalM += i.activity.travelDistance
+                cnt += 1
+                totalSec += i.activity.walkedTime.toLong()
+                totalKcal += i.activity.burnedCalories
+            }
+        }
+        startTime.set("")
+        endTime.set("")
+        minTime.set("")
+        distance.set("")
+        calories.set("")
+    }
+
     fun weeklyUpdateText() { //weekly log 업뎃
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, -7) // 현재 날짜로부터 7일 전 날짜로 설정
