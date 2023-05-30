@@ -76,7 +76,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             uiSettings.isScaleBarEnabled = true // 축척 바 활성화 여부
             uiSettings.isCompassEnabled = true // 나침반 활성화 여부
             uiSettings.isZoomControlEnabled = true // 줌 컨트롤 활성화 되어 있는지 여부
-//            uiSettings.setLogoMargin(20, 20, 100, 1520)
+            uiSettings.setLogoMargin(20, 20, 100, 2520)
             isIndoorEnabled = false // 실내 지도
             isLiteModeEnabled = false // 라이트모드
             //lightness = -0.5f // 지도 밝기

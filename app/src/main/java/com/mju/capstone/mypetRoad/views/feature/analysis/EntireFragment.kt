@@ -55,12 +55,12 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
         super.initViews()
         val spacing = resources.getDimensionPixelSize(R.dimen.item_spacing)
 
-        binding.myWalkingLog.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = myWalkingAdapter
-            setMyWalkingLogView()
-            addItemDecoration(VerticalSpaceItemDecoration(spacing))
-        }
+//        binding.myWalkingLog.apply {
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = myWalkingAdapter
+//            setMyWalkingLogView()
+//            addItemDecoration(VerticalSpaceItemDecoration(spacing))
+//        }
 
         binding.entireWalkingLog.apply {
             layoutManager = LinearLayoutManager(context)
@@ -84,13 +84,13 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
         entireLogAdapter.notifyDataSetChanged()
     }
 
-    private fun setMyWalkingLogView() {
-        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/17"))
-        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/16"))
-        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/15"))
-        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/14"))
-        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/13"))
-
-        myWalkingAdapter.notifyDataSetChanged()
-    }
+//    private fun setMyWalkingLogView() {
+//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/17"))
+//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/16"))
+//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/15"))
+//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/14"))
+//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/13"))
+//
+//        myWalkingAdapter.notifyDataSetChanged()
+//    }
 }

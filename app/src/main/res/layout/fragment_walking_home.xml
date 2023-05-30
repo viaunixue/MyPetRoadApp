@@ -19,47 +19,82 @@
             android:layout_height="match_parent"
             android:name="com.mju.capstone.mypetRoad.views.feature.walking.WalkingHomeFragment"/>
 
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/walking_home_card"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent">-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/walking_home_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-<!--            <androidx.viewpager2.widget.ViewPager2-->
-<!--                android:id="@+id/walkingLogViewPager"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:clipChildren="false"-->
-<!--                android:clipToPadding="false"-->
-<!--                android:foregroundGravity="center"-->
-<!--                android:overScrollMode="never"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"/>-->
+            <TextView
+                android:id="@+id/recent_walking_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최근 산책 기록"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginVertical="20dp"
+                android:layout_marginStart="25dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/walkingLogViewPager"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/log_right_arrow"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/baseline_keyboard_arrow_right_24"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"-->
-<!--                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>-->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/walkingLogViewPager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:foregroundGravity="center"
+                android:overScrollMode="never"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recent_walking_log"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/log_left_arrow"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:src="@drawable/baseline_keyboard_arrow_left_24"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"-->
-<!--                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>-->
+            <ImageView
+                android:id="@+id/log_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_keyboard_arrow_right_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
+                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
 
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+            <ImageView
+                android:id="@+id/log_left_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/walkingLogViewPager"
+                app:layout_constraintTop_toTopOf="@id/walkingLogViewPager"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/home_pet_card"
+            android:src="@drawable/sample_dduzzi"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/pet_btn_text" />
+
+        <TextView
+            android:id="@+id/pet_btn_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="함께 산책할 반려견을 고르세요."
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_walking_start"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_walking_start"

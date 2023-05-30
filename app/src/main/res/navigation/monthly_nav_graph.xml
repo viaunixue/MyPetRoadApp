@@ -9,8 +9,8 @@
         android:name="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisDetailFragment"
         android:label="AnalysisDetailFragment" >
         <action
-            android:id="@+id/action_analysisDetailFragment_to_analysisFragment"
-            app:destination="@id/analysisFragment" />
+            android:id="@+id/action_analysisDetailFragment_to_monthlyFragment2"
+            app:destination="@id/monthlyFragment2" />
     </fragment>
     <fragment
         android:id="@+id/analysisFragment"
@@ -20,4 +20,8 @@
             android:id="@+id/action_analysisFragment_to_analysisDetailFragment"
             app:destination="@id/analysisDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/monthlyFragment2"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.MonthlyFragment"
+        android:label="MonthlyFragment" />
 </navigation>
