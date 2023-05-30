@@ -63,7 +63,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>(){
         calendar.add(Calendar.DAY_OF_YEAR, -7) // 현재 날짜로부터 7일 전 날짜로 설정
         val oneWeekAgo = calendar.time // 최근 일주일 전 날짜
 
-        for(i in Config.walkList){ //log add
+        for(i in Config.walkList.reversed()){ //log add
             val dateStr = DateFormatter.dateToString(i.walkDate)!!.take(10)
             if (i.walkDate >= oneWeekAgo) {
                 val min = i.activity.walkedTime.toLong() / 60

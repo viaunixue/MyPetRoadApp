@@ -2,10 +2,13 @@ package com.mju.capstone.mypetRoad.views.feature.analysis
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +18,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.DateSelector
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentMonthlyBinding
+import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.DateFormatter.formatDate
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
@@ -27,6 +32,7 @@ import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.threeten.bp.LocalDate
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -88,7 +94,7 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
             // 해당 year과 month에 해당하는 Date 값 얻기
             val calendarWithSelectedMonth = Calendar.getInstance()
             calendarWithSelectedMonth.set(Calendar.YEAR, year)
-            calendarWithSelectedMonth.set(Calendar.MONTH, month) // 0부터 시작하므로 1을 빼줌
+            calendarWithSelectedMonth.set(Calendar.MONTH, month)
             val selectedMonthDate = calendarWithSelectedMonth.time
 
             analysisViewModel.monthlyNextUpdateText(selectedMonthDate)
@@ -98,16 +104,30 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     private inner class EventDecorator(private val context: Context) : DayViewDecorator {
         private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_stamp)!!
         override fun shouldDecorate(day: CalendarDay?): Boolean {
-            val walkingDates = listOf("2023-05-28", "2023-05-15", "2023-05-05")
-            val dateString = day?.date.toString()
-            return walkingDates.contains(dateString)
+            // Config.walkList에서 해당 일자를 찾아 존재하는 경우에만 그림을 그리기 위해 조건을 설정
+            for (i in Config.walkList) {
+                val calendar = Calendar.getInstance()
+                calendar.time = i.walkDate
+
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+                val walkDay = CalendarDay.from(year, month, dayOfMonth)
+
+                if (day == walkDay) {
+                    return true
+                }
+            }
+            return false
+//            val walkingDates = listOf("2023-05-28", "2023-05-15", "2023-05-05")
+//            val dateString = day?.date.toString()
+//            return walkingDates.contains(dateString)
         }
 
         override fun decorate(view: DayViewFacade?) {
             view?.setSelectionDrawable(drawable)
-//            view.addSpan(StyleSpan(Typeface.BOLD))
-//            view.addSpan(RelativeSizeSpan(1.4f))
-//            view.addSpan(ForegroundColorSpan(Color.RED))
+            view?.addSpan(StyleSpan(Typeface.BOLD))
+            view?.addSpan(RelativeSizeSpan(1.4f))
         }
     }
 

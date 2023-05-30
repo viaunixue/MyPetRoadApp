@@ -18,6 +18,7 @@ import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentWalkingHomeBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
 import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.widget.Adapter.WalkingLogAdapter
@@ -95,6 +96,7 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.walking_nav_graph)
             navController.graph = graph
+            Route.clearPing()
 
             try {
                 Config.isWalking = true

@@ -2,7 +2,9 @@ package com.mju.capstone.mypetRoad.views.feature.analysis
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -138,25 +140,41 @@ class AnalysisViewModel @Inject constructor(
     }
 
     fun monthlyDetailUpdateText(dateStr: String) { //monthly log 변경 업뎃
-        // 텍스트 업데이트 로직
-        var totalM = 0F
-        var cnt = 0
-        var totalSec : Long = 0
-        var totalKcal = 0
+        try {// 텍스트 업데이트 로직
+            var totalM = 0F
+            var cnt = 0
+            var totalSec : Long = 0
+            var totalKcal = 0
 
-        for(i in Config.walkList){
-            if (i.walkDate) {
-                totalM += i.activity.travelDistance
-                cnt += 1
-                totalSec += i.activity.walkedTime.toLong()
-                totalKcal += i.activity.burnedCalories
+            //시작시간 도출을 위해 걷기시간을 저장
+            val walkMap : MutableMap<Date, Long> = mutableMapOf()
+            val walkLists : MutableList<Date> = mutableListOf()
+
+            for(i in Config.walkList){
+                if (DateFormatter.dateToString(i.walkDate)!!.take(10) == dateStr) {
+                    totalM += i.activity.travelDistance
+                    walkMap[i.walkDate] = i.activity.walkedTime.toLong()
+                    walkLists.add(i.walkDate)
+                    cnt += 1
+                    totalSec += i.activity.walkedTime.toLong()
+                    totalKcal += i.activity.burnedCalories
+                }
             }
+            //시작시간은 첫 산책종료시간에서 산책시간을 뺀 값
+            val startTimeDate =
+                walkMap[walkLists[0]]?.let { DateFormatter.decreaseDateBySeconds(walkLists[0], it) }
+            val endTimeDate = walkLists.last()
+            val startTimeStr = String.format("%tH시 %tM분", startTimeDate, startTimeDate)
+            val endTimeStr = String.format("%tH시 %tM분", endTimeDate, endTimeDate)
+
+            startTime.set(startTimeStr)
+            endTime.set(endTimeStr)
+            minTime.set((totalSec/60).toString())
+            distance.set((floor((totalM*100).toDouble()/1000) /100.0).toString())
+            calories.set(totalKcal.toString())
+        } catch (_: Exception) {
+
         }
-        startTime.set("")
-        endTime.set("")
-        minTime.set("")
-        distance.set("")
-        calories.set("")
     }
 
     fun weeklyUpdateText() { //weekly log 업뎃
