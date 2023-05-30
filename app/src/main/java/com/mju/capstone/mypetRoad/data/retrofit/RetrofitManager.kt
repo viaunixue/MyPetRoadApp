@@ -29,6 +29,7 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationSource
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.CircleOverlay
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
@@ -152,7 +153,25 @@ class RetrofitManager {
                             val locationOverlay = it.locationOverlay
                             locationOverlay.isVisible = true
                             locationOverlay.position = coord
-//                            it.moveCamera(CameraUpdate.scrollTo(coord))
+
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+
+                            // 이전 마커 제거
+//                            gpsMarker?.map = null
+//
+//                            val imageMarkerIcon = OverlayImage.fromResource(R.drawable.marker_icon)
+//                            gpsMarker = Marker()
+//                            gpsMarker?.icon = imageMarkerIcon
+//                            gpsMarker?.position = coord
+//                            gpsMarker?.map = naverMap
+
+//                            val infoWindow = InfoWindow()
+//                            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(context) {
+//                                override fun getText(infoWindow : InfoWindow): CharSequence {
+//                                    return "Tracker 위치"
+//                                }
+//                            }
+//                            gpsMarker?.infoWindow = infoWindow
                         }
                     }
                     Log.d("GPS", "onResponce 성공: " + result?.toString());

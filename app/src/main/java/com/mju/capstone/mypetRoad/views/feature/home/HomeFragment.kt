@@ -37,9 +37,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
 
+    private val homeViewModel by viewModels<HomeViewModel>()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         // Context를 액티비티로 형변환해서 할당(토큰 받아올 때 쓰임)
         mainActivity = context as MainActivity
     }
@@ -52,22 +53,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         mapView.getMapAsync(this)
     }
 
+    override fun initViews() {
+        super.initViews()
+        binding.petCard.homeViewModel = homeViewModel
+        homeViewModel.petInfoUpdateText()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
-            uiSettings.isLocationButtonEnabled = true
-            uiSettings.isScaleBarEnabled = true
-            uiSettings.isCompassEnabled = true
-            uiSettings.isZoomControlEnabled = true
+            uiSettings.isLocationButtonEnabled = false
+            uiSettings.isScaleBarEnabled = false
+            uiSettings.isCompassEnabled = false
+            uiSettings.isZoomControlEnabled = false
             uiSettings.setLogoMargin(20, 20, 100, 1520)
             isIndoorEnabled = false // 실내 지도
             isLiteModeEnabled = false // 라이트모드
@@ -75,22 +77,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // buildingHeight = 0.8f // 건물 높이
         }
         RetrofitManager.instance.getLastestWalk(naverMap)
-        letsBinding()
+//        letsBinding()
     }
 
-    fun letsBinding() {
-        val petNameValue = "이름 : ${Config.pet.name}"
-        val petAgeValue = "나이 : ${Config.pet.age}"
-
-        binding.petName = petNameValue
-        binding.petAge = petAgeValue
-        if(Config.todayIsWalked)
-            Config.todayIsWalkedString.set("오늘 산책 함")
-        binding.petIsWalked = Config.todayIsWalkedString.get()
-    }
-
-
-
-    private val homeViewModel by viewModels<HomeViewModel>()
-
+//    private fun letsBinding() {
+//        val petNameValue = "이름 : ${Config.pet.name}"
+//        val petAgeValue = "나이 : ${Config.pet.age}"
+//
+//        binding.petName = petNameValue
+//        binding.petAge = petAgeValue
+//        if(Config.todayIsWalked)
+//            Config.todayIsWalkedString.set("오늘 산책 함")
+//        binding.petIsWalked = Config.todayIsWalkedString.get()
+//    }
 }

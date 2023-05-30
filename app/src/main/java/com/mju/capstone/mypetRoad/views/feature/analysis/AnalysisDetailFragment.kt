@@ -13,6 +13,8 @@ import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
@@ -69,6 +71,16 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             binding.analysisDetailDate.text = selectedDate
             binding.analysisViewModel = analysisViewModel //ViewModel설정
             analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
+        }
+
+        binding.detailBackBtn.setOnClickListener {
+//            view?.let { analysisMode ->
+//                Navigation.findNavController(analysisMode)
+//                    .navigate(R.id.action_analysisDetailFragment_to_monthlyFragment2)
+//            }
+            val navController = findNavController()
+            val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
+            navController.graph = graph
         }
     }
 
