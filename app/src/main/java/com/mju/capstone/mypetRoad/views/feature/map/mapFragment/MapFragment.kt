@@ -1,31 +1,17 @@
 package com.mju.capstone.mypetRoad.views.feature.map.mapFragment
 
 import android.content.Context
-import android.graphics.Color
-import android.util.Log
-import androidx.fragment.app.viewModels
 import com.mju.capstone.mypetRoad.databinding.FragmentMapBinding
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
-import com.mju.capstone.mypetRoad.domain.model.GpsModel
 import com.mju.capstone.mypetRoad.views.MainActivity
-import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.MarkerFactory
-import com.mju.capstone.mypetRoad.views.feature.map.mapFragment.navermap.NaverMapHandler
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
-import com.naver.maps.map.util.MarkerIcons
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.*
-import javax.inject.Inject
-import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -82,6 +68,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
             //lightness = -0.5f // 지도 밝기
             // buildingHeight = 0.8f // 건물 높이
         }
+        RetrofitManager.instance.firstMoveCamera(naverMap)
+
+
+
         timer = Timer()
 
         //1초마다 getGPS
@@ -90,6 +80,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
                 RetrofitManager.instance.getGPS(naverMap, mainActivity);
             }
         }, 0, 1000)
+
+        // 지도상에 핫스팟을 표시해줌
+        RetrofitManager.instance.markHotSpot(naverMap);
     }
 
     override fun onStop() {

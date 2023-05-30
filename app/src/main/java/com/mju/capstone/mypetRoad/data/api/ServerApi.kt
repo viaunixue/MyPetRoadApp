@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.data.api
 
+import com.mju.capstone.mypetRoad.data.dto.coords.HotSpotDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserResponseDto
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
@@ -37,4 +38,7 @@ interface ServerApi {
     fun getAllWalk(
         @Path("petId") petId: Long,
     ) : Call<List<WalkingDto>>
+
+    @GET("/api/walks/hotspot")
+    fun getHotSpot() : Call<List<HotSpotDto>>
 }

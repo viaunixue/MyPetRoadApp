@@ -1,76 +1,55 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
-import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.Typeface.BOLD
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.text.style.ImageSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.DateSelector
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentMonthlyBinding
+import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.DateFormatter.formatDate
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
-import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     val dummyData = arrayOf("2017,03,18", "2017,04,18", "2017,05,18", "2017,06,18")
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val analysisViewModel by viewModels<AnalysisViewModel>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding.monthlyCard.analysisViewModel = analysisViewModel //ViewModel설정
-        analysisViewModel.monthlyUpdateText()  //텍스트업뎃
+        analysisViewModel.monthlyFirstUpdateText()  //텍스트업뎃
 
         return binding.root
     }
@@ -106,23 +85,50 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
                     .navigate(R.id.action_analysisFragment_to_analysisDetailFragment, bundle)
             }
         }
+
+        //달이 바뀌면 정보도 업뎃
+        calendarView.setOnMonthChangedListener { _, date ->
+            val year = date.year
+            val month = date.month
+
+            // 해당 year과 month에 해당하는 Date 값 얻기
+            val calendarWithSelectedMonth = Calendar.getInstance()
+            calendarWithSelectedMonth.set(Calendar.YEAR, year)
+            calendarWithSelectedMonth.set(Calendar.MONTH, month)
+            val selectedMonthDate = calendarWithSelectedMonth.time
+
+            analysisViewModel.monthlyNextUpdateText(selectedMonthDate)
+        }
     }
 
     private inner class EventDecorator(private val context: Context) : DayViewDecorator {
         private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_stamp)!!
         override fun shouldDecorate(day: CalendarDay?): Boolean {
-            val walkingDates = listOf("2023-05-28", "2023-05-15", "2023-05-05")
-            val dateString = day?.date.toString()
-            return walkingDates.contains(dateString)
+            // Config.walkList에서 해당 일자를 찾아 존재하는 경우에만 그림을 그리기 위해 조건을 설정
+            for (i in Config.walkList) {
+                val calendar = Calendar.getInstance()
+                calendar.time = i.walkDate
+
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+                val walkDay = CalendarDay.from(year, month, dayOfMonth)
+
+                if (day == walkDay) {
+                    return true
+                }
+            }
+            return false
+//            val walkingDates = listOf("2023-05-28", "2023-05-15", "2023-05-05")
+//            val dateString = day?.date.toString()
+//            return walkingDates.contains(dateString)
         }
 
         override fun decorate(view: DayViewFacade?) {
             view?.setSelectionDrawable(drawable)
-//            view.addSpan(StyleSpan(Typeface.BOLD))
-//            view.addSpan(RelativeSizeSpan(1.4f))
-//            view.addSpan(ForegroundColorSpan(Color.RED))
+            view?.addSpan(StyleSpan(Typeface.BOLD))
+            view?.addSpan(RelativeSizeSpan(1.4f))
         }
-
     }
 
     private inner class SaturdayDayDecorator(private val context: Context) : DayViewDecorator {

@@ -1,19 +1,24 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -48,6 +53,7 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
     lateinit var naverMap: NaverMap
+    private val analysisViewModel by viewModels<AnalysisViewModel>()
 
     override fun initState() {
         super.initState()
@@ -55,15 +61,16 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
 //        mapView = binding.detailMapView
 //        mapView.getMapAsync(this)
-
-
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
         val selectedDate = requireArguments().getString("selectedDate")
         if(selectedDate != null){
             binding.analysisDetailDate.text = selectedDate
+            binding.analysisViewModel = analysisViewModel //ViewModel설정
+            analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
         }
 
         binding.detailBackBtn.setOnClickListener {

@@ -73,7 +73,7 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     }
 
     private fun setEntireLogView() {
-        for(i in Config.walkList){ //log add
+        for(i in Config.walkList.reversed()){ //log add
             val dateStr = DateFormatter.dateToString(i.walkDate)!!.take(10)
             val min = i.activity.walkedTime.toLong() / 60
             val sec = i.activity.walkedTime.toLong() % 60

@@ -83,7 +83,7 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 
             val roadMapName = binding.detailRoadName.text.toString()
 
-            durationTime = endTime - startTime / 1000
+            durationTime = (endTime - startTime) / 1000
             RetrofitManager.instance.WalkingOver(durationTime, roadMapName, Distance.totalDistance, Calories.totalCalories, formattedDate)
             Distance.clearDistance() // 거리 변수 초기화
             Calories.clearCalories() // 칼로리 변수 초기화

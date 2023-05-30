@@ -57,3 +57,4 @@ class EntireLogAdapter(
 //            navController.navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
 //        }
     }
+}

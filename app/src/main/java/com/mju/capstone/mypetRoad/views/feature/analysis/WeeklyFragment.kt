@@ -13,6 +13,8 @@ import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentWeeklyBinding
 import com.mju.capstone.mypetRoad.domain.model.Date
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.VerticalSpaceItemDecoration
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.mju.capstone.mypetRoad.widget.Adapter.AnalysisAdapter.WeeklyLogAdapter
@@ -57,15 +59,19 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>(){
     }
 
     private fun setWeeklyLogView() {
-        walkingLogs.add(
-            WalkingLog(R.drawable.sample_map_view,
-                "2023/05/17", 3F, 3, "10'55\"")
-        )
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""))
-        walkingLogs.add(WalkingLog(R.drawable.sample_map_view, "2023/05/17", 3F, 3, "10'55\""))
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -7) // 현재 날짜로부터 7일 전 날짜로 설정
+        val oneWeekAgo = calendar.time // 최근 일주일 전 날짜
 
+        for(i in Config.walkList.reversed()){ //log add
+            val dateStr = DateFormatter.dateToString(i.walkDate)!!.take(10)
+            if (i.walkDate >= oneWeekAgo) {
+                val min = i.activity.walkedTime.toLong() / 60
+                val sec = i.activity.walkedTime.toLong() % 60
+                val distance = String.format("%.2f", i.activity.travelDistance / 1000f).toFloat()
+                walkingLogs.add(WalkingLog(R.drawable.sample_map_view, dateStr, distance, i.activity.burnedCalories, "$min:$sec"))
+            }
+        }
         weeklyLogAdapter.notifyDataSetChanged()
     }
 

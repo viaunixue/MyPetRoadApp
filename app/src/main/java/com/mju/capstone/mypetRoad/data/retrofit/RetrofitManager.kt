@@ -2,18 +2,17 @@ package com.mju.capstone.mypetRoad.data.retrofit
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.R
+import com.mju.capstone.mypetRoad.data.dto.coords.HotSpotDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserResponseDto
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.SignUp
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
-import com.mju.capstone.mypetRoad.data.dto.walkingInfo.Ping
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.PingRequestDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
@@ -27,11 +26,13 @@ import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.LocationSource
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.overlay.CircleOverlay
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +40,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
+
 
 class RetrofitManager {
     companion object{
@@ -136,7 +138,7 @@ class RetrofitManager {
 
     fun getGPS( //naverMap에 실시간 위치표시
         naverMap: NaverMap,
-        context: Context
+        context: Context,
     ) {
         val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
         val jwt = sharedPreferences.getString("jwt_token", null)
@@ -184,7 +186,85 @@ class RetrofitManager {
         })
     }
 
-    fun getPings( //핑 받아서 실시간으로 경로 그리기
+    /** 실시간 위치 프래그먼트에 올때 카메라 위치를 가장 마지막 트래커 위치로 한번만 옮겨줌*/
+    fun firstMoveCamera(
+        naverMap: NaverMap
+    ){
+        trackerInstance.getGps().enqueue(object : Callback<TrackerDto>{
+            override fun onResponse(call: Call<TrackerDto>, response: Response<TrackerDto>) {
+                if(response.isSuccessful){
+                    val result: TrackerDto? = response.body()
+                    if (result != null) {
+                        naverMap.let {
+                            val coord = LatLng(result.latitude, result.longitude)
+
+                            val locationOverlay = it.locationOverlay
+                            locationOverlay.isVisible = true
+                            locationOverlay.position = coord
+                            it.moveCamera(CameraUpdate.scrollTo(coord))
+                        }
+                    }
+                    Log.d("firstMoveCamera", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("firstMoveCamera", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<TrackerDto>, t: Throwable) {
+                Log.d("firstMoveCamera", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    /** 핫스팟 리스트를 받아와서 지도상에 띄어주는 함수*/
+    fun markHotSpot(
+        naverMap : NaverMap
+    ) {
+        serverInstance.getHotSpot().enqueue(object : Callback<List<HotSpotDto>>{
+            override fun onResponse(
+                call: Call<List<HotSpotDto>>,
+                response: Response<List<HotSpotDto>>,
+            ) {
+                if(response.isSuccessful()){
+                    val hotSpotList : List<HotSpotDto>? = response.body()
+                    if(hotSpotList != null){
+                        // 핫스팟을 지도에 표시
+                        for(hs in hotSpotList) {
+                            naverMap.let {
+                                val coord = LatLng(hs.latitude, hs.longitude)
+
+                                // 지도상에 핫스팟을 마커로 표시
+                                val hotSpotMarker = Marker()
+                                val imageMarkerIcon = OverlayImage.fromResource(R.drawable.hotspot_color_32)
+                                hotSpotMarker.icon = imageMarkerIcon
+                                hotSpotMarker.position = coord
+                                hotSpotMarker.map = it
+
+                                // 지도상에 핫스팟을 셰이프로 표시(원)
+                                val hotSpotCircle = CircleOverlay()
+                                hotSpotCircle.center = coord // 핫스팟 좌표
+                                hotSpotCircle.radius = 50.0 // 반경 50미터 표시 (실상은 100m인데 너무 겹쳐서 50으로 줄임)
+                                hotSpotCircle.color = Color.parseColor("#80AEE4FF") // AARRGGBB (AA는 투명도)
+                                hotSpotCircle.outlineWidth = 3
+                                hotSpotCircle.map = it
+                            }
+                        }
+                    }
+
+                    Log.d("markHotSpot", "onResponce 성공: " + hotSpotList?.toString());
+                }
+                else{
+                    Log.d("markHotSpot", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+
+            override fun onFailure(call: Call<List<HotSpotDto>>, t: Throwable) {
+                Log.d("markHotSpot", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    fun getPings( //핑 받아서 실시간으로 경로그리기
         naverMap: NaverMap
     ) {
         trackerInstance.getGpsPing().enqueue(object : Callback<PingRequestDto>{
