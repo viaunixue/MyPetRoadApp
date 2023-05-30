@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentMonthlyBinding
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.DateFormatter.formatDate
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -30,19 +31,19 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     val dummyData = arrayOf("2017,03,18", "2017,04,18", "2017,05,18", "2017,06,18")
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val analysisViewModel by viewModels<AnalysisViewModel>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding.monthlyCard.analysisViewModel = analysisViewModel //ViewModel설정
-        analysisViewModel.monthlyUpdateText()  //텍스트업뎃
+        analysisViewModel.monthlyFirstUpdateText()  //텍스트업뎃
 
         return binding.root
     }
@@ -77,6 +78,20 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
                 Navigation.findNavController(analysisMode)
                     .navigate(R.id.action_analysisFragment_to_analysisDetailFragment, bundle)
             }
+        }
+
+        //달이 바뀌면 정보도 업뎃
+        calendarView.setOnMonthChangedListener { _, date ->
+            val year = date.year
+            val month = date.month
+
+            // 해당 year과 month에 해당하는 Date 값 얻기
+            val calendarWithSelectedMonth = Calendar.getInstance()
+            calendarWithSelectedMonth.set(Calendar.YEAR, year)
+            calendarWithSelectedMonth.set(Calendar.MONTH, month) // 0부터 시작하므로 1을 빼줌
+            val selectedMonthDate = calendarWithSelectedMonth.time
+
+            analysisViewModel.monthlyNextUpdateText(selectedMonthDate)
         }
     }
 

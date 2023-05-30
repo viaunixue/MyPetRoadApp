@@ -7,18 +7,14 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.databinding.ObservableField
-import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.DateFormatter
-import com.mju.capstone.mypetRoad.util.Distance
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Year
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.floor
 
 @HiltViewModel
+@RequiresApi(Build.VERSION_CODES.O)
 class AnalysisViewModel @Inject constructor(
 
 ): ViewModel(){
@@ -39,7 +35,6 @@ class AnalysisViewModel @Inject constructor(
     var endTime = ObservableField<String>()
     var startTime = ObservableField<String>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun entireUpdateText() { //entire log 업뎃
         // 텍스트 업데이트 로직
         var totalM = 0F
@@ -71,9 +66,8 @@ class AnalysisViewModel @Inject constructor(
         WalkingCardKcal.set(totalKcal.toString())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun monthlyUpdateText() { //monthly log 업뎃
-        val firstDayOfMonth = DateFormatter.getFirstDayOfMonth(Date()) // 최근 일주일 전 날짜
+    fun monthlyFirstUpdateText() { //monthly log 첫 업뎃
+        val firstDayOfMonth = DateFormatter.getFirstDayOfMonth(Date()) // 이번 달의 첫 날
 
         // 텍스트 업데이트 로직
         var totalM = 0F
@@ -107,7 +101,42 @@ class AnalysisViewModel @Inject constructor(
         WalkingCardKcal.set(totalKcal.toString())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    fun monthlyNextUpdateText(date: Date) { //monthly log 변경 업뎃
+        val firstDayOfMonth = DateFormatter.getFirstDayOfMonth(date) // 해당 달의 첫 날
+        val lastDayOfMonth = DateFormatter.getLastDayOfMonth(date) // 해당 달의 마지막 날
+
+        // 텍스트 업데이트 로직
+        var totalM = 0F
+        var cnt = 0
+        var totalSec : Long = 0
+        var totalKcal = 0
+        val startDateStr = String.format("%tY.%tm.%td",
+            firstDayOfMonth,
+            firstDayOfMonth,
+            firstDayOfMonth
+        )
+        val endDateStr = String.format("%tY.%tm.%td",
+            lastDayOfMonth,
+            lastDayOfMonth,
+            lastDayOfMonth
+        )
+
+        for(i in Config.walkList){
+            if (i.walkDate in firstDayOfMonth..lastDayOfMonth) {
+                totalM += i.activity.travelDistance
+                cnt += 1
+                totalSec += i.activity.walkedTime.toLong()
+                totalKcal += i.activity.burnedCalories
+            }
+        }
+        startDate.set(startDateStr)
+        endDate.set(endDateStr)
+        WalkingCardKm.set((floor((totalM*100).toDouble()/1000) /100.0).toString())
+        WalkingCardCnt.set(cnt.toString())
+        WalkingCardMin.set((totalSec / 60).toString())
+        WalkingCardKcal.set(totalKcal.toString())
+    }
+
     fun weeklyUpdateText() { //weekly log 업뎃
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, -7) // 현재 날짜로부터 7일 전 날짜로 설정
