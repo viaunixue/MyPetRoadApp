@@ -47,6 +47,8 @@ class EntireLogAdapter(
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
         holder.binding.walkingLogKcal.text = walkingLog.calories.toString()
         holder.binding.walkingLogTime.text = walkingLog.time
+        holder.binding.walkingLogId.text = walkingLog.id.toString()
+
         holder.itemView.setOnClickListener {
             itemClickListener?.onItemClick(it, position)
         }

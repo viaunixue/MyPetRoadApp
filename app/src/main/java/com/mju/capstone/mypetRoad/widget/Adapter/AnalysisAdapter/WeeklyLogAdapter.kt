@@ -24,6 +24,12 @@ import com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisFragmentDirecti
 class WeeklyLogAdapter (
     private val walkingLogs : List<WalkingLog>
 ) : RecyclerView.Adapter<WeeklyLogAdapter.WeeklyLogViewHolder>() {
+
+    private var itemClickListener: OnItemClickListener? = null
+    interface OnItemClickListener {
+        //클릭시 동작할 함수
+        fun onItemClick(v: View?, pos: Int)
+    }
     inner class WeeklyLogViewHolder(val binding: WeeklylogAdapterItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -38,6 +44,10 @@ class WeeklyLogAdapter (
 
     override fun getItemCount(): Int = walkingLogs.size
 
+    fun setOnItemClickListener(listener: OnItemClickListener?) {
+        itemClickListener = listener
+    }
+
     override fun onBindViewHolder(holder: WeeklyLogViewHolder, position: Int) {
         val walkingLog = walkingLogs[position]
         holder.binding.walkingLogImage.setImageResource(walkingLog.LogImage)
@@ -45,10 +55,10 @@ class WeeklyLogAdapter (
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
         holder.binding.walkingLogKcal.text = walkingLog.calories.toString()
         holder.binding.walkingLogTime.text = walkingLog.time
+        holder.binding.walkingLogId.text = walkingLog.id.toString()
 
-        holder.itemView.setOnClickListener {view ->
-            val navController = Navigation.findNavController(view)
-            navController.navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
+        holder.itemView.setOnClickListener {
+            itemClickListener?.onItemClick(it, position)
         }
     }
 }

@@ -20,6 +20,8 @@ import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import com.mju.capstone.mypetRoad.util.Config
+import com.mju.capstone.mypetRoad.util.DateFormatter
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
@@ -70,14 +72,27 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
     override fun initViews() {
         super.initViews()
 
-        val selectedDate = requireArguments().getString("selectedDate")
-        if(selectedDate != null){
-            binding.analysisDetailDate.text = selectedDate
-            binding.analysisViewModel = analysisViewModel //ViewModel설정
-            analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
-        } else {
-        //TODO 주간이나 월간에서 눌렀을 시
+        var selectedDateFromCalendar = requireArguments().getString("selectedDate")
+        var selectedDateFromCard = requireArguments().getString("selectedCardDate")
+
+        binding.analysisViewModel = analysisViewModel //ViewModel설정
+        if(selectedDateFromCalendar != null){
+            binding.analysisDetailDate.text = selectedDateFromCalendar
+            analysisViewModel.monthlyDetailUpdateText(selectedDateFromCalendar)  //텍스트업뎃
+            Log.e("달력", "달력달력")
+        }else if(selectedDateFromCard != null) {
+            for(i in Config.walkList){
+                if(i.activity.id == selectedDateFromCard.toLong()) {
+                    binding.analysisDetailDate.text =
+                        String.format("%tY-%tm-%td", i.walkDate, i.walkDate, i.walkDate)
+                    analysisViewModel.cardDetailUpdateText(i)  //텍스트업뎃
+                    Log.e("카드", "카드카드")
+                    break
+                }
+            }
         }
+        selectedDateFromCalendar = null
+        selectedDateFromCard = null
 
         binding.detailBackBtn.setOnClickListener {
 //            view?.let { analysisMode ->

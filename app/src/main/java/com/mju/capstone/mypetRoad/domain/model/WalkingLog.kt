@@ -12,5 +12,6 @@ data class WalkingLog (
     var date: String,
     var distance: Float,
     var calories: Int,
-    var time: String
+    var time: String,
+    var id: Long
 ): Parcelable

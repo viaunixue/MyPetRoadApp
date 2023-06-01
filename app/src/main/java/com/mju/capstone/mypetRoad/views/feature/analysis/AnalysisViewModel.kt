@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.databinding.ObservableField
+import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.util.Config
 import com.mju.capstone.mypetRoad.util.DateFormatter
 import java.time.LocalDate
@@ -177,6 +178,25 @@ class AnalysisViewModel @Inject constructor(
             minTime.set((totalSec/60).toString())
             distance.set((floor((totalM*100).toDouble()/1000) /100.0).toString())
             calories.set(totalKcal.toString())
+        } catch (_: Exception) {
+
+        }
+    }
+
+    fun cardDetailUpdateText(walkingDto: WalkingDto) { //monthly log 변경 업뎃
+        try {// 텍스트 업데이트 로직
+            //시작시간은 첫 산책종료시간에서 산책시간을 뺀 값
+            val startTimeDate = DateFormatter.decreaseDateBySeconds(
+                walkingDto.walkDate, walkingDto.activity.walkedTime.toLong())
+            val endTimeDate = walkingDto.walkDate
+            val startTimeStr = String.format("%tH시 %tM분", startTimeDate, startTimeDate)
+            val endTimeStr = String.format("%tH시 %tM분", endTimeDate, endTimeDate)
+
+            startTime.set(startTimeStr)
+            endTime.set(endTimeStr)
+            minTime.set((walkingDto.activity.walkedTime.toInt()/60).toString())
+            distance.set((floor((walkingDto.activity.travelDistance*100).toDouble()/1000) /100.0).toString())
+            calories.set(walkingDto.activity.burnedCalories.toString())
         } catch (_: Exception) {
 
         }

@@ -80,11 +80,11 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
         val buttonAnimation = AnimationUtils.loadAnimation(requireContext(), R.animator.button_animation)
 
         var walkingLog: List<WalkingLog> = listOf(
-            WalkingLog(R.drawable.sample_dog, "2023/05/17", 23f, 110, "10'55\""),
-            WalkingLog(R.drawable.sample_dduzzi, "2022/04/20", 12f, 73, "20'44\""),
-            WalkingLog(R.drawable.sample_dduzzi, "2021/03/23", 18f, 134, "30'33\""),
-            WalkingLog(R.drawable.sample_dog2, "2020/02/26", 12f, 89, "06:08"),
-            WalkingLog(R.drawable.sample_dduzzi, "2019/01/29", 33f, 134, "50'11\"")
+            WalkingLog(R.drawable.sample_dog, "2023/05/17", 23f, 110, "10'55\"",0),
+            WalkingLog(R.drawable.sample_dduzzi, "2022/04/20", 12f, 73, "20'44\"",0),
+            WalkingLog(R.drawable.sample_dduzzi, "2021/03/23", 18f, 134, "30'33\"",0),
+            WalkingLog(R.drawable.sample_dog2, "2020/02/26", 12f, 89, "06:08",0),
+            WalkingLog(R.drawable.sample_dduzzi, "2019/01/29", 33f, 134, "50'11\"",0)
         )
 
         val walkingLogAdapter = WalkingLogAdapter(walkingLog)

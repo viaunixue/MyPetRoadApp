@@ -34,6 +34,7 @@ class WalkingLogAdapter (
         holder.binding.walkingLogDate.text = walkingLog.date
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
         holder.binding.walkingLogTime.text = walkingLog.time
+        holder.binding.walkingLogId.text = walkingLog.id.toString()
 
         holder.itemView.setOnClickListener {
             // 세부 정보

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -51,9 +52,11 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
                 val graph = navController.navInflater.inflate(R.navigation.monthly_nav_graph)
                 navController.graph = graph
 
+                val bundle = bundleOf("selectedCardDate" to walkingLogs[pos].id.toString())
+
                 view?.let { analysisMode ->
                     Navigation.findNavController(analysisMode)
-                        .navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
+                        .navigate(R.id.action_analysisFragment_to_analysisDetailFragment, bundle)
                 }
             }
         })
@@ -83,7 +86,8 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
             val min = i.activity.walkedTime.toLong() / 60
             val sec = i.activity.walkedTime.toLong() % 60
             val distance = String.format("%.2f", i.activity.travelDistance/1000f).toFloat()
-            walkingLogs.add(WalkingLog(R.drawable.sample_map_view, dateStr, distance, i.activity.burnedCalories, "$min:$sec"))
+            val id = i.activity.id!!
+            walkingLogs.add(WalkingLog(R.drawable.sample_map_view, dateStr, distance, i.activity.burnedCalories, "$min:$sec", id))
         }
 
         entireLogAdapter.notifyDataSetChanged()

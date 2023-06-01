@@ -179,7 +179,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
                     walkingViewModel.updateWalkingText()
                 }
             }
-        }, 0, 2000)
+        }, 0, 1000)
     }
 
     override fun onStop() {
