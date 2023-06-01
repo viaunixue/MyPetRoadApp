@@ -49,7 +49,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
-            uiSettings.isLocationButtonEnabled = true // 현 위치 버튼 활성화 여부
+            uiSettings.isLocationButtonEnabled = false // 현 위치 버튼 활성화 여부
             uiSettings.isScaleBarEnabled = true // 축척 바 활성화 여부
             uiSettings.isCompassEnabled = true // 나침반 활성화 여부
             uiSettings.isZoomControlEnabled = true // 줌 컨트롤 활성화 되어 있는지 여부
@@ -61,7 +61,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         }
         RetrofitManager.instance.firstMoveCamera(naverMap)
 
-
+        binding.btnCurLocation.setOnClickListener {
+            RetrofitManager.instance.firstMoveCamera(naverMap)
+        }
 
         timer = Timer()
 
