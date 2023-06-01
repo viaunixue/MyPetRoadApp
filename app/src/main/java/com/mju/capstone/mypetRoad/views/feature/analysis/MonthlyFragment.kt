@@ -134,9 +134,6 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
                 }
             }
             return false
-//            val walkingDates = listOf("2023-05-28", "2023-05-15", "2023-05-05")
-//            val dateString = day?.date.toString()
-//            return walkingDates.contains(dateString)
         }
 
         override fun decorate(view: DayViewFacade?) {

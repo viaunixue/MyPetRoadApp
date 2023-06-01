@@ -90,14 +90,11 @@ class WalkingDetailFragment : BaseFragment<FragmentWalkingDetailBinding>(), OnMa
 
             initializeTimeValue()
 
-//            view?.let { walkingMode ->
-//                Navigation.findNavController(walkingMode)
-//                    .navigate(R.id.action_walkingDetailFragment_to_walkingHomeFragment)
-//            }
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
-//            navController.navigate(R.id.walking) <- 홈 화면 못넘어가는 오류 발생
+            navController.popBackStack() // 이전의 백스택 항목 제거
+            navController.navigate(R.id.walking) // walking 화면으로 이동
         }
     }
 
