@@ -52,20 +52,11 @@
             app:singleLine="true"
             app:singleSelection="true"
             tools:visibility="visible"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="MissingConstraints">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/btnFilter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="산책로 기록"
-                app:chipIcon="@drawable/list"
-                app:chipIconEnabled="true"
-                app:chipBackgroundColor="#D8F4F2"
-                app:chipIconTint="#000000"
-                tools:visibility="visible" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/btn_curLocation"
@@ -76,23 +67,6 @@
                 app:chipIconEnabled="true"
                 app:chipBackgroundColor="#D8F4F2"
                 app:chipIconTint="#000000"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/btn_destLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="주소지"
-                app:chipIcon="@drawable/address_location"
-                app:chipIconEnabled="true"
-                app:chipBackgroundColor="#D8F4F2"
-                app:chipIconTint="#000000"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/btnCloseMarkers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="닫기"
-                app:chipBackgroundColor="#D8F4F2" />
 
         </com.google.android.material.chip.ChipGroup>
 

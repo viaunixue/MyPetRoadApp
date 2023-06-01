@@ -152,7 +152,7 @@ class RetrofitManager {
                             locationOverlay.isVisible = true
                             locationOverlay.position = coord
 
-                            it.moveCamera(CameraUpdate.scrollTo(coord))
+//                            it.moveCamera(CameraUpdate.scrollTo(coord))
 
                             // 이전 마커 제거
 //                            gpsMarker?.map = null
