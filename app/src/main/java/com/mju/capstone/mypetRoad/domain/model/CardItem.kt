@@ -4,9 +4,9 @@ import android.widget.ImageView
 
 data class CardItem (
 
-    val analysisCardMap : Int,
-    val analysisCardTime: String,
-    val analysisCardDistance : Double,
-    val analysisCardCalories : String
+    val walkingFriendCardImg : Int,
+    val walkingFriendCardName: String,
+    val walkingFriendCardAge : Int,
+    val walkingFriendCardIsNeutered : Boolean
 
 )

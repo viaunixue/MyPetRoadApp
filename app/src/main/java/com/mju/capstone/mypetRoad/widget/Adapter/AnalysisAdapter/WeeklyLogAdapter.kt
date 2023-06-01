@@ -40,15 +40,15 @@ class WeeklyLogAdapter (
 
     override fun onBindViewHolder(holder: WeeklyLogViewHolder, position: Int) {
         val walkingLog = walkingLogs[position]
-//        holder.binding.walkingLogImage.setImageResource(R.drawable.sample_map_view)
         holder.binding.walkingLogImage.setImageResource(walkingLog.LogImage)
         holder.binding.walkingLogDate.text = walkingLog.date
         holder.binding.walkingLogDistance.text = walkingLog.distance.toString()
         holder.binding.walkingLogKcal.text = walkingLog.calories.toString()
         holder.binding.walkingLogTime.text = walkingLog.time
-//        holder.itemView.setOnClickListener {view ->
-//            val navController = Navigation.findNavController(view)
-//            navController.navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
-//        }
+
+        holder.itemView.setOnClickListener {view ->
+            val navController = Navigation.findNavController(view)
+            navController.navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
+        }
     }
 }

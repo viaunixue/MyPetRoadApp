@@ -4,6 +4,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.databinding.ObservableField
+import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
+import com.mju.capstone.mypetRoad.data.dto.trackerInfo.OtherPetDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
@@ -27,8 +29,11 @@ object Config {
     var todayIsWalked : Boolean = false
     var todayIsWalkedString : ObservableField<String> = ObservableField("오늘 산책 안함")
 
-    //Analysis fragment에 들어가면 서버값으로 초기화
+    // Analysis fragment에 들어가면 서버값으로 초기화
     lateinit var walkList : List<WalkingDto>
+
+    // Random Pet Info
+    lateinit var otherPetInof : List<OtherPetDto>
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun isDateToday(lastestDate: Date): Boolean {

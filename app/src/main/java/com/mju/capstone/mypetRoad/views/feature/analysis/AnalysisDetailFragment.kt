@@ -66,12 +66,12 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
-        val selectedDate = requireArguments().getString("selectedDate")
-        if(selectedDate != null){
-            binding.analysisDetailDate.text = selectedDate
-            binding.analysisViewModel = analysisViewModel //ViewModel설정
-            analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
-        }
+//        val selectedDate = requireArguments().getString("selectedDate")
+//        if(selectedDate != null){
+//            binding.analysisDetailDate.text = selectedDate
+//            binding.analysisViewModel = analysisViewModel //ViewModel설정
+//            analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
+//        }
 
         binding.detailBackBtn.setOnClickListener {
 //            view?.let { analysisMode ->

@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".views.feature.analysis.WeeklyFrame">
+
             <include
                 android:id="@+id/weekly_card"
                 layout="@layout/entirelog_card" />

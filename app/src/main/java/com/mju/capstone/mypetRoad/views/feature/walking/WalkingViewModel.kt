@@ -25,6 +25,8 @@ import kotlin.math.round
 class WalkingViewModel @Inject constructor(
 
 ): ViewModel(){
+    val petName = ObservableField<String>()
+
     //텍스트 업데이트 변수
     var distance = ObservableField<String>()
     var secTime = ObservableField<String>()
@@ -34,6 +36,11 @@ class WalkingViewModel @Inject constructor(
     var walkedDate = ObservableField<String>()
     var endTime = ObservableField<String>()
     var startTime = ObservableField<String>()
+
+    fun petInfoUpdateText() {
+        val petNameValue = "내새꾸 ${Config.pet.name}"
+        petName.set(petNameValue)
+    }
 
     fun updateWalkingText() { //live log 업뎃
         // 텍스트 업데이트 로직

@@ -19,49 +19,50 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
 
     override fun initViews() {
         super.initViews()
+
         val viewPager = binding.cardViewPager
         val analysisCardAdapter =
             AnalysisCardPagerAdapter(requireContext())
-        analysisCardAdapter.addCardItem(
-            CardItem(
-                R.drawable.sample_dduzzi,
-                "35",
-                3.05,
-                "250"
-            )
-        )
-        analysisCardAdapter.addCardItem(
-            CardItem(
-                R.drawable.sample_dog,
-                "45",
-                3.75,
-                "370"
-            )
-        )
-        analysisCardAdapter.addCardItem(
-            CardItem(
-                R.drawable.sample_map_view,
-                "25",
-                2.05,
-                "220"
-            )
-        )
-        analysisCardAdapter.addCardItem(
-            CardItem(
-                R.drawable.sample_map_view,
-                "60",
-                3.35,
-                "400"
-            )
-        )
-        analysisCardAdapter.addCardItem(
-            CardItem(
-                R.drawable.sample_map_view,
-                "10",
-                1.25,
-                "120"
-            )
-        )
+//        analysisCardAdapter.addCardItem(
+//            CardItem(
+//                R.drawable.sample_dduzzi,
+//                "35",
+//                3.05,
+//                "250"
+//            )
+//        )
+//        analysisCardAdapter.addCardItem(
+//            CardItem(
+//                R.drawable.sample_dog,
+//                "45",
+//                3.75,
+//                "370"
+//            )
+//        )
+//        analysisCardAdapter.addCardItem(
+//            CardItem(
+//                R.drawable.sample_map_view,
+//                "25",
+//                2.05,
+//                "220"
+//            )
+//        )
+//        analysisCardAdapter.addCardItem(
+//            CardItem(
+//                R.drawable.sample_map_view,
+//                "60",
+//                3.35,
+//                "400"
+//            )
+//        )
+//        analysisCardAdapter.addCardItem(
+//            CardItem(
+//                R.drawable.sample_map_view,
+//                "10",
+//                1.25,
+//                "120"
+//            )
+//        )
 
         var mLastOffset = 0f
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detailAnalysis"
+    app:startDestination="@id/datailFragment">
+
+    <fragment
+        android:id="@+id/datailFragment"
+        android:name="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisDetailFragment"
+        android:label="상세정보"/>
+
+</navigation>

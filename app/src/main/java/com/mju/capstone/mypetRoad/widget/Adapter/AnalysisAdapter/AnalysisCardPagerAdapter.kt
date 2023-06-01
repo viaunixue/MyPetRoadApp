@@ -36,10 +36,10 @@ class AnalysisCardPagerAdapter(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         binding = AnalysisDailyItemBinding.inflate(inflater)
-        binding.analysisCardMap.setImageResource(cardData[position].analysisCardMap)
-        binding.analysisCardTime.text = cardData[position].analysisCardTime
-        binding.analysisCardDistance.text = cardData[position].analysisCardDistance.toString()
-        binding.analysisCardCalories.text = cardData[position].analysisCardCalories
+        binding.analysisCardMap.setImageResource(cardData[position].walkingFriendCardImg)
+        binding.analysisCardTime.text = cardData[position].walkingFriendCardName
+        binding.analysisCardDistance.text = cardData[position].walkingFriendCardAge.toString()
+        binding.analysisCardCalories.text = cardData[position].walkingFriendCardIsNeutered.toString()
 
 //        binding.contextText.text = mData[position].getText()
 

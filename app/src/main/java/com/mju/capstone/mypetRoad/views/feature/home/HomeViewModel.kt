@@ -16,8 +16,8 @@ class HomeViewModel @Inject constructor(
     val petIsWalked = ObservableField<String>()
 
     fun petInfoUpdateText() {
-        val petNameValue = "이름 : ${Config.pet.name}"
-        val petAgeValue = "나이 : ${Config.pet.age}"
+        val petNameValue = "${Config.pet.name}"
+        val petAgeValue = "${Config.pet.age}살"
         petName.set(petNameValue)
         petAge.set(petAgeValue)
 

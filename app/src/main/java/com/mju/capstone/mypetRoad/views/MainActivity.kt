@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
     // 그때 그 id 값을 반환 하면서 get 으로 가져옴
     private val navController get() = navControllerProvider.get()
 
-
-
     companion object {
         const val MY_LOCATION_KEY = "MY_LOCATION_KEY"
     }

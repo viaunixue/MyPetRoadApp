@@ -2,7 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="analysisViewModel"
+            type="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

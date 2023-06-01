@@ -6,6 +6,7 @@ import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.SignUp
 import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
+import com.mju.capstone.mypetRoad.data.dto.trackerInfo.OtherPetDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingDto
 import com.mju.capstone.mypetRoad.data.dto.walkingInfo.WalkingRequestDto
 import retrofit2.Call
@@ -41,4 +42,9 @@ interface ServerApi {
 
     @GET("/api/walks/hotspot")
     fun getHotSpot() : Call<List<HotSpotDto>>
+
+    @GET("/api/otherpets/{Id}")
+    fun getOtherPets(
+        @Path("Id") Id: Long
+    ) : Call<List<OtherPetDto>>
 }
