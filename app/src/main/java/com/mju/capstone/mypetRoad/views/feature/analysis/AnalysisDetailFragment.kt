@@ -106,13 +106,17 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             // buildingHeight = 0.8f // 건물 높이
         }
         //가장 최근의 산책로 그리기
-        val year = binding.analysisDetailDate.text.take(4).toString()
-        val month = binding.analysisDetailDate.text.substring(5..6)
-        val day = binding.analysisDetailDate.text.substring(8..9)
-        val processedStartTime = binding.startTime.text.toString()
-            .replace("시 ", "").replace("분", "").toInt()
-        val processedEndTime = binding.endTime.text.toString()
-            .replace("시 ", "").replace("분", "").toInt()
-        Route.setWalkLine(naverMap, year, month, day, processedStartTime, processedEndTime)
+        try {
+            val year = binding.analysisDetailDate.text.take(4).toString()
+            val month = binding.analysisDetailDate.text.substring(5..6)
+            val day = binding.analysisDetailDate.text.substring(8..9)
+            val processedStartTime = binding.startTime.text.toString()
+                .replace("시 ", "").replace("분", "").toInt()
+            val processedEndTime = binding.endTime.text.toString()
+                .replace("시 ", "").replace("분", "").toInt()
+            Route.setWalkLine(naverMap, year, month, day, processedStartTime, processedEndTime)
+        } catch (_: NumberFormatException) {
+            Toast.makeText(requireContext(),"이 날에는 산책기록이 없습니다.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
