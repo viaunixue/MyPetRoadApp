@@ -69,6 +69,7 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
+
         val selectedDate = requireArguments().getString("selectedDate")
         if(selectedDate != null){
             binding.analysisDetailDate.text = selectedDate

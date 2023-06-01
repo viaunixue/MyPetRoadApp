@@ -16,7 +16,7 @@ import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Provider
-
+@RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
 class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     override fun getViewBinding() = FragmentAnalysisBinding.inflate(layoutInflater)
@@ -41,13 +41,16 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //WalkList를 초기화함
+        // WalkList 초기화
         RetrofitManager.instance.getAllWalk()
 
-        // Child fragment를 생성합니다.
+        // PetList 초기화
+        RetrofitManager.instance.getOtherPets()
+
+        // Child fragment를 생성
         val childFragment = DailyFragment()
 
-        // Child fragment를 추가합니다.
+        // Child fragment를 추가
         childFragmentManager.beginTransaction()
             .add(R.id.analysis_host_fragment, childFragment)
             .commit()
@@ -63,7 +66,6 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
             .commit()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun navigateToWeeklyFragment() {
         val fragment = WeeklyFragment()
         childFragmentManager.beginTransaction()
@@ -80,7 +82,6 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
             .commit()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun navigateToEntireFragment() {
         val fragment = EntireFragment()
         childFragmentManager.beginTransaction()

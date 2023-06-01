@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.retrofit.RetrofitManager
 import com.mju.capstone.mypetRoad.databinding.FragmentHomeBinding
@@ -56,6 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     override fun initViews() {
         super.initViews()
         binding.petCard.homeViewModel = homeViewModel
+//        binding.homeTodayRecommend.text = homeViewModel.petName.get()
         homeViewModel.petInfoUpdateText()
     }
 
@@ -77,17 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // buildingHeight = 0.8f // 건물 높이
         }
         RetrofitManager.instance.getLastestWalk(naverMap)
-//        letsBinding()
+
     }
 
-//    private fun letsBinding() {
-//        val petNameValue = "이름 : ${Config.pet.name}"
-//        val petAgeValue = "나이 : ${Config.pet.age}"
-//
-//        binding.petName = petNameValue
-//        binding.petAge = petAgeValue
-//        if(Config.todayIsWalked)
-//            Config.todayIsWalkedString.set("오늘 산책 함")
-//        binding.petIsWalked = Config.todayIsWalkedString.get()
-//    }
 }

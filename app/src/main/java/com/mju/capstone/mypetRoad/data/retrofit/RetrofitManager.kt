@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.data.dto.coords.HotSpotDto
+import com.mju.capstone.mypetRoad.data.dto.signUp.PetDto
 import com.mju.capstone.mypetRoad.data.dto.signUp.UserResponseDto
+import com.mju.capstone.mypetRoad.data.dto.trackerInfo.OtherPetDto
 import com.mju.capstone.mypetRoad.domain.model.Login
 import com.mju.capstone.mypetRoad.domain.model.SignUp
 import com.mju.capstone.mypetRoad.data.dto.trackerInfo.TrackerDto
@@ -20,19 +22,15 @@ import com.mju.capstone.mypetRoad.domain.model.Pet
 import com.mju.capstone.mypetRoad.domain.model.User
 import com.mju.capstone.mypetRoad.util.Calories
 import com.mju.capstone.mypetRoad.util.Config
-import com.mju.capstone.mypetRoad.util.Config.gpsMarker
 import com.mju.capstone.mypetRoad.util.Distance
 import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.LocationSource
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.CircleOverlay
-import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.FusedLocationSource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -264,6 +262,10 @@ class RetrofitManager {
         })
     }
 
+
+
+
+
     fun getPings( //핑 받아서 실시간으로 경로그리기
         naverMap: NaverMap
     ) {
@@ -456,6 +458,31 @@ class RetrofitManager {
                 }
             }
             override fun onFailure(call: Call<List<WalkingDto>>, t: Throwable) {
+                Log.d("LastestWalk", "네트워크 에러 : " + t.message.toString())
+            }
+        })
+    }
+
+    fun getOtherPets( //Config.walkList 값을 서버값으로 초기화
+//        context: Context
+    ) {
+        serverInstance.getOtherPets(Config.pet.id).enqueue(object : Callback<List<OtherPetDto>>{
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<List<OtherPetDto>>, response: Response<List<OtherPetDto>>) {
+                if(response.isSuccessful){
+                    val result: List<OtherPetDto>? = response.body()
+                    if (result != null) {
+                        // Pet 정보
+                        Config.otherPetInof = result
+
+                    }
+                    Log.d("LastestWalk", "onResponce 성공: " + result?.toString());
+                }
+                else{
+                    Log.d("LastestWalk", "onResponce 실패" + response.errorBody()?.string())
+                }
+            }
+            override fun onFailure(call: Call<List<OtherPetDto>>, t: Throwable) {
                 Log.d("LastestWalk", "네트워크 에러 : " + t.message.toString())
             }
         })

@@ -1,13 +1,22 @@
 package com.mju.capstone.mypetRoad.views.feature.walking
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
+import androidx.core.os.HandlerCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -46,6 +55,7 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
     private lateinit var mapView: MapView
 //    private var timer: Timer? = null
     lateinit var mainActivity: MainActivity
+    private val walkingViewModel by viewModels<WalkingViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,16 +71,20 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
         mapView.getMapAsync(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initViews() {
         super.initViews()
+        binding.walkingViewModel = walkingViewModel //ViewModel설정
+        walkingViewModel.petInfoUpdateText()
         val viewPager = binding.walkingLogViewPager
+        val buttonAnimation = AnimationUtils.loadAnimation(requireContext(), R.animator.button_animation)
 
         var walkingLog: List<WalkingLog> = listOf(
-            WalkingLog(R.drawable.sample_map_view, "2023/05/17", 23f, 110, "10'55\""),
-            WalkingLog(R.drawable.sample_map_view, "2022/04/20", 12f, 73, "20'44\""),
-            WalkingLog(R.drawable.sample_map_view, "2021/03/23", 18f, 134, "30'33\""),
-            WalkingLog(R.drawable.sample_map_view, "2020/02/26", 12f, 89, "06:08"),
-            WalkingLog(R.drawable.sample_map_view, "2019/01/29", 33f, 134, "50'11\"")
+            WalkingLog(R.drawable.sample_dog, "2023/05/17", 23f, 110, "10'55\""),
+            WalkingLog(R.drawable.sample_dduzzi, "2022/04/20", 12f, 73, "20'44\""),
+            WalkingLog(R.drawable.sample_dduzzi, "2021/03/23", 18f, 134, "30'33\""),
+            WalkingLog(R.drawable.sample_dog2, "2020/02/26", 12f, 89, "06:08"),
+            WalkingLog(R.drawable.sample_dduzzi, "2019/01/29", 33f, 134, "50'11\"")
         )
 
         val walkingLogAdapter = WalkingLogAdapter(walkingLog)
@@ -92,6 +106,7 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
         })
 
         binding.btnWalkingStart.setOnClickListener {
+            binding.homePetCard.startAnimation(buttonAnimation)
             //네비게이션 바꾸기
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.walking_nav_graph)

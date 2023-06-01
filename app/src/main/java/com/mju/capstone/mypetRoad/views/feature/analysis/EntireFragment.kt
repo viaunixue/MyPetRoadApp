@@ -45,22 +45,27 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
     ): View? {
         myWalkingAdapter = MyWalkingAdapter(mapLogLists)
         entireLogAdapter = EntireLogAdapter(walkingLogs)
+        entireLogAdapter.setOnItemClickListener(object: EntireLogAdapter.OnItemClickListener{
+            override fun onItemClick(v: View?, pos: Int) {
+                val navController = findNavController()
+                val graph = navController.navInflater.inflate(R.navigation.monthly_nav_graph)
+                navController.graph = graph
 
-        binding.entireCard.analysisViewModel = analysisViewModel //ViewModel설정
-        analysisViewModel.entireUpdateText()  //텍스트업뎃
+                view?.let { analysisMode ->
+                    Navigation.findNavController(analysisMode)
+                        .navigate(R.id.action_analysisFragment_to_analysisDetailFragment)
+                }
+            }
+        })
+
+        binding.entireCard.analysisViewModel = analysisViewModel // ViewModel 설정
+        analysisViewModel.entireUpdateText()  // 텍스트 업뎃
 
         return binding.root
     }
     override fun initViews() {
         super.initViews()
         val spacing = resources.getDimensionPixelSize(R.dimen.item_spacing)
-
-//        binding.myWalkingLog.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            adapter = myWalkingAdapter
-//            setMyWalkingLogView()
-//            addItemDecoration(VerticalSpaceItemDecoration(spacing))
-//        }
 
         binding.entireWalkingLog.apply {
             layoutManager = LinearLayoutManager(context)
@@ -83,14 +88,4 @@ class EntireFragment : BaseFragment<FragmentEntireBinding>() {
 
         entireLogAdapter.notifyDataSetChanged()
     }
-
-//    private fun setMyWalkingLogView() {
-//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/17"))
-//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/16"))
-//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/15"))
-//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/14"))
-//        mapLogLists.add(MyWalking(R.drawable.sample_map_view, "2023/05/13"))
-//
-//        myWalkingAdapter.notifyDataSetChanged()
-//    }
 }

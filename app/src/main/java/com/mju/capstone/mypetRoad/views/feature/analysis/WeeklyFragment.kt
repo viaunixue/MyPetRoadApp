@@ -1,5 +1,6 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>(){
     private val walkingLogs = mutableListOf<WalkingLog>()
     private lateinit var weeklyLogAdapter: WeeklyLogAdapter
     private val analysisViewModel by viewModels<AnalysisViewModel>()
-
+    private lateinit var datas : String
     override fun getViewBinding() = FragmentWeeklyBinding.inflate(layoutInflater)
 
     override fun onCreateView(
@@ -40,6 +41,8 @@ class WeeklyFragment : BaseFragment<FragmentWeeklyBinding>(){
         binding.weeklyCard.analysisViewModel = analysisViewModel //ViewModel설정
         analysisViewModel.weeklyUpdateText() //텍스트업뎃
 
+//        datas = Intent.
+//
         weeklyLogAdapter = WeeklyLogAdapter(walkingLogs)
 
         return binding.root

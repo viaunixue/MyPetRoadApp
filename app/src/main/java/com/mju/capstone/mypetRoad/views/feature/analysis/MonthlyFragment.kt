@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.DateSelector
@@ -34,6 +35,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.threeten.bp.LocalDate
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Provider
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -42,6 +45,11 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     val dummyData = arrayOf("2017,03,18", "2017,04,18", "2017,05,18", "2017,06,18")
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val analysisViewModel by viewModels<AnalysisViewModel>()
+    @Inject
+    lateinit var navControllerProvider: Provider<NavController>
+    // fragment 가 생성이 되고 fragment 가 있어야 navController 가
+    // 그때 그 id 값을 반환 하면서 get 으로 가져옴
+    private val navController get() = navControllerProvider.get()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,6 +109,13 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
         }
     }
 
+    private fun navigateToDetailFragment() {
+        val fragment = AnalysisDetailFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.petroad_nav_host_fragment , fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     private inner class EventDecorator(private val context: Context) : DayViewDecorator {
         private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_stamp)!!
         override fun shouldDecorate(day: CalendarDay?): Boolean {

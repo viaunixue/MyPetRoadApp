@@ -20,4 +20,5 @@
         android:id="@+id/analysis"
         android:icon="@drawable/ic_analysis"
         android:title="@string/analysis" />
+
 </menu>

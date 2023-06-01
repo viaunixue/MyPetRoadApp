@@ -18,15 +18,6 @@ import java.util.*
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     override fun getViewBinding() = FragmentMapBinding.inflate(layoutInflater)
 
-//    private val viewModel : MapViewModel by viewModels()
-
-//    @Inject
-//    lateinit var markerFactory: MarkerFactory
-//
-//    @Inject
-//    lateinit var naverMapHandlerProvider: Provider<NaverMapHandler>
-//    private val naverMapHandler get() = naverMapHandlerProvider.get()
-
     // CoroutineScope -> Coroutine 관리, 조정 interface
     // 예를 들어, Activity, Fragment 생명 주기 관련 Coroutine 실행 하는데 사용
     // 이를 통해 UI 작업 비 동기적 처리, 스레드 관리와 관련된 일반적 문제 해결

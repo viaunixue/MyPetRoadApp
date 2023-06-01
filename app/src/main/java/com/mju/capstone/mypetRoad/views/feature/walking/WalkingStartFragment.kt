@@ -201,8 +201,4 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             slidePanel.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
         }
     }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
 }

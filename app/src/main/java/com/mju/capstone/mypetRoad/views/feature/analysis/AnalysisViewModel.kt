@@ -20,7 +20,12 @@ import kotlin.math.floor
 class AnalysisViewModel @Inject constructor(
 
 ): ViewModel(){
-    //entire log 변수
+    // daily log 변수
+    val otherPetName = ObservableField<String>()
+    val otherPetAge = ObservableField<String>()
+    val isNeutered = ObservableField<String>()
+
+    // entire log 변수
     val startDate = ObservableField<String>()
     val endDate = ObservableField<String>()
     val WalkingCardKm = ObservableField<String>()
@@ -28,7 +33,7 @@ class AnalysisViewModel @Inject constructor(
     val WalkingCardMin = ObservableField<String>()
     val WalkingCardKcal = ObservableField<String>()
 
-    //detail 변수
+    // detail 변수
     var distance = ObservableField<String>()
     var minTime = ObservableField<String>()
     var calories = ObservableField<String>()
@@ -64,7 +69,7 @@ class AnalysisViewModel @Inject constructor(
         endDate.set(endDateStr)
         WalkingCardKm.set((floor((totalM*100).toDouble()/1000) /100.0).toString())
         WalkingCardCnt.set(cnt.toString())
-        WalkingCardMin.set((totalSec / 60).toString())
+        WalkingCardMin.set((totalSec / 60000000000).toString())
         WalkingCardKcal.set(totalKcal.toString())
     }
 
@@ -235,5 +240,9 @@ class AnalysisViewModel @Inject constructor(
 //        distance.set(String.format("%.2f", Distance.totalDistance/1000))
 //        minTime.set(timeStr)
 //        calories.set(Calories.totalCalories.toString()
+    }
+
+    fun dailyUpdateText() {
+
     }
 }
