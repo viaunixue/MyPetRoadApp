@@ -70,7 +70,7 @@ class AnalysisViewModel @Inject constructor(
         endDate.set(endDateStr)
         WalkingCardKm.set((floor((totalM*100).toDouble()/1000) /100.0).toString())
         WalkingCardCnt.set(cnt.toString())
-        WalkingCardMin.set((totalSec / 60000000000).toString())
+        WalkingCardMin.set((totalSec / 60).toString())
         WalkingCardKcal.set(totalKcal.toString())
     }
 
