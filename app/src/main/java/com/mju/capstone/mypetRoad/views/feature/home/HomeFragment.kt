@@ -76,6 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             uiSettings.setLogoMargin(20, 20, 100, 1520)
             isIndoorEnabled = false // 실내 지도
             isLiteModeEnabled = false // 라이트모드
+            uiSettings.isScrollGesturesEnabled = false
             // lightness = -0.5f // 지도 밝기
             // buildingHeight = 0.8f // 건물 높이
         }
