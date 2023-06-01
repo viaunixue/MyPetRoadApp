@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
@@ -85,6 +86,8 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
+            navController.popBackStack() // 이전의 백스택 항목 제거
+            navController.navigate(R.id.analysis) // analysis 화면으로 이동
         }
     }
 
