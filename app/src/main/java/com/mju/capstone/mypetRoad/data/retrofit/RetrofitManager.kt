@@ -338,38 +338,6 @@ class RetrofitManager {
         })
     }
 
-    fun drawRoadMap( //list받아서 경로그리기
-        naverMap: NaverMap,
-        context: Context
-    ) {
-        val sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
-        val jwt = sharedPreferences.getString("jwt_token", null)
-        trackerInstance.getGpsList().enqueue(object : Callback<List<PingRequestDto>>{
-            override fun onResponse(call: Call<List<PingRequestDto>>, response: Response<List<PingRequestDto>>) {
-                if(response.isSuccessful){
-                    var result: List<PingRequestDto>? = response.body()
-                    if (result != null) {
-                        for(i in result){
-                            naverMap.let {
-                                val coord = LatLng(i.latitude, i.longitude)
-                                Log.e("ping", "$i")
-//                                Route.addPing(coord, 0)
-                                Route.setMap(naverMap)
-                            }
-                        }
-                    }
-                    Log.d("Ping", "onResponce 성공: " + result?.toString());
-                }
-                else{
-                    Log.d("Ping", "onResponce 실패" + response.errorBody()?.string())
-                }
-            }
-            override fun onFailure(call: Call<List<PingRequestDto>>, t: Throwable) {
-                Log.d("Ping", "네트워크 에러 : " + t.message.toString())
-            }
-        })
-    }
-
     fun WalkingOver( //산책이 끝나면 서버에 산책정보를 Post
         durationTime: Long,
         roadMapName: String,
@@ -443,8 +411,8 @@ class RetrofitManager {
                                 val duration: Duration = Duration.between(localDateTime1, localDateTime2) // 두 시간의 차이 계산
                                 differenceInSeconds = duration.seconds // 시간차를 초로 나타냄 (long 타입)
                                 Log.d("differenceInSeconds", "$differenceInSeconds")
-                                savedSl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
                             }
+                            savedSl.add(differenceInSeconds) //시간 가중치 리스트에 값 추가 (점이 2개 이상일 때부터)
                         }
                         naverMap.let {
                             // coords 리스트와 선의 시간 가중치 리스트도 넘김

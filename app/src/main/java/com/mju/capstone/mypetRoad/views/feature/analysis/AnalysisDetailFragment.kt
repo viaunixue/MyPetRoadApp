@@ -3,11 +3,13 @@ package com.mju.capstone.mypetRoad.views.feature.analysis
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.datastore.dataStore
 import androidx.fragment.app.setFragmentResult
@@ -18,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.mju.capstone.mypetRoad.R
 import com.mju.capstone.mypetRoad.databinding.FragmentAnalysisDetailBinding
 import com.mju.capstone.mypetRoad.domain.model.WalkingLog
+import com.mju.capstone.mypetRoad.util.Route
 import com.mju.capstone.mypetRoad.views.MainActivity
 import com.mju.capstone.mypetRoad.views.base.BaseFragment
 import com.naver.maps.map.MapView
@@ -59,8 +62,8 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         super.initState()
         uiScope = CoroutineScope(Dispatchers.Main)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSTION_REQUEST_CODE)
-//        mapView = binding.detailMapView
-//        mapView.getMapAsync(this)
+        mapView = binding.analysisMapView
+        mapView.getMapAsync(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -71,6 +74,8 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             binding.analysisDetailDate.text = selectedDate
             binding.analysisViewModel = analysisViewModel //ViewModel설정
             analysisViewModel.monthlyDetailUpdateText(selectedDate)  //텍스트업뎃
+        } else {
+        //TODO 주간이나 월간에서 눌렀을 시
         }
 
         binding.detailBackBtn.setOnClickListener {
@@ -81,9 +86,12 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             val navController = findNavController()
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
+            navController.popBackStack() // 이전의 백스택 항목 제거
+            navController.navigate(R.id.analysis) // analysis 화면으로 이동
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
             uiSettings.isLocationButtonEnabled = true
@@ -96,5 +104,14 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
             //lightness = -0.5f // 지도 밝기
             // buildingHeight = 0.8f // 건물 높이
         }
+        //가장 최근의 산책로 그리기
+        val year = binding.analysisDetailDate.text.take(4).toString()
+        val month = binding.analysisDetailDate.text.substring(5..6)
+        val day = binding.analysisDetailDate.text.substring(8..9)
+        val processedStartTime = binding.startTime.text.toString()
+            .replace("시 ", "").replace("분", "").toInt()
+        val processedEndTime = binding.endTime.text.toString()
+            .replace("시 ", "").replace("분", "").toInt()
+        Route.setWalkLine(naverMap, year, month, day, processedStartTime, processedEndTime)
     }
 }
