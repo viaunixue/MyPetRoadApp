@@ -126,15 +126,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
 
         binding.btnWalkingEnd.setOnClickListener {
             val et = EditText(this.requireContext())
-            walkingViewModel.updateEndWalkingText()
             et.gravity = Gravity.CENTER
-            endTime = System.currentTimeMillis()
-            endDate = Date()
-            isStopped = true
-            //getGPS 종료
-            timer?.cancel()
-            timer = null
-            Route.clearPing()
 
             Sliding()
         }
@@ -144,6 +136,13 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         }
 
         binding.walkingEndYes.setOnClickListener {
+            endTime = System.currentTimeMillis()
+            endDate = Date()
+            isStopped = true
+            //getGPS 종료
+            timer?.cancel()
+            timer = null
+            Route.clearPing()
             view?.let { walkingMode ->
                 Navigation.findNavController(walkingMode)
                     .navigate(R.id.action_walkingStartFragment_to_walkingDetailFragment)
@@ -172,6 +171,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         timer?.scheduleAtFixedRate(object : TimerTask() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun run() {
+                walkingViewModel.updateEndWalkingText()
                 if(Config.isWalking) RetrofitManager.instance.getPings(naverMap);
                 if(isStopped){
                     walkingViewModel.stopWalkingText()
