@@ -33,6 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.time.Month
 import java.util.*
 import kotlin.math.log
 
@@ -91,32 +92,38 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
                 }
             }
         }
-        selectedDateFromCalendar = null
-        selectedDateFromCard = null
 
         binding.detailBackBtn.setOnClickListener {
-//            view?.let { analysisMode ->
-//                Navigation.findNavController(analysisMode)
-//                    .navigate(R.id.action_analysisDetailFragment_to_monthlyFragment2)
-//            }
+//            parentFragmentManager.popBackStack()
             val navController = findNavController()
+
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
             navController.popBackStack() // 이전의 백스택 항목 제거
             navController.navigate(R.id.analysis) // analysis 화면으로 이동
+
+//            val navController = findNavController()
+//            val graph = navController.navInflater.inflate(R.navigation.monthly_nav_graph)
+//            navController.graph = graph
+//
+//            view?.let { analysisMode ->
+//                Navigation.findNavController(analysisMode)
+//                    .navigate(R.id.action_analysisDetailFragment_to_analysisFragment)
+//            }
+
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onMapReady(map: NaverMap) {
         naverMap = map.apply {
-            uiSettings.isLocationButtonEnabled = true
-            uiSettings.isScaleBarEnabled = true
-            uiSettings.isCompassEnabled = true
-            uiSettings.isZoomControlEnabled = true
+            uiSettings.isLocationButtonEnabled = false
+            uiSettings.isScaleBarEnabled = false
+            uiSettings.isCompassEnabled = false
+            uiSettings.isZoomControlEnabled = false
             uiSettings.setLogoMargin(20, 20, 100, 1520)
-            isIndoorEnabled = false // 실내 지도
-            isLiteModeEnabled = false // 라이트모드
+//            isIndoorEnabled = false // 실내 지도
+//            isLiteModeEnabled = false // 라이트모드
             //lightness = -0.5f // 지도 밝기
             // buildingHeight = 0.8f // 건물 높이
         }

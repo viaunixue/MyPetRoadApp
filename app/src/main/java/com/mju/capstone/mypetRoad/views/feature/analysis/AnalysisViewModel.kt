@@ -22,9 +22,9 @@ class AnalysisViewModel @Inject constructor(
 
 ): ViewModel(){
     // daily log 변수
-    val otherPetName = ObservableField<String>()
-    val otherPetAge = ObservableField<String>()
-    val isNeutered = ObservableField<String>()
+//    val otherPetName = ObservableField<String>()
+//    val otherPetAge = ObservableField<String>()
+//    val isNeutered = ObservableField<String>()
 
     // entire log 변수
     val startDate = ObservableField<String>()

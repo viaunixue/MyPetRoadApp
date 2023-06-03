@@ -23,46 +23,39 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>() {
         val viewPager = binding.cardViewPager
         val analysisCardAdapter =
             AnalysisCardPagerAdapter(requireContext())
-//        analysisCardAdapter.addCardItem(
-//            CardItem(
-//                R.drawable.sample_dduzzi,
-//                "35",
-//                3.05,
-//                "250"
-//            )
-//        )
-//        analysisCardAdapter.addCardItem(
-//            CardItem(
-//                R.drawable.sample_dog,
-//                "45",
-//                3.75,
-//                "370"
-//            )
-//        )
-//        analysisCardAdapter.addCardItem(
-//            CardItem(
-//                R.drawable.sample_map_view,
-//                "25",
-//                2.05,
-//                "220"
-//            )
-//        )
-//        analysisCardAdapter.addCardItem(
-//            CardItem(
-//                R.drawable.sample_map_view,
-//                "60",
-//                3.35,
-//                "400"
-//            )
-//        )
-//        analysisCardAdapter.addCardItem(
-//            CardItem(
-//                R.drawable.sample_map_view,
-//                "10",
-//                1.25,
-//                "120"
-//            )
-//        )
+        analysisCardAdapter.addCardItem(
+            CardItem(
+                R.drawable.sample_dduzzi,
+                "35",
+                4,
+                124
+            )
+        )
+        analysisCardAdapter.addCardItem(
+            CardItem(
+                R.drawable.sample_dog,
+                "45",
+                2,
+                110
+            )
+        )
+        analysisCardAdapter.addCardItem(
+            CardItem(
+                R.drawable.sample_dog2,
+                "25",
+                1,
+                182
+            )
+        )
+        analysisCardAdapter.addCardItem(
+            CardItem(
+                R.drawable.sample_dog3,
+                "60",
+                5,
+                233
+            )
+        )
+
 
         var mLastOffset = 0f
 

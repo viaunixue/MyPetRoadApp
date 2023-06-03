@@ -39,8 +39,8 @@ class AnalysisCardPagerAdapter(
         binding.analysisCardMap.setImageResource(cardData[position].walkingFriendCardImg)
         binding.analysisCardTime.text = cardData[position].walkingFriendCardName
         binding.analysisCardDistance.text = cardData[position].walkingFriendCardAge.toString()
-        binding.analysisCardCalories.text = cardData[position].walkingFriendCardIsNeutered.toString()
-
+//        binding.analysisCardCalories.text = cardData[position].walkingFriendCardIsNeutered.toString()
+        binding.analysisCardCalories.text = cardData[position].walkingCalories.toString()
 //        binding.contextText.text = mData[position].getText()
 
         binding.analysisCardView.maxCardElevation = mBaseElevation * MAX_ELEVATION_FACTOR

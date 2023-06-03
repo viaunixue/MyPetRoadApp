@@ -6,8 +6,8 @@
     app:startDestination="@id/dailyAnalysis">
 
     <include app:graph="@navigation/daily" />
-    <include app:graph="@navigation/monthly" />
     <include app:graph="@navigation/weekly" />
+    <include app:graph="@navigation/monthly" />
     <include app:graph="@navigation/entire" />
 
 </navigation>

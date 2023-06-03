@@ -45,11 +45,6 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
     val dummyData = arrayOf("2017,03,18", "2017,04,18", "2017,05,18", "2017,06,18")
     override fun getViewBinding() = FragmentMonthlyBinding.inflate(layoutInflater)
     private val analysisViewModel by viewModels<AnalysisViewModel>()
-    @Inject
-    lateinit var navControllerProvider: Provider<NavController>
-    // fragment 가 생성이 되고 fragment 가 있어야 navController 가
-    // 그때 그 id 값을 반환 하면서 get 으로 가져옴
-    private val navController get() = navControllerProvider.get()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,8 +69,8 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
         calendarView.setHeaderTextAppearance(R.style.CalendarWidgetHeader)
 
         // 산책 날짜 커스텀
-        calendarView.addDecorators(SundayDayDecorator(requireContext()))
-        calendarView.addDecorators(SaturdayDayDecorator(requireContext()))
+//        calendarView.addDecorators(SundayDayDecorator(requireContext()))
+//        calendarView.addDecorators(SaturdayDayDecorator(requireContext()))
         calendarView.addDecorators(EventDecorator(requireContext()))
 
         // 산책 상세 페이지 이동
@@ -109,15 +104,8 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
         }
     }
 
-    private fun navigateToDetailFragment() {
-        val fragment = AnalysisDetailFragment()
-        childFragmentManager.beginTransaction()
-            .replace(R.id.petroad_nav_host_fragment , fragment)
-            .addToBackStack(null)
-            .commit()
-    }
     private inner class EventDecorator(private val context: Context) : DayViewDecorator {
-        private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_stamp)!!
+        private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.pet_foot_icon)!!
         override fun shouldDecorate(day: CalendarDay?): Boolean {
             // Config.walkList에서 해당 일자를 찾아 존재하는 경우에만 그림을 그리기 위해 조건을 설정
             for (i in Config.walkList) {
@@ -138,37 +126,37 @@ class MonthlyFragment : BaseFragment<FragmentMonthlyBinding>() {
 
         override fun decorate(view: DayViewFacade?) {
             view?.setSelectionDrawable(drawable)
-            view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(RelativeSizeSpan(1.4f))
+//            view?.addSpan(StyleSpan(Typeface.BOLD))
+//            view?.addSpan(RelativeSizeSpan(1.4f))
         }
     }
 
-    private inner class SaturdayDayDecorator(private val context: Context) : DayViewDecorator {
+//    private inner class SaturdayDayDecorator(private val context: Context) : DayViewDecorator {
+//
+//        private val calendar = Calendar.getInstance()
+//        override fun shouldDecorate(day: CalendarDay): Boolean {
+//            day.copyTo(calendar)
+//            val weekDay: Int = calendar.get(Calendar.DAY_OF_WEEK)
+//            return weekDay == Calendar.SATURDAY
+//        }
+//
+//        // Apply the custom drawable when a day is selected
+//        override fun decorate(view: DayViewFacade) {
+//            view.addSpan(ForegroundColorSpan(Color.parseColor("#87CEFA")))
+//        }
+//    }
 
-        private val calendar = Calendar.getInstance()
-        override fun shouldDecorate(day: CalendarDay): Boolean {
-            day.copyTo(calendar)
-            val weekDay: Int = calendar.get(Calendar.DAY_OF_WEEK)
-            return weekDay == Calendar.SATURDAY
-        }
-
-        // Apply the custom drawable when a day is selected
-        override fun decorate(view: DayViewFacade) {
-            view.addSpan(ForegroundColorSpan(Color.parseColor("#87CEFA")))
-        }
-    }
-
-    private inner class SundayDayDecorator(private val context: Context) : DayViewDecorator {
-
-//        private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_selector)!!
-        private val calendar = Calendar.getInstance()
-        override fun shouldDecorate(day: CalendarDay): Boolean {
-            day.copyTo(calendar)
-            val weekDay: Int = calendar.get(Calendar.DAY_OF_WEEK)
-            return weekDay == Calendar.SUNDAY
-        }
-        override fun decorate(view: DayViewFacade) {
-            view.addSpan(ForegroundColorSpan(Color.parseColor("#ff4040")))
-        }
-    }
+//    private inner class SundayDayDecorator(private val context: Context) : DayViewDecorator {
+//
+////        private val drawable: Drawable = ContextCompat.getDrawable(context, R.drawable.calendar_selector)!!
+//        private val calendar = Calendar.getInstance()
+//        override fun shouldDecorate(day: CalendarDay): Boolean {
+//            day.copyTo(calendar)
+//            val weekDay: Int = calendar.get(Calendar.DAY_OF_WEEK)
+//            return weekDay == Calendar.SUNDAY
+//        }
+//        override fun decorate(view: DayViewFacade) {
+//            view.addSpan(ForegroundColorSpan(Color.parseColor("#ff4040")))
+//        }
+//    }
 }

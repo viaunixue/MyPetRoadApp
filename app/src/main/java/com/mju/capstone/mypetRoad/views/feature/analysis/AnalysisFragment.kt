@@ -49,6 +49,7 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
 
         // Child fragment를 생성
         val childFragment = DailyFragment()
+//        val childFragment = WeeklyFragment()
 
         // Child fragment를 추가
         childFragmentManager.beginTransaction()
