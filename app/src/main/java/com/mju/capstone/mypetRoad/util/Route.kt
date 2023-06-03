@@ -40,7 +40,7 @@ object Route {
 
             //선의 시간 가중치 값에 따라 색상 부여
             //가중치 기준값은 향후 변경 필요
-            if(sl[index] < 7) {
+            if(sl[index] < 9) {
                 cdColorList.add(
                     MultipartPathOverlay.ColorPart(
                         Color.parseColor("#66CC33"),
@@ -48,7 +48,7 @@ object Route {
                         Color.parseColor("#66CC33"),
                         Color.parseColor("#66CC33")),
                 )
-            }else if(sl[index] < 13) {
+            }else if(sl[index] < 15) {
                 cdColorList.add(
                     MultipartPathOverlay.ColorPart(
                         Color.parseColor("#FFE650"),
