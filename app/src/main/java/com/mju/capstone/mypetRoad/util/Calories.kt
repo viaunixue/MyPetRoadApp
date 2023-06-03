@@ -23,7 +23,7 @@ object Calories {
         val calcCalSub = DoubleCalc.mul(petWeight, walkDistance)
         val calcCalSub2 = DoubleCalc.mul(calcCalSub, walkTime)
         val calcCal = DoubleCalc.mul(calcCalSub2, correctionValue)
-        val result = (calcCal).toInt()
+        val result = ceil(calcCal).toInt()
 
 
         totalCalories = result
