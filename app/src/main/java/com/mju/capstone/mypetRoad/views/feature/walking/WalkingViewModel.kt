@@ -38,7 +38,7 @@ class WalkingViewModel @Inject constructor(
     var startTime = ObservableField<String>()
 
     fun petInfoUpdateText() {
-        val petNameValue = "내새꾸 ${Config.pet.name}"
+        val petNameValue = "내새꾸 ${Config.pet.name}이"
         petName.set(petNameValue)
     }
 

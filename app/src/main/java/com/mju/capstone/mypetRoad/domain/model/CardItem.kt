@@ -7,6 +7,7 @@ data class CardItem (
     val walkingFriendCardImg : Int,
     val walkingFriendCardName: String,
     val walkingFriendCardAge : Int,
-    val walkingFriendCardIsNeutered : Boolean
+//    val walkingFriendCardIsNeutered : Boolean
+    val walkingCalories : Int
 
 )
