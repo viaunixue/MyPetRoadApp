@@ -106,6 +106,7 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
         })
 
         binding.btnWalkingStart.setOnClickListener {
+
             binding.homePetCard.startAnimation(buttonAnimation)
             //네비게이션 바꾸기
             val navController = findNavController()
@@ -139,5 +140,4 @@ class WalkingHomeFragment : BaseFragment<FragmentWalkingHomeBinding>(), OnMapRea
             buildingHeight = 0.8f // 건물 높이
         }
     }
-
 }

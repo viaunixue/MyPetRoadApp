@@ -82,4 +82,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun runDelayed(millis: Long, function: () -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(function, millis)
     }
+
+
 }

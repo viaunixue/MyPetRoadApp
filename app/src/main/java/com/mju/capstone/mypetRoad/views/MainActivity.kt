@@ -1,8 +1,11 @@
 package com.mju.capstone.mypetRoad.views
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -17,7 +20,6 @@ import javax.inject.Provider
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     @Inject
@@ -30,13 +32,10 @@ class MainActivity : AppCompatActivity() {
         const val MY_LOCATION_KEY = "MY_LOCATION_KEY"
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         //navController
         binding.bottomNavView.setupWithNavController(navController)
     }

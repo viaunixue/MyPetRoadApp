@@ -70,20 +70,4 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     open fun initViews() = Unit
     open fun observeData() = Unit
 
-    fun observeState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            uiState.collect {
-                when(it) {
-                    is UiState.Loading -> {
-                        if(it.data){
-                            progressDialog.show()
-                        } else {
-                            progressDialog.dismiss()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }

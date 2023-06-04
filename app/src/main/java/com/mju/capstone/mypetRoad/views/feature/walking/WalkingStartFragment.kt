@@ -131,6 +131,10 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
             Sliding()
         }
 
+        binding.btnWalkingCamera.setOnClickListener {
+
+        }
+
         binding.walkingEndNo.setOnClickListener {
             Sliding()
         }
