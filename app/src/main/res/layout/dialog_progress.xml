@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spinkit"
-        style="@style/SpinKitView.ThreeBounce"
+    <ImageView
+        android:id="@+id/loading_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:SpinKit_Color="@color/black"
+        android:background="@drawable/loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

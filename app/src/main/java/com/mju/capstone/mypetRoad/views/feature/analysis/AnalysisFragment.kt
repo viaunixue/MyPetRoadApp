@@ -1,11 +1,13 @@
 package com.mju.capstone.mypetRoad.views.feature.analysis
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -20,8 +22,6 @@ import javax.inject.Provider
 @AndroidEntryPoint
 class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
     override fun getViewBinding() = FragmentAnalysisBinding.inflate(layoutInflater)
-
-//    private val analysisViewModel by viewModels<AnalysisViewModel>()
 
     override fun initViews() {
         super.initViews()
@@ -49,7 +49,6 @@ class AnalysisFragment : BaseFragment<FragmentAnalysisBinding>() {
 
         // Child fragment를 생성
         val childFragment = DailyFragment()
-//        val childFragment = WeeklyFragment()
 
         // Child fragment를 추가
         childFragmentManager.beginTransaction()
