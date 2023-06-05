@@ -437,6 +437,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="30dp"
                     android:hint="산책로 이름을 남겨주세요!"
+                    android:inputType="text"
                     android:textSize="15sp"
                     app:layout_constraintTop_toBottomOf="@+id/detail_pet_memo"
                     android:background="@drawable/login_textbox"/>

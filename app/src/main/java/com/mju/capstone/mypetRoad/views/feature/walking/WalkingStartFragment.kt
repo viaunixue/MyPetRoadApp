@@ -3,9 +3,11 @@ package com.mju.capstone.mypetRoad.views.feature.walking
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
@@ -68,11 +70,6 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
     lateinit var mainActivity: MainActivity
     private val walkingViewModel by viewModels<WalkingViewModel>()
 
-//    private var startTime : Long = 0
-//    private var endTime : Long = 0
-//    private var pauseTime : Long = 0
-//    private var durationTime : Long = 0
-
     private var isStopped = false
 
     override fun onAttach(context: Context) {
@@ -132,6 +129,7 @@ class WalkingStartFragment : BaseFragment<FragmentWalkingStartBinding>(), OnMapR
         }
 
         binding.btnWalkingCamera.setOnClickListener {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         }
 
