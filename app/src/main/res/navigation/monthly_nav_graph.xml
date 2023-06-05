@@ -7,21 +7,13 @@
     <fragment
         android:id="@+id/analysisDetailFragment"
         android:name="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisDetailFragment"
-        android:label="AnalysisDetailFragment" >
-        <action
-            android:id="@+id/action_analysisDetailFragment_to_analysisFragment"
-            app:destination="@id/analysisFragment"
-            app:popUpTo="@id/analysisDetailFragment"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        android:label="AnalysisDetailFragment" />
     <fragment
         android:id="@+id/analysisFragment"
         android:name="com.mju.capstone.mypetRoad.views.feature.analysis.AnalysisFragment"
         android:label="AnalysisFragment" >
         <action
             android:id="@+id/action_analysisFragment_to_analysisDetailFragment"
-            app:destination="@id/analysisDetailFragment"
-            app:popUpTo="@id/analysisFragment"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/analysisDetailFragment" />
     </fragment>
 </navigation>

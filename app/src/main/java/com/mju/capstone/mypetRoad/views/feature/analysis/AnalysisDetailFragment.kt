@@ -94,9 +94,7 @@ class AnalysisDetailFragment : BaseFragment<FragmentAnalysisDetailBinding>(), On
         }
 
         binding.detailBackBtn.setOnClickListener {
-//            parentFragmentManager.popBackStack()
             val navController = findNavController()
-
             val graph = navController.navInflater.inflate(R.navigation.petroad_nav_graph)
             navController.graph = graph
             navController.popBackStack() // 이전의 백스택 항목 제거
