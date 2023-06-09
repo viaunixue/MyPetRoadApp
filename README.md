@@ -1,16 +1,15 @@
 # <p align="center">My Pet Road<p>
-                                  
-<br>
-<!-- 
+  
 <p align="center">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/e1XUIKy6Fw.png" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/eb26cef8-1935-4141-a6c3-eed8ea3f2b15" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/fi5zj22hhM.png" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/2derXfr5UX.png" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/KymaPe8DMn.png" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/RgQmzMcU4E.png" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/oauVvGBsrp.png" width="20%" height="30%">
 <img src="https://i.esdrop.com/d/f/4aTmHoKpdK/k4D09tHGe5.png" width="20%" height="30%">
-</p> -->
+</p>
+
 <br>
 
 ## <p align="center">프로젝트 소개</p>
@@ -20,6 +19,8 @@
 ● 산책 시 이동하며 기록되는 GPS 장치의 위치정보를 산책로로써 기록,저장 <br> 
 ● 산책 데이터를 분석 및 통계내어 사용자에게 전달 <br> 
 ● 산책로 그라데이션/ 펫 스탑 등의 사용자에게 제공하는 산책 부가기능 <br>
+
+<br>
 
 ## <p align="center"> 기술 스택 </p>
 
@@ -42,6 +43,8 @@
 <!--  Postman --><img src="https://img.shields.io/badge/Postman-fc5c34?style=flat-square&logo=Postman&logoColor=white"/>
 </div>
 
+<br>
+
 ## <p align="center"> 설계 구현도 </p>
 
   
@@ -51,14 +54,22 @@
   <p> -Data Binding
   <p> -Retrofit2
   <p> -OKHttp3
+    
+<br>
    
 ## <p align="center"> Member </p>
 
 ### Front-end
+|정종현|최영준|
+|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/75851930?v=4" alt="almond0115" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/121839021?v=4" alt="ChoiYungJn" width="100" height="100">|
+|[almond0115](https://github.com/almond0115)|[ChoiYungJn](https://github.com/ChoiYungJn)|
+
+<br>
 
 ### Back-end
 
-|한승수|정종현|최영준|유상훈|
-|:-:|:--:|:-:|:-:|
-|<img src="https://avatars.githubusercontent.com/u/71253519?v=4" alt="KKaeBu" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/75851930?v=4" alt="almond0115" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/121839021?v=4" alt="ChoiYungJn" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/90717313?v=4" alt="Choi1124" width="100" height="100">|
-|[KKaeBu](https://github.com/KKaeBu)|[almond0115](https://github.com/almond0115)|[ChoiYungJn](https://github.com/ChoiYungJn)|[Choi1124](https://github.com/Choi1124)|
+|한승수|유상훈|
+|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/71253519?v=4" alt="KKaeBu" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/90717313?v=4" alt="Choi1124" width="100" height="100">|
+|[KKaeBu](https://github.com/KKaeBu)|[Choi1124](https://github.com/Choi1124)|
