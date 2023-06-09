@@ -73,3 +73,10 @@
 |:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/71253519?v=4" alt="KKaeBu" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/90717313?v=4" alt="Choi1124" width="100" height="100">|
 |[KKaeBu](https://github.com/KKaeBu)|[Choi1124](https://github.com/Choi1124)|
+
+<br>
+
+#### Back-end Repository
+
+[MyPetRoadControllerServer](https://github.com/KKaeBu/CapstoneProjectControllerServer) <br>
+[MyPetRoadTransmitter](https://github.com/KKaeBu/CapstoneProjectTransmitter)
