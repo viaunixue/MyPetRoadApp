@@ -1,13 +1,13 @@
 # <p align="center">My Pet Road<p>
-  
+
 <p align="center">
 <img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/eb26cef8-1935-4141-a6c3-eed8ea3f2b15" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/fi5zj22hhM.png" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/2derXfr5UX.png" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/KymaPe8DMn.png" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/RgQmzMcU4E.png" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/oauVvGBsrp.png" width="20%" height="30%">
-<img src="https://i.esdrop.com/d/f/4aTmHoKpdK/k4D09tHGe5.png" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/43758a77-ae8f-4dcf-9e52-743f32c3d025" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/5e1691ed-103e-4fcd-b44d-e1477d5540e0" width="19.3%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/19be9782-6542-4b9d-bfb6-ca3dc3636267" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/160cf4ad-72e4-403c-a213-1751aeaa0458" width="19.7%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/3b88dd12-43df-4372-9bdb-52d62fc66502" width="19.6%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/f3617181-c88b-44c5-84dc-3960e5257cc7" width="20%" height="30%">
 </p>
 
 <br>
@@ -46,14 +46,14 @@
 <br>
 
 ## <p align="center"> 설계 구현도 </p>
+<img width="1100" alt="pet-structure" src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/38863496-0282-406a-aa0c-7e98d669e4ce">
 
-  
 ### 라이브러리
-  <p> -Android JetPack (ViewModel, LiveData, Navigation, RecyclerView, Fragment)
+  <p> -Android JetPack (ViewModel, Navigation, RecyclerView, Fragment)
   <p> -View Binding
   <p> -Data Binding
   <p> -Retrofit2
-  <p> -OKHttp3
+  <p> -Dagger Hilt
     
 <br>
    
@@ -62,7 +62,7 @@
 ### Front-end
 |정종현|최영준|
 |:-:|:-:|
-|<img src="https://avatars.githubusercontent.com/u/75851930?v=4" alt="almond0115" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/121839021?v=4" alt="ChoiYungJn" width="100" height="100">|
+|<img src="https://avatars.githubusercontent.com/u/77084379?v=4" alt="almond0115" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/121839021?v=4" alt="ChoiYungJn" width="100" height="100">|
 |[almond0115](https://github.com/almond0115)|[ChoiYungJn](https://github.com/ChoiYungJn)|
 
 <br>
