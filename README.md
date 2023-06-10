@@ -1,13 +1,13 @@
 # <p align="center">My Pet Road<p>
 
 <p align="center">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/eb26cef8-1935-4141-a6c3-eed8ea3f2b15" width="20%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/43758a77-ae8f-4dcf-9e52-743f32c3d025" width="20%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/5e1691ed-103e-4fcd-b44d-e1477d5540e0" width="19.3%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/19be9782-6542-4b9d-bfb6-ca3dc3636267" width="20%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/160cf4ad-72e4-403c-a213-1751aeaa0458" width="19.7%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/3b88dd12-43df-4372-9bdb-52d62fc66502" width="19.6%" height="30%">
-<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/f3617181-c88b-44c5-84dc-3960e5257cc7" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/e584ac51-4db2-4709-ac64-fbff9b3aa8e1" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/3eb7fa4d-8ee2-44b2-a7aa-a9f8b20c34e2" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/02b62adf-132d-40d1-ada2-e52102b16e37" width="19.3%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/c012737d-813b-4ed7-abea-e978f75c3141" width="20%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/4c5dc385-6e28-44e1-be24-7dadd401925f" width="19.7%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/84987f6a-870e-4981-9d5a-694b9d5fef4b" width="19.6%" height="30%">
+<img src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/9f6665e4-3c82-40c6-ad1e-cfc997a6a9be" width="20%" height="30%">
 </p>
 
 <br>
