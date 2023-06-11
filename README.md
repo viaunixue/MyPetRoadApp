@@ -46,7 +46,7 @@
 <br>
 
 ## <p align="center"> 설계 구현도 </p>
-<img width="1100" alt="pet-structure" src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/38863496-0282-406a-aa0c-7e98d669e4ce">
+<img width="1100" alt="pet-structure" src="https://github.com/almond0115/MyPetRoadApp/assets/77084379/f2a46660-318a-48b7-a754-4c17ccbc43b9">
 
 ### 라이브러리
   <p> -Android JetPack (ViewModel, Navigation, RecyclerView, Fragment)
